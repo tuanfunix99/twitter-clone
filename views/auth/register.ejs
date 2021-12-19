@@ -1,0 +1,35 @@
+<%- include('../layout/header') -%>
+<link rel="stylesheet" href="/css/login.css">
+</header>
+<body>
+<div class="container">
+  <div class="row mt-4">
+    <div class="col-lg-5 mx-auto bg-light p-4">
+      <h1 class="text-center">Register</h1>
+      <form method="post" action="/register">
+        <% for(let i = 0; i < forms.length; i++) {%>
+          <% let {name, type, placeholder} = forms[i]; %>
+          <div class="<%= `${errors && errors[name] ? 'mb-1' : 'mb-3'}`%>">
+            <input
+              type="<%= type %>"
+              class="<%= `form-control ${errors && errors[name] ? 'is-invalid' : ''}` %>"
+              placeholder="<%= placeholder %>" 
+              name="<%= name %>" 
+              value="<%= `${input && input[name] ? input[name] : ''}` %>"
+            />
+            <% if(errors && errors[name]) { %>
+              <p class='text-danger mb-0'><%= errors[name] %> </p>
+              <% } %> 
+          </div>
+          <% } %>    
+          <div class="d-grid gap-2">
+          <button class="btn btn-DeepSkyBlue" type="submit">Register</button>
+        </div>
+        <div class="text-center mt-2">
+          <a href="login" class="link-primary">Have an account? Login here</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<%- include('../layout/footer') -%>

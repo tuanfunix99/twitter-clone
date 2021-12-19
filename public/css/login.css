@@ -1,0 +1,20 @@
+body {
+    background-color: #0099ff;
+}
+
+a{
+    text-decoration: none;
+}
+
+.btn-DeepSkyBlue{
+    color: white;
+    background-color: #0099ff;
+    border: #0099ff;
+    transition: 0.5s;
+}
+
+.btn-DeepSkyBlue:hover{
+    color: white;
+    background-color: #0889df;
+    border: #0889df;
+}
