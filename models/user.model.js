@@ -3,7 +3,12 @@ const { Schema } = mogoose;
 const validator = require("validator");
 const bcrypt = require("bcrypt");
 const uniqueValidator = require("mongoose-unique-validator");
+const jwt = require('jsonwebtoken');
 const { Error } = require("mongoose");
+const dotenv = require("dotenv");
+dotenv.config();
+
+const PRIVATE_KEY = process.env.PRIVATE_KEY;
 
 const userSchema = new Schema({
   firstName: {
@@ -35,7 +40,20 @@ const userSchema = new Schema({
     minlength: [8, "Password at least 8 chracters"],
     maxlength: [64, "Password max 64 characters"],
   },
+  isActive: {
+    type: Boolean,
+    default: false,
+  },
+  token:{
+    type: String,
+  },
 });
+
+userSchema.methods.setToken = function(){
+  const user = this;
+  const token = jwt.sign({ _id: user._id }, PRIVATE_KEY, { expiresIn: '24h' });
+  return token;
+}
 
 userSchema.statics.authenticate = async (name, password) => {
   const username = await User.findOne({ username: name });
@@ -43,17 +61,18 @@ userSchema.statics.authenticate = async (name, password) => {
   let error = new Error.ValidationError();
   if (!username && !email) {
     error.errors.name = new Error.ValidatorError({
-      message: 'User not found',
-      path: 'name',
+      message: "User not found",
+      path: "name",
     });
     throw error;
   }
   const user = username ? username : email;
+  console.log(user);
   const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch) {
     error.errors.password = new Error.ValidatorError({
-      message: 'Password not match',
-      path: 'password',
+      message: "Password not match",
+      path: "password",
     });
     throw error;
   }
@@ -62,7 +81,7 @@ userSchema.statics.authenticate = async (name, password) => {
 
 userSchema.pre("save", async function (next) {
   const user = this;
-  if (user.isModified) {
+  if (user.isModified("password")) {
     user.password = await bcrypt.hash(user.password, 8);
   }
   next();
