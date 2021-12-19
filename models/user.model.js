@@ -49,6 +49,8 @@ const userSchema = new Schema({
   },
 });
 
+userSchema.plugin(uniqueValidator);
+
 userSchema.methods.setToken = function(){
   const user = this;
   const token = jwt.sign({ _id: user._id }, PRIVATE_KEY, { expiresIn: '24h' });
@@ -61,13 +63,12 @@ userSchema.statics.authenticate = async (name, password) => {
   let error = new Error.ValidationError();
   if (!username && !email) {
     error.errors.name = new Error.ValidatorError({
-      message: "User not found",
+      message: "Username or email not match",
       path: "name",
     });
     throw error;
   }
   const user = username ? username : email;
-  console.log(user);
   const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch) {
     error.errors.password = new Error.ValidatorError({
@@ -87,7 +88,6 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
-userSchema.plugin(uniqueValidator);
 
 const User = mogoose.model("User", userSchema);
 

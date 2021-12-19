@@ -143,7 +143,8 @@ exports.verify = async (req, res, next) => {
   const token = req.params.token;
   try {
     const userDecode = jwt.verify(token, PRIVATE_KEY);
-    const user = await User.findById(userDecode._id);
+    let user = await User.findById(userDecode._id);
+    console.log(user);
     if(!user){
       throw new Error('User not found');
     }
