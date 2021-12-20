@@ -2,7 +2,6 @@ const mogoose = require("mongoose");
 const { Schema } = mogoose;
 const validator = require("validator");
 const bcrypt = require("bcrypt");
-const uniqueValidator = require("mongoose-unique-validator");
 const jwt = require('jsonwebtoken');
 const { Error } = require("mongoose");
 const dotenv = require("dotenv");
@@ -48,8 +47,6 @@ const userSchema = new Schema({
     type: String,
   },
 });
-
-userSchema.plugin(uniqueValidator);
 
 userSchema.methods.setToken = function(){
   const user = this;

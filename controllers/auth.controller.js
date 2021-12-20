@@ -87,6 +87,7 @@ exports.getRegister = (req, res, next) => {
 };
 
 exports.postRegister = async (req, res, next) => {
+  //hoaingo.26061999@gmail.com
   const title = "Register";
   const { firstName, lastName, username, email, password, confirm } = req.body;
   const input = {
@@ -103,6 +104,7 @@ exports.postRegister = async (req, res, next) => {
       errors.confirm = "Confirm not match";
     }
     const user = new User({ firstName, lastName, username, email, password });
+    await user.save();
     user.token = user.setToken();
     await transporter.sendMail({
       from: "ADMIN",
@@ -116,15 +118,17 @@ exports.postRegister = async (req, res, next) => {
     await user.save();
     res.redirect("/login?new-account=true");
   } catch (error) {
-    console.log(error.name);
     if (error.name === "ValidationError") {
       for (const property in error.errors) {
         if (error.errors[property].kind === "unique") {
-          errors[property] = `${error.errors[property].path} existed`;
           continue;
         }
         errors[property] = error.errors[property].message;
       }
+    }
+    else if(error.name === "MongoServerError" && error.code === 11000){
+      const property = Object.keys(error.keyPattern)[0];
+      errors[property] = `${property} is already taken`;
     }
     log.error({ message: error.message }, "error register");
     res
@@ -144,7 +148,6 @@ exports.verify = async (req, res, next) => {
   try {
     const userDecode = jwt.verify(token, PRIVATE_KEY);
     let user = await User.findById(userDecode._id);
-    console.log(user);
     if(!user){
       throw new Error('User not found');
     }
