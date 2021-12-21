@@ -58,9 +58,11 @@ exports.postLogin = async (req, res, next) => {
       throw error; 
     }
     req.session.user = {
-      email: user.email,
+      _id: user._id,
+      email: user.email,  
       username: user.username,
-      isActive: user.isActive
+      isActive: user.isActive,
+      avatar: user.avatar,
     };
     res.redirect("/");
   } catch (error) {

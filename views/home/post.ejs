@@ -1,0 +1,44 @@
+<div class="px-0" id="postContainer">
+    <% for(let post of posts) {%>
+        <%  const { postedBy, content, time } = post %>
+        <% const displayName = postedBy.firstName + " " + postedBy.lastName; %>
+        
+        <div class='post p-2'>
+            <div class='mainContentContainer'>
+                <div class='userImageContainer'>
+                    <img  class="rounded-circle"
+                    alt="profile picture"
+                    width="40"
+                    height="40" src='<%= postedBy.avatar %> '>
+                </div>
+                <div class='postContentContainer mx-2'>
+                    <div class='header'>
+                        <a href='/profile/${postedBy.username}' class='displayName'><%= displayName %></a>
+                        <span class='username'>@<%= postedBy.username %></span> | 
+                        <span class='date'><%= time %></span>
+                    </div>
+                    <div class='postBody'>
+                        <span><%= content %> </span>
+                    </div>
+                    <div class='postFooter'>
+                        <div class='postButtonContainer'>
+                            <button>
+                                <i class='far fa-comment'></i>
+                            </button>
+                        </div>
+                        <div class='postButtonContainer'>
+                            <button>
+                                <i class='fas fa-retweet'></i>
+                            </button>
+                        </div>
+                        <div class='postButtonContainer'>
+                            <button>
+                                <i class='far fa-heart'></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+      <% } %>
+</div>

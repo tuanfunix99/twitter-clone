@@ -1,5 +1,5 @@
 
-const auth = (req, res, next) => {
+exports.auth = (req, res, next) => {
     if(req.session && req.session.user && req.session.user.isActive){
         req.user = req.session.user;
         next();
@@ -8,5 +8,3 @@ const auth = (req, res, next) => {
         res.redirect('/login');
     }
 }
-
-module.exports = auth;

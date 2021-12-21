@@ -46,6 +46,10 @@ const userSchema = new Schema({
   token:{
     type: String,
   },
+  avatar:{
+    type: String,
+    default: "/images/profilePic.jpeg"
+  }
 });
 
 userSchema.methods.setToken = function(){

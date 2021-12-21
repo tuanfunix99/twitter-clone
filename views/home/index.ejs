@@ -5,20 +5,25 @@
 <div class="container">
     <div class="row">
         <nav class="col-2">
-            <a href="#" title="Twitter"><i class="fas fa-dove blue"></i></a>
-            <a href="#" title="Home"><i class="fas fa-home"></i></a>
-            <a href="#" title="Search"><i class="fas fa-search"></i></a>
-            <a href="#" title="Nofication"><i class="fas fa-bell"></i></a>
-            <a href="#"><i class="fas fa-envelope"></i></a>
-            <a href="#"><i class="fas fa-user"></i></a>
-            <a href="/logout" title="Logout"><i class="fas fa-sign-out-alt"></i></a>
+                <a href="#" title="Twitter"><i class="fas fa-dove blue"></i></a>
+                <a href="#" title="Home"><i class="fas fa-home"></i></a>
+                <a href="#" title="Search"><i class="fas fa-search"></i></a>
+                <a href="#" title="Nofication"><i class="fas fa-bell"></i></a>
+                <a href="#" title="Mail"><i class="fas fa-envelope"></i></a>
+                <a href="#" title="Profile"><i class="fas fa-user"></i></a>
+                <a href="/logout" title="Logout"><i class="fas fa-sign-out-alt"></i></a>
         </nav>
-        <div class="mainSectionContainer col-lg-6 col-md-8 col-10">
+        <div class="mainSectionContainer col-lg-6 col-md-8 col-10 p-0">
             <div class="titleContainer">
                 <h1><%= title %> </h1>
             </div>
+            <%- include('./postform') -%>
+            <%- include('./post') -%>
         </div>
         <div class="col-lg-4 col-md-2"></div>
     </div>
 </div>
 <%- include('../layout/footer') -%>
+<script src="/js/common.js"></script>
+</body>
+</html>

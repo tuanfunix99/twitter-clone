@@ -1,61 +1,154 @@
-:root{
-    --blue:#1FA2F1;
-    --bluehover: #d4edff;
-    --lightGrey: rgb(230, 236, 240);
-    --spacing: 15px;
+:root {
+  --blue: #1fa2f1;
+  --blueblack: #1587cb;
+  --bluehover: #d4edff;
+  --lightGrey: rgb(230, 236, 240);
+  --spacing: 15px;
 }
 
-a{
-    color: inherit;
+a {
+  color: inherit;
 }
 
 nav {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  height: 100%;
 }
 
 nav a {
-    padding: 10px;
-    font-size: 30px;
-    width: 55px;
-    height: 55px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    transition: 0.3s;
+  padding: 10px;
+  font-size: 30px;
+  width: 55px;
+  height: 55px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: 0.3s;
 }
 
-nav a:hover{
-    color: var(--blue);
-    background: var(--bluehover);
-    border-radius: 50%;
+nav a:hover {
+  color: var(--blue);
+  background: var(--bluehover);
+  border-radius: 50%;
 }
 
 h1 {
-    font-size: 19px;
-    font-weight: 800;
-    margin: 0;
+  font-size: 19px;
+  font-weight: 800;
+  margin: 0;
 }
 
-nav .blue{
-    color: var(--blue);
+nav .blue {
+  color: var(--blue);
 }
 
 .mainSectionContainer {
-    border-left: 1px solid var(--lightGrey);
-    border-right: 1px solid var(--lightGrey);
-    display: flex;
-    flex-direction: column;
+  border-left: 1px solid var(--lightGrey);
+  border-right: 1px solid var(--lightGrey);
+  display: flex;
+  flex-direction: column;
+  background: #f0f0f08c;
 }
 
 .titleContainer {
-    height: 53px;
-    padding: 0 var(--spacing);
-    display: flex;
-    align-items: center;
-    border-bottom: 1px solid var(--lightGrey);
-    flex-shrink: 0;
+  height: 53px;
+  padding: 0 var(--spacing);
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--lightGrey);
+  flex-shrink: 0;
+  background: white;
 }
+
+#postFormContainer {
+  background: white;
+  display: flex;
+}
+
+#postFormContainer form {
+  flex: 1;
+}
+
+#postTextarea {
+  width: 100%;
+  border: none !important;
+}
+
+#postTextarea:focus {
+  box-shadow: none !important;
+}
+
+#postButton {
+  border: none !important;
+  border-radius: 25px;
+  background: var(--blue);
+  box-shadow: none;
+  transition: 0.4s;
+}
+
+#postButton:hover {
+  background: var(--blueblack);
+}
+
+#postContainer {
+  height: 406px;
+  width: 100%;
+  background: white;
+  overflow-y: hidden;
+  overflow-y: scroll;
+}
+
+.post {
+  border-bottom: 1px solid var(--lightGrey);
+}
+
+.mainContentContainer {
+  display: flex;
+}
+
+.postFooter {
+  display: flex;
+  justify-content: space-between;
+}
+
+.postFooter button {
+  border: none;
+  background: inherit;
+  transition: 0.4s;
+}
+
+.postFooter button:hover {
+  background: var(--bluehover);
+  border-radius: 50%;
+}
+
+.date{
+  color: gray;
+  font-weight: 500;
+  font-size: 13px;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(204, 204, 204);
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(175, 175, 175);
+}
+
