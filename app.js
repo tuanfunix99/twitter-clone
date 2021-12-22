@@ -2,10 +2,11 @@ const express = require("express");
 const dotenv = require("dotenv");
 const log = require("./logger");
 const { authRoutes, postApiRoutes, mainRoutes } = require("./routes/index.routes");
-const { auth } = require("./middleware/auth");
 const path = require("path");
 const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
+const http = require("http");
+const socketIO = require('socket.io');
 require("./utils/database");
 
 dotenv.config();
@@ -15,6 +16,10 @@ const SECRET = process.env.SECRET || "secret";
 const MONGO_URL = process.env.MONGO_URL || "";
 
 const app = express();
+const httpServer = http.createServer(app);
+const io = socketIO(httpServer);
+app.set('socketIo', io);
+
 
 const store = new MongoDBStore({
   uri: MONGO_URL,
@@ -41,6 +46,6 @@ app.use(mainRoutes);
 app.use(authRoutes);
 app.use('/api', postApiRoutes);
 
-app.listen(PORT, () => {
+httpServer.listen(PORT, () => {
   log.info("listening on port " + PORT);
 });

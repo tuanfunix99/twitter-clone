@@ -1,11 +1,21 @@
 $(document).ready(function () {
+  const socket = io();
   const btnpost = $("#postButton");
   const textarea = $("#postTextarea");
   const postContainer = $("#postContainer");
   const spinner = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Loading...`;
   let value = "";
 
-  textarea.keyup(function (e) {
+  socket.on("respone", (postData) => {
+    btnpost.remove(".spinner-border");
+    btnpost.text("Post");
+    btnpost.prop("disabled", true);
+    textarea.val("");
+    const newPost = createPost(postData);
+    postContainer.prepend(newPost);
+  });
+
+  $(textarea).keyup(function (e) {
     value = $(e.target).val();
     if (value.trim().length > 0) {
       btnpost.prop("disabled", false);
@@ -16,20 +26,17 @@ $(document).ready(function () {
 
   btnpost.click(function (e) {
     e.preventDefault();
+    socket.emit("mess", "hello");
+    if (value.trim().length === 0) {
+      alert("empty");
+      return;
+    }
     btnpost.text("");
     btnpost.append(spinner);
     const data = {
       content: value,
     };
-    $.post("/api/post", data, (postData, status, xhr) => {
-      console.log(postData);
-      btnpost.remove(".spinner-border");
-      btnpost.text("Post");
-      btnpost.prop("disabled", true);
-      textarea.val("");
-      const newPost = createPost(postData);
-      postContainer.prepend(newPost);
-    });
+    $.post("/api/post", data);
   });
 });
 
