@@ -3,6 +3,20 @@
 <link rel="stylesheet" href="/css/responsive_web.css">
 </header>
 <body>
+<div class="uploadContainer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 mx-auto">
+                <form action="/api/upload-avatar" method="post" enctype="multipart/form-data">
+                    <div class="mb-3">
+                      <input type="file" class="form-control" name="avatar">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Upload</button>
+                  </form>
+            </div>
+        </div>
+    </div>
+</div>    
 <div class="container">
     <div class="row">
         <nav class="col-2 fixed-top">

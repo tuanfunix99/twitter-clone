@@ -6,6 +6,10 @@
   --spacing: 15px;
 }
 
+body.scroll-none{
+  overflow-y: hidden;
+}
+
 .fixed-top {
   position: sticky;
   top: 0;
@@ -68,6 +72,39 @@ nav .blue {
   align-items: center;
   flex-shrink: 0;
   background: white;
+}
+
+.postAvatar {
+  display: flex;
+  flex-direction: column;
+}
+
+#uploadButton {
+  border: 0px;
+  background: inherit;
+}
+
+#uploadButton:hover i {
+  color: rgb(104, 103, 103);
+}
+
+.uploadContainer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #00000095;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.5s;
+}
+
+.uploadContainer.show{
+  opacity: 1;
+  visibility: visible;
+  transition: 0.5s;
 }
 
 #postFormContainer {
@@ -194,7 +231,7 @@ a#search {
   display: none;
 }
 
-.followFormContainer {  
+.followFormContainer {
   width: 100%;
   height: 500px;
   background: #fafafa;
@@ -221,7 +258,7 @@ a#search {
 }
 
 .followUser:hover {
-  background:rgb(230, 236, 240);
+  background: rgb(230, 236, 240);
 }
 
 .followUserContainer {
@@ -234,7 +271,7 @@ a#search {
   margin-left: 15px;
 }
 
-.followContent a{
+.followContent a {
   font-size: 17px;
   font-weight: 500;
   text-transform: capitalize;
@@ -242,8 +279,8 @@ a#search {
   transition: 0.4s;
 }
 
-.followContent a:hover{
-  color: #494949;;
+.followContent a:hover {
+  color: #494949;
   text-decoration: underline;
 }
 
@@ -285,7 +322,7 @@ a#search {
   width: calc(100% - 40%);
 }
 
-.description .line::before{
+.description .line::before {
   position: absolute;
   content: "";
   height: 100%;

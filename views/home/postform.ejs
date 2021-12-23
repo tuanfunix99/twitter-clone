@@ -1,11 +1,16 @@
 <div id="postFormContainer" class="py-3 px-2 mb-2">
-  <image
-    class="rounded-circle"
-    src="<%= avatar %> "
-    alt="profile picture"
-    width="50"
-    height="50"
-  ></image>
+  <div class="postAvatar">
+    <image
+      class="rounded-circle"
+      src="<%= avatar %> "
+      alt="profile picture"
+      width="50"
+      height="50"
+    ></image>
+    <button id="uploadButton" title="upload avatar">
+      <i class="fas fa-camera"></i>
+    </button>
+  </div>
   <form class="mx-1">
     <div class="mb-1">
       <textarea

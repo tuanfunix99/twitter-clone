@@ -1,7 +1,9 @@
+const User = require("../models/user.model");
 
-exports.auth = (req, res, next) => {
+exports.auth = async (req, res, next) => {
     if(req.session && req.session.user && req.session.user.isActive){
-        req.user = req.session.user;
+        const user = await User.findById(req.session.user._id, '_id avatar username isActive email')
+        req.user = user;
         next();
     }
     else{

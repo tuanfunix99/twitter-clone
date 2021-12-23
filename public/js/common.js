@@ -2,6 +2,7 @@ $(document).ready(function () {
   const socket = io();
   const btnpost = $("#postButton");
   const btnfollow = $(".followButton");
+  const btnupload = $("#uploadButton");
   const textarea = $("#postTextarea");
   const postContainer = $("#postContainer");
   const spinner = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Tweet...`;
@@ -58,6 +59,17 @@ $(document).ready(function () {
     }
   });
 
+  btnupload.click(function(e) {
+    $('.uploadContainer').addClass('show');
+    $('body').addClass('scroll-none')
+  })
+
+  $('.uploadContainer').click(function (e){
+    $('.uploadContainer').removeClass('show');
+    $('body').removeClass('scroll-none')
+  })
+
+  
   btnfollow.click(function (e) {
     e.preventDefault();
     btnfollow.prop("disabled", true);

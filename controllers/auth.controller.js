@@ -59,10 +59,7 @@ exports.postLogin = async (req, res, next) => {
     }
     req.session.user = {
       _id: user._id,
-      email: user.email,  
-      username: user.username,
       isActive: user.isActive,
-      avatar: user.avatar,
     };
     res.redirect("/");
   } catch (error) {

@@ -1,5 +1,7 @@
 const Post = require("../../models/post.model");
 const User = require("../../models/user.model");
+const fs = require('fs');
+const path = require('path');
 
 exports.follow = async (req, res, next) => {
   const { username } = req.body;
@@ -44,3 +46,26 @@ exports.follow = async (req, res, next) => {
     console.log(error);
   }
 };
+
+exports.uploadAvatar = async (req, res, next) => {
+  const { _id } = req.user;
+  const { filename } = req.file;
+  console.log(filename);
+  try {
+    if(!filename){
+      throw new Error('error');
+    }
+    const user = await User.findById(_id);
+    if(user.avatar !== '/images/profilePic.jpeg'){
+      console.log(path.join(__dirname, 'public', user.avatar));
+      fs.unlink(path.join(__dirname, '../../public', user.avatar), function() {
+        console.log('Image deleted');
+    });
+    }
+    user.avatar = '/uploads/' + filename;
+    await user.save();
+    res.redirect("/"); 
+  } catch (error) {
+    res.redirect("/"); 
+  }
+}
