@@ -6,6 +6,14 @@
   --spacing: 15px;
 }
 
+.fixed-top {
+  position: sticky;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1030;
+}
+
 a {
   color: inherit;
 }
@@ -54,11 +62,10 @@ nav .blue {
 }
 
 .titleContainer {
-  height: 53px;
+  height: 55px;
   padding: 0 var(--spacing);
   display: flex;
   align-items: center;
-  border-bottom: 1px solid var(--lightGrey);
   flex-shrink: 0;
   background: white;
 }
@@ -94,11 +101,8 @@ nav .blue {
 }
 
 #postContainer {
-  height: 406px;
   width: 100%;
   background: white;
-  overflow-y: hidden;
-  overflow-y: scroll;
 }
 
 .post {
@@ -109,26 +113,149 @@ nav .blue {
   display: flex;
 }
 
+.postContentContainer {
+  flex: 1;
+}
+
 .postFooter {
   display: flex;
   justify-content: space-between;
+  padding-right: 50px;
 }
 
-.postFooter button {
+.postButtonContainer button {
   border: none;
   background: inherit;
-  transition: 0.4s;
-}
-
-.postFooter button:hover {
-  background: var(--bluehover);
   border-radius: 50%;
 }
 
-.date{
+.postButtonContainer {
+  border-radius: 50%;
+  transition: 0.4s;
+}
+
+.postButtonContainer:hover {
+  border-radius: 50%;
+  background: var(--bluehover);
+}
+
+.postButtonContainer:hover i {
+  color: white;
+}
+
+.date {
   color: gray;
   font-weight: 500;
   font-size: 13px;
+}
+
+.searchContainer {
+  height: 55px;
+  padding: 0 var(--spacing);
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  background: white;
+  width: 100%;
+}
+
+.searchFormContainer {
+  width: 100%;
+  border: 0px;
+  padding: 7px 20px;
+  border-radius: 30px;
+  display: flex;
+  background: #f4f4f4;
+}
+
+.searchFormContainer:focus {
+  border: 1px solid var(--blue);
+}
+
+.searchFormContainer button {
+  border: 0px;
+  background: inherit;
+  color: #c9c9c9;
+}
+
+.searchFormContainer input {
+  flex: 1;
+  margin-left: 5px;
+  border: 0px;
+  background: #f4f4f4;
+}
+
+.searchFormContainer input:focus {
+  border: 0px;
+  outline: 0px;
+}
+
+a#search {
+  display: none;
+}
+
+.followFormContainer {
+  width: 100%;
+  height: 500px;
+  background: #fafafa;
+  border-radius: 10px;
+  box-shadow: 0px 0px 2px 1px #0f0f0f0d;
+}
+
+.followFormContainer h1 {
+  color: #3d3a3a;
+  font-size: 22px;
+}
+
+.followList {
+  list-style: none;
+  padding: 0px 0px;
+}
+
+.followUser {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 15px;
+  cursor: pointer;
+  transition: 0.4s;
+}
+
+.followUser:hover {
+  background:rgb(230, 236, 240);
+}
+
+.followUserContainer {
+  display: flex;
+}
+
+.followContent {
+  display: flex;
+  flex-direction: column;
+  margin-left: 15px;
+}
+
+.followContent a{
+  font-size: 17px;
+  font-weight: 500;
+  text-transform: capitalize;
+  text-decoration: none;
+  transition: 0.4s;
+}
+
+.followContent a:hover{
+  color: #494949;;
+  text-decoration: underline;
+}
+
+#followButton {
+  border: none !important;
+  height: 38px;
+  border-radius: 30px;
+  margin-top: 5px;
+  padding: 0px 20px;
+  background: var(--blue);
+  box-shadow: none;
+  transition: 0.4s;
 }
 
 /* width */
@@ -151,4 +278,3 @@ nav .blue {
 ::-webkit-scrollbar-thumb:hover {
   background: rgb(175, 175, 175);
 }
-

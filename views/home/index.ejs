@@ -1,26 +1,66 @@
 <%- include('../layout/header') -%>
 <link rel="stylesheet" href="/css/main.css">
+<link rel="stylesheet" href="/css/responsive_web.css">
 </header>
 <body>
 <div class="container">
     <div class="row">
-        <nav class="col-2">
+        <nav class="col-2 fixed-top">
                 <a href="#" title="Twitter"><i class="fas fa-dove blue"></i></a>
                 <a href="#" title="Home"><i class="fas fa-home"></i></a>
-                <a href="#" title="Search"><i class="fas fa-search"></i></a>
+                <a href="#" title="Search" id="search"><i class="fas fa-search"></i></a>
                 <a href="#" title="Nofication"><i class="fas fa-bell"></i></a>
                 <a href="#" title="Mail"><i class="fas fa-envelope"></i></a>
                 <a href="#" title="Profile"><i class="fas fa-user"></i></a>
+                <a href="#" title="Explore"><i class="fas fa-globe"></i></a>
                 <a href="/logout" title="Logout"><i class="fas fa-sign-out-alt"></i></a>
         </nav>
-        <div class="mainSectionContainer col-lg-6 col-md-8 col-10 p-0">
-            <div class="titleContainer">
+        <div class="mainSectionContainer col-lg-6 col-10 p-0">
+            <div class="titleContainer fixed-top">
                 <h1><%= title %> </h1>
             </div>
             <%- include('./postform') -%>
             <%- include('./post') -%>
         </div>
-        <div class="col-lg-4 col-md-2"></div>
+        <div class="col-lg-4">
+            <div class="searchContainer fixed-top">
+                <div class='searchFormContainer'>
+                    <button>
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <input type='text' placeholder="Search Twitter"></input>
+                </div>
+            </div>
+            <div class="followContainer px-3 mt-3">
+                <div class="followFormContainer">
+                    <div id="followTittle" class="p-4">
+                        <h1>Who to follow</h1>
+                    </div>
+                    <ul class="followList">
+                        <% for(let user of users) {%>
+                            <% const displayName = user.firstName + " " + user.lastName; %>
+                            <li class="followUser">
+                                <div class="followUserContainer">
+                                    <div class='followUserImage'>
+                                        <img  class="rounded-circle"
+                                        alt="profile picture"
+                                        width="45"
+                                        height="45" src="<%= user.avatar %> ">
+                                    </div>
+                                    <div class="followContent">
+                                        <a href="#"><%= displayName %> </a>
+                                        <span class='username'>@<%= user.username %></span>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary" id="followButton">
+                                    Follow
+                                  </button>
+                            </li>
+                            <% } %>  
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <%- include('../layout/footer') -%>

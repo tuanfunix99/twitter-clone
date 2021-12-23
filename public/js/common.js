@@ -3,16 +3,26 @@ $(document).ready(function () {
   const btnpost = $("#postButton");
   const textarea = $("#postTextarea");
   const postContainer = $("#postContainer");
-  const spinner = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Loading...`;
+  const spinner = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Tweet...`;
   let value = "";
 
   socket.on("respone", (postData) => {
     btnpost.remove(".spinner-border");
-    btnpost.text("Post");
+    btnpost.text("Tweet");
     btnpost.prop("disabled", true);
     textarea.val("");
     const newPost = createPost(postData);
     postContainer.prepend(newPost);
+  });
+
+  $(window).scroll(function () {
+    const top = $(window).scrollTop();
+    console.log(top);
+    if (top > 16) {
+      $(".titleContainer").css("background", "#ffffffd9");
+    } else {
+      $(".titleContainer").css("background", "#ffffffff");
+    }
   });
 
   $(textarea).keyup(function (e) {
@@ -27,12 +37,9 @@ $(document).ready(function () {
   btnpost.click(function (e) {
     e.preventDefault();
     socket.emit("mess", "hello");
-    if (value.trim().length === 0) {
-      alert("empty");
-      return;
-    }
     btnpost.text("");
     btnpost.append(spinner);
+    btnpost.prop("disabled", true);
     const data = {
       content: value,
     };
