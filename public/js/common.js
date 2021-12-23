@@ -1,6 +1,7 @@
 $(document).ready(function () {
   const socket = io();
   const btnpost = $("#postButton");
+  const btnfollow = $(".followButton");
   const textarea = $("#postTextarea");
   const postContainer = $("#postContainer");
   const spinner = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Tweet...`;
@@ -17,12 +18,19 @@ $(document).ready(function () {
 
   $(window).scroll(function () {
     const top = $(window).scrollTop();
-    console.log(top);
     if (top > 16) {
       $(".titleContainer").css("background", "#ffffffd9");
     } else {
       $(".titleContainer").css("background", "#ffffffff");
     }
+  });
+
+  btnfollow.click(function (e) {
+    e.preventDefault();
+    const username = $(this).attr("data-name");
+    $.post("/api/follow", { username });
+    const text = $(this).text().trim();
+    text === "Follow" ? $(this).text("Following") : $(this).text("Follow");
   });
 
   $(textarea).keyup(function (e) {

@@ -22,7 +22,7 @@
             <%- include('./postform') -%>
             <%- include('./post') -%>
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-4 third-col">
             <div class="searchContainer fixed-top">
                 <div class='searchFormContainer'>
                     <button>
@@ -52,9 +52,9 @@
                                         <span class='username'>@<%= user.username %></span>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary" id="followButton">
-                                    Follow
-                                  </button>
+                                    <button data-name=<%= user.username %>  type="submit" class="btn btn-primary followButton">
+                                        Follow
+                                      </button>                               
                             </li>
                             <% } %>  
                     </ul>

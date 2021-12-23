@@ -1,7 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const log = require("./logger");
-const { authRoutes, postApiRoutes, mainRoutes } = require("./routes/index.routes");
+const { authRoutes, postApiRoutes, mainRoutes, userApiRoutes } = require("./routes/index.routes");
 const path = require("path");
 const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
@@ -45,6 +45,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(mainRoutes);
 app.use(authRoutes);
 app.use('/api', postApiRoutes);
+app.use('/api', userApiRoutes);
 
 httpServer.listen(PORT, () => {
   log.info("listening on port " + PORT);

@@ -49,7 +49,19 @@ const userSchema = new Schema({
   avatar:{
     type: String,
     default: "/images/profilePic.jpeg"
-  }
+  },
+  following: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'User'
+    }
+  ],
+  follower:[
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'User'
+    }
+  ]
 });
 
 userSchema.methods.setToken = function(){

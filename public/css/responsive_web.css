@@ -2,4 +2,7 @@
   a#search {
     display: block;
   }
+  .third-col{
+    display: none;
+  }
 }
