@@ -7,6 +7,39 @@ $(document).ready(function () {
   const spinner = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Tweet...`;
   let value = "";
 
+  const card = `<div id="card">
+  <div class="description">
+    <div class="line line-1"></div>
+    <div class="line line-2"></div>
+    <div class="line line-3"></div>
+  </div>
+</div>
+`;
+
+  socket.on("follow", (posts) => {
+    console.log(posts);
+    for (let post of posts) {
+      const newPost = createPost(post);
+      postContainer.prepend(newPost);
+    }
+    document.getElementById("postContainer").removeChild(document.getElementById('card'));
+    btnfollow.prop("disabled", false);
+  });
+
+  socket.on("unfollow", (posts) => {
+    console.log(posts);
+    for (let child of postContainer.children()) {
+      if (posts.includes(child.getAttribute("data-postid"))) {
+        const ele = document.querySelector([
+          `[data-postid='${child.getAttribute("data-postid")}']`,
+        ]);
+        document.getElementById("postContainer").removeChild(ele);
+      }
+    }
+    document.getElementById("postContainer").removeChild(document.getElementById('card')); 
+    btnfollow.prop("disabled", false); 
+  });
+
   socket.on("respone", (postData) => {
     btnpost.remove(".spinner-border");
     btnpost.text("Tweet");
@@ -27,10 +60,15 @@ $(document).ready(function () {
 
   btnfollow.click(function (e) {
     e.preventDefault();
+    btnfollow.prop("disabled", true);
+    postContainer.prepend(card);
     const username = $(this).attr("data-name");
     $.post("/api/follow", { username });
     const text = $(this).text().trim();
     text === "Follow" ? $(this).text("Following") : $(this).text("Follow");
+    text === "Follow"
+      ? $(this).prop("title", "Unfollow")
+      : $(this).prop("title", "Follow");
   });
 
   $(textarea).keyup(function (e) {
@@ -56,10 +94,10 @@ $(document).ready(function () {
 });
 
 function createPost(post) {
-  const { postedBy, content, createdAt } = post;
+  const { postedBy, content, createdAt, _id } = post;
   const displayName = postedBy.firstName + " " + postedBy.lastName;
   const time = moment(new Date(createdAt)).fromNow();
-  return `<div class='post p-2'>
+  return `<div class='post p-2' data-postId=${_id}>
   <div class='mainContentContainer'>
       <div class='userImageContainer'>
           <img  class="rounded-circle"

@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
 const { Error } = require("mongoose");
 const dotenv = require("dotenv");
+const generator = require('generate-password');
 dotenv.config();
 
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
@@ -66,7 +67,11 @@ const userSchema = new Schema({
 
 userSchema.methods.setToken = function(){
   const user = this;
-  const token = jwt.sign({ _id: user._id }, PRIVATE_KEY, { expiresIn: '24h' });
+  const key_secret = generator.generate({
+    length: 15,
+    symbols: true
+  })
+  const token = jwt.sign({ _id: user._id, key_secret }, PRIVATE_KEY, { expiresIn: '24h' });
   return token;
 }
 

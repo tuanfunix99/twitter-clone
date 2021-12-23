@@ -1,9 +1,10 @@
 <div class="px-0" id="postContainer">
+    <% let count = 0 %> 
     <% for(let post of posts) {%>
         <%  const { postedBy, content, time } = post %>
         <% const displayName = postedBy.firstName + " " + postedBy.lastName; %>
-        
-        <div class='post p-2'>
+
+        <div class='post p-2' data-postId="<%= post._id %>">
             <div class='mainContentContainer'>
                 <div class='userImageContainer'>
                     <img  class="rounded-circle"

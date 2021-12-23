@@ -8,7 +8,8 @@
       <% if(alert) {%>
         <div class="alert alert-success" role="alert">
           <p class="m-0">We send a token to verify your email.</p>
-          <p class="m-0">Please check <a href="https://mail.google.com/">your email</a> from minggu220399@gmail.com</p>
+          <p class="m-0">Please check <a href="https://mail.google.com/">your email</a> from minggu</p>
+          <p class="m-0">(Check spam if not find email)</p>
           <p class="m-0">Note: Token available in 24 hours</p>
         </div>
         <% } %>  
@@ -30,7 +31,7 @@
           </div>
           <% } %>
         <div class="d-grid gap-2">
-          <button class="btn btn-DeepSkyBlue" type="submit">Login</button>
+          <button id="btnLogin" class="btn btn-DeepSkyBlue" type="submit">Login</button>
         </div>
         <div class="text-center mt-2">
           <a href="register" class="link-primary">Need an account? Register here</a>
@@ -40,5 +41,13 @@
   </div>
 </div>
 <%- include('../layout/footer') -%>
+<script>
+  const btn = $('#btnLogin');
+  btn.click(function(e) {
+    setTimeout(function() {
+      btn.prop("disabled", true);
+    }, 10)
+  })
+</script>
 </body>
 </html>

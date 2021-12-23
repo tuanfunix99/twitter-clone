@@ -1,6 +1,6 @@
 :root {
   --blue: #1fa2f1;
-  --blueblack: #1587cb;
+  --blueblack: #2f9bdd;
   --bluehover: #d4edff;
   --lightGrey: rgb(230, 236, 240);
   --spacing: 15px;
@@ -136,7 +136,7 @@ nav .blue {
 
 .postButtonContainer:hover {
   border-radius: 50%;
-  background: var(--bluehover);
+  background: #5cb9f0;
 }
 
 .postButtonContainer:hover i {
@@ -256,6 +256,59 @@ a#search {
   background: var(--blue);
   box-shadow: none;
   transition: 0.4s;
+}
+
+#card {
+  width: 100%;
+  background: #fafafa;
+  padding: 30px;
+  border-radius: 10px;
+  border: 1px solid #fafafa;
+}
+
+#card .description {
+  margin: 25px 0;
+}
+
+.description .line {
+  background: #656871;
+  border-radius: 10px;
+  height: 13px;
+  margin: 10px 0;
+  overflow: hidden;
+  position: relative;
+}
+.description .line-1 {
+  width: calc(100% - 15%);
+}
+.description .line-3 {
+  width: calc(100% - 40%);
+}
+
+.description .line::before{
+  position: absolute;
+  content: "";
+  height: 100%;
+  width: 100%;
+  background-image: linear-gradient(
+    to right,
+    #656871 0%,
+    #888b94 20%,
+    #656871 40%,
+    #656871 100%
+  );
+  background-repeat: no-repeat;
+  background-size: 450px 400px;
+  animation: shimmer 1s linear infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -450px 0;
+  }
+  100% {
+    background-position: 450px 0;
+  }
 }
 
 /* width */
