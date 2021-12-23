@@ -50,7 +50,6 @@ exports.follow = async (req, res, next) => {
 exports.uploadAvatar = async (req, res, next) => {
   const { _id } = req.user;
   const { filename } = req.file;
-  console.log(filename);
   try {
     if(!filename){
       throw new Error('error');

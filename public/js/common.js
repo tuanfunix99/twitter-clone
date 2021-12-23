@@ -64,12 +64,12 @@ $(document).ready(function () {
     $('body').addClass('scroll-none')
   })
 
-  $('.uploadContainer').click(function (e){
-    $('.uploadContainer').removeClass('show');
-    $('body').removeClass('scroll-none')
-  })
+  // $('.uploadContainer').click(function (e){
+  //   $('.uploadContainer').removeClass('show');
+  //   $('body').removeClass('scroll-none')
+  // })
 
-  
+
   btnfollow.click(function (e) {
     e.preventDefault();
     btnfollow.prop("disabled", true);
