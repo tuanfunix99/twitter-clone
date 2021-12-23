@@ -56,7 +56,6 @@ exports.uploadAvatar = async (req, res, next) => {
     }
     const user = await User.findById(_id);
     if(user.avatar !== '/images/profilePic.jpeg'){
-      console.log(path.join(__dirname, 'public', user.avatar));
       fs.unlink(path.join(__dirname, '../../public', user.avatar), function() {
         console.log('Image deleted');
     });
