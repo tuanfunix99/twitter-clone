@@ -29,11 +29,13 @@ $(document).ready(function () {
 
   socket.on("upload-avatar", (respone) => {
     const { _id, avatar } = respone;
-    const ele = document.querySelector([
+    const eles = document.querySelectorAll([
       `[data-image='img${_id.toString().trim()}png']`,
     ]);
-    if(ele){
-      ele.src = avatar;
+    if(eles && eles.length > 0) {
+      for(let ele of eles){
+        ele.src = avatar;
+      }
     }
   })
 

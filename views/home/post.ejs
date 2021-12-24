@@ -7,7 +7,9 @@
         <div class='post p-2' data-postId="<%= post._id %>">
             <div class='mainContentContainer'>
                 <div class='userImageContainer'>
-                    <img  class="rounded-circle"
+                    <img
+                    data-image="<%= 'img' + postedBy._id + 'png' %>"  
+                    class="rounded-circle"
                     alt="avatar"
                     width="40"
                     height="40" src='<%= postedBy.avatar %> '>
