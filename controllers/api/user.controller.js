@@ -11,19 +11,17 @@ exports.follow = async (req, res, next) => {
     "username firstName lastName avatar"
   );
   const io = req.app.get("socketIo");
-
   try {
     const userFollowing = await User.findOne({ username: username });
     const user = await User.findById(_id);
     const following = user.following.find(
       (f) => f._id.toString() === userFollowing._id.toString()
     );
-
     if (!following) {
       posts = posts.filter(
         (post) => post.postedBy._id.toString() === userFollowing._id.toString()
       );
-      io.emit("follow", posts);
+      res.status(200).send({ posts, follow: true });
       user.following.push(userFollowing._id);
       userFollowing.follower.push(user._id);
       await user.save();
@@ -32,7 +30,7 @@ exports.follow = async (req, res, next) => {
       posts = posts
         .filter((post) => post.postedBy._id.toString() === following.toString())
         .map((post) => post._id.toString());
-      io.emit("unfollow", posts);
+      res.status(200).send({ posts, follow: false });
       user.following = user.following.filter(
         (f) => f._id.toString() !== following.toString()
       );

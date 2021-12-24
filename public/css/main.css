@@ -84,6 +84,11 @@ nav .blue {
   background: inherit;
 }
 
+#uploadButton:focus{
+  border: 0px;
+  outline: 0px;
+}
+
 #uploadButton:hover i {
   color: rgb(104, 103, 103);
 }
@@ -91,7 +96,7 @@ nav .blue {
 .uploadContainer {
   position: absolute;
   width: 100%;
-  height: 100%;
+  height: 1000px;
   background: #00000095;
   z-index: 2000;
   display: flex;
@@ -159,10 +164,26 @@ nav .blue {
   flex: 1;
 }
 
+.header{
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.userInfo {
+  margin-left: 10px;
+  padding-top: 5px;
+}
+
+.displayName{
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
 .postFooter {
   display: flex;
   justify-content: space-between;
   padding-right: 50px;
+  margin-top: 10px;
 }
 
 .postButtonContainer button {
@@ -396,5 +417,77 @@ a#search {
 
 #imagePreview{
   display: block;
+  max-width: 100%;
+}
+
+.editorContainer{
+  position: absolute;
+  width: 100%;
+  height: 1000px;
+  background: #00000095;
+  z-index: 2000;
+  display: flex;
+  align-items: flex-start;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.5s;
+}
+
+.editorContainer.show{
+  opacity: 1;
+  visibility: visible;
+  transition: 0.5s;
+}
+
+.editorContainer h1{
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 15px;
+}
+
+.note-editing-area{
+  height: 300px;
+}
+
+.buttonEditorContainer{
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-fullscreen{
+  display: none;
+}
+
+.btn-codeview{
+  display: none;
+}
+
+#editButton {
+  border: 0px;
+  background: inherit;
+}
+
+#editButton:focus{
+  border: 0px;
+  outline: 0px;
+}
+
+#editButton:hover i {
+  color: rgb(104, 103, 103);
+}
+
+.postBody p{
+  max-width: 100%;
+}
+
+.postBody iframe{
+  max-width: 100%;
+}
+
+.postBody span{
+  max-width: 100%;
+}
+
+.postBody image{
   max-width: 100%;
 }

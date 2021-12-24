@@ -1,0 +1,40 @@
+<div class="uploadContainer">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 mx-auto">
+        <div class="boxUpload">
+          <form method="post" enctype="multipart/form-data">
+            <h1>Upload a new profile picture</h1>
+            <div class="mb-3">
+              <input
+                id="input-upload"
+                type="file"
+                class="form-control"
+                name="avatar"
+              />
+            </div>
+            <div class="imagePreviewContainer">
+              <img id="imagePreview" src="#" alt="#" />
+            </div>
+            <div class="buttonUploadContainer mt-2">
+              <button
+                type="submit"
+                id="btn-upload-cancel"
+                class="btn btn-secondary"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                id="btn-submit-upload"
+                class="btn btn-primary mx-1"
+              >
+                Upload
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

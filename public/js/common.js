@@ -23,7 +23,7 @@ $(document).ready(function () {
   </div>
   `;
 
-  const spinner = function (mess) {
+  const spinner = (mess) => {
     return `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>${mess}`;
   };
 
@@ -32,41 +32,14 @@ $(document).ready(function () {
     const eles = document.querySelectorAll([
       `[data-image='img${_id.toString().trim()}png']`,
     ]);
-    if(eles && eles.length > 0) {
-      for(let ele of eles){
+    if (eles && eles.length > 0) {
+      for (let ele of eles) {
         ele.src = avatar;
       }
     }
-  })
-
-  socket.on("follow", (posts) => {
-    console.log(posts);
-    for (let post of posts) {
-      const newPost = createPost(post);
-      postContainer.prepend(newPost);
-    }
-    document
-      .getElementById("postContainer")
-      .removeChild(document.getElementById("card"));
-    btnfollow.prop("disabled", false);
   });
 
-  socket.on("unfollow", (posts) => {
-    for (let child of postContainer.children()) {
-      if (posts.includes(child.getAttribute("data-postid"))) {
-        const ele = document.querySelector([
-          `[data-postid='${child.getAttribute("data-postid")}']`,
-        ]);
-        document.getElementById("postContainer").removeChild(ele);
-      }
-    }
-    document
-      .getElementById("postContainer")
-      .removeChild(document.getElementById("card"));
-    btnfollow.prop("disabled", false);
-  });
-
-  socket.on("respone", (postData) => {
+  socket.on("post", (postData) => {
     btnpost.remove(".spinner-border");
     btnpost.text("Tweet");
     btnpost.prop("disabled", true);
@@ -165,12 +138,37 @@ $(document).ready(function () {
     btnfollow.prop("disabled", true);
     postContainer.prepend(card);
     const username = $(this).attr("data-name");
-    $.post("/api/follow", { username });
     const text = $(this).text().trim();
     text === "Follow" ? $(this).text("Following") : $(this).text("Follow");
     text === "Follow"
       ? $(this).prop("title", "Unfollow")
       : $(this).prop("title", "Follow");
+    $.post("/api/follow", { username }, function (result) {
+      const { posts, follow } = result;
+      if (follow) {
+        for (let post of posts) {
+          const newPost = createPost(post);
+          postContainer.prepend(newPost);
+        }
+        document
+          .getElementById("postContainer")
+          .removeChild(document.getElementById("card"));
+        btnfollow.prop("disabled", false);
+      } else {
+        for (let child of postContainer.children()) {
+          if (posts.includes(child.getAttribute("data-postid"))) {
+            const ele = document.querySelector([
+              `[data-postid='${child.getAttribute("data-postid")}']`,
+            ]);
+            document.getElementById("postContainer").removeChild(ele);
+          }
+        }
+        document
+          .getElementById("postContainer")
+          .removeChild(document.getElementById("card"));
+        btnfollow.prop("disabled", false);
+      }
+    });
   });
 
   $(textarea).keyup(function (e) {
@@ -184,7 +182,6 @@ $(document).ready(function () {
 
   btnpost.click(function (e) {
     e.preventDefault();
-    socket.emit("mess", "hello");
     btnpost.text("");
     btnpost.append(spinner("Tweet..."));
     btnpost.prop("disabled", true);
@@ -201,18 +198,24 @@ function createPost(post) {
   const time = moment(new Date(createdAt)).fromNow();
   return `<div class='post p-2' data-postId=${_id}>
   <div class='mainContentContainer'>
-      <div class='userImageContainer'>
-          <img  class="rounded-circle"
-          alt="profile picture"
-          width="40"
-          height="40" src='${postedBy.avatar}'>
-      </div>
       <div class='postContentContainer mx-2'>
-          <div class='header'>
-              <a href='/profile/${postedBy.username}' class='displayName'>${displayName}</a>
-              <span class='username'>@${postedBy.username}</span> | 
-              <span class='date'>${time}</span>
+          <div class="header">
+          <div class="userImageContainer">
+            <img
+              data-image="${"img" + postedBy._id + "png"}"
+              class="rounded-circle"
+              alt="avatar"
+              width="40"
+              height="40"
+              src="<%= postedBy.avatar %> "
+            />
           </div>
+          <div class="userInfo">
+            <a href="#" class="displayName">${displayName}</a>
+            <span class="username">@${postedBy.username}</span> |
+            <span class="date">${time}</span>
+          </div>
+        </div>
           <div class='postBody'>
               <span>${content}</span>
           </div>
