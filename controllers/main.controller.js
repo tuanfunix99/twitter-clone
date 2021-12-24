@@ -16,7 +16,10 @@ exports.main = async (req, res) => {
     "username firstName lastName avatar"
   );
   posts = posts
-    .filter((post) => user_main.following.includes(post.postedBy._id))
+    .filter((post) => {
+      if(user_main.following.includes(post.postedBy._id) ||
+        user_main._id.toString() === post.postedBy._id.toString()) return post;
+    })
     .map((post) => {
       post.time = moment(new Date(post.createdAt)).fromNow();
       return post;
