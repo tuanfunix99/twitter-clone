@@ -62,7 +62,7 @@ $(document).ready(function () {
     btnsubmitupload.prop("disabled", true);
     btnuploadcancel.prop("disabled", true);
     btnsubmitupload.text("");
-    btnsubmitupload.append(spinner("Updating..."));
+    btnsubmitupload.append(spinner("Uploading..."));
     if (!upload) {
       alert("Image empty");
       btnsubmitupload.prop("disabled", false);

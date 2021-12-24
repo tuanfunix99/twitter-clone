@@ -27,7 +27,6 @@ let transporter = nodemailer.createTransport({
 exports.getLogin = (req, res, next) => {
   const title = "Login";
   const alert = req.query['new-account'];
-  console.log(alert);
   res
     .status(200)
     .render("auth/login", {
@@ -57,6 +56,7 @@ exports.postLogin = async (req, res, next) => {
       });
       throw error; 
     }
+    console.log(user);
     req.session.user = {
       _id: user._id,
       isActive: user.isActive,

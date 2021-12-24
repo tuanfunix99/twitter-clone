@@ -4,7 +4,7 @@ const moment = require("moment");
 
 exports.main = async (req, res) => {
   const title = "Home";
-  const { avatar } = req.user;
+  const { avatar, username } = req.user;
   const user_main = await User.findById(req.user._id);
   let users = await User.find({ isActive: true });
   users = users
@@ -25,5 +25,5 @@ exports.main = async (req, res) => {
       (p1, p2) =>
         new Date(p2.createdAt).getTime() - new Date(p1.createdAt).getTime()
     );
-  res.status(200).render("home", { title, avatar, posts, users });
+  res.status(200).render("home", { title, avatar, posts, users, username });
 };

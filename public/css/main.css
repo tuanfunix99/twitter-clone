@@ -37,7 +37,7 @@ nav a {
   display: flex;
   align-items: center;
   justify-content: center;
-  text-decoration: none;
+  text-decoration: none !important;
   transition: 0.3s;
 }
 
@@ -99,17 +99,17 @@ nav .blue {
   height: 1000px;
   background: #00000095;
   z-index: 2000;
-  display: flex;
+  display: none;
   align-items: flex-start;
   opacity: 0;
   visibility: hidden;
-  transition: 0.5s;
+  transition: 0.7s ease-in-out;
 }
 
 .uploadContainer.show{
+  display: flex;
   opacity: 1;
   visibility: visible;
-  transition: 0.5s;
 }
 
 .buttonUploadContainer{
@@ -426,7 +426,7 @@ a#search {
   height: 1000px;
   background: #00000095;
   z-index: 2000;
-  display: flex;
+  display: none;
   align-items: flex-start;
   opacity: 0;
   visibility: hidden;
@@ -434,6 +434,7 @@ a#search {
 }
 
 .editorContainer.show{
+  display: flex;
   opacity: 1;
   visibility: visible;
   transition: 0.5s;
@@ -488,6 +489,6 @@ a#search {
   max-width: 100%;
 }
 
-.postBody image{
+.postBody img{
   max-width: 100%;
 }
