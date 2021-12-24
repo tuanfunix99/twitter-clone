@@ -7,7 +7,7 @@ const fileStorge = multer.diskStorage({
     callback(null, path.join(__dirname, "../uploads/avatar"));
   },
   filename: (req, file, callback) => {
-    callback(null, new Date().getTime() + '-' + uuidv4());
+    callback(null, new Date().getTime() + '-' + uuidv4() + '.png');
   },
 });
 

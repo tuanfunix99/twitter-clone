@@ -27,7 +27,6 @@ $(document).ready(function () {
     return `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>${mess}`;
   };
 
-
   socket.on("follow", (posts) => {
     console.log(posts);
     for (let post of posts) {
@@ -76,12 +75,10 @@ $(document).ready(function () {
 
   btnsubmitupload.click(function (e) {
     e.preventDefault();
-    setTimeout(function () {
-      btnsubmitupload.prop("disabled", true);
-      btnuploadcancel.prop("disabled", true);
-      btnsubmitupload.text("");
-      btnsubmitupload.append(spinner("Updating..."));
-    }, 10);
+    btnsubmitupload.prop("disabled", true);
+    btnuploadcancel.prop("disabled", true);
+    btnsubmitupload.text("");
+    btnsubmitupload.append(spinner("Updating..."));
     if (!upload) {
       alert("Image empty");
       btnsubmitupload.prop("disabled", false);
