@@ -1,21 +1,45 @@
+let cropper;
+
 $(document).ready(function () {
   const socket = io();
   const btnpost = $("#postButton");
   const btnfollow = $(".followButton");
   const btnupload = $("#uploadButton");
+  const btnuploadcancel = $("#btn-upload-cancel");
+  const btnsubmitupload = $("#btn-submit-upload");
+  const inputUpload = $("#input-upload");
+  const imagePreview = document.getElementById("imagePreview");
   const textarea = $("#postTextarea");
   const postContainer = $("#postContainer");
-  const spinner = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Tweet...`;
   let value = "";
+  let upload = null;
 
   const card = `<div id="card">
   <div class="description">
-    <div class="line line-1"></div>
-    <div class="line line-2"></div>
-    <div class="line line-3"></div>
+  <div class="line line-1"></div>
+  <div class="line line-2"></div>
+  <div class="line line-3"></div>
   </div>
-</div>
-`;
+  </div>
+  `;
+
+  const spinner = function (mess) {
+    return `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>${mess}`;
+  };
+
+  function dataURLtoFile(dataurl, filename) {
+    let arr = dataurl.split(","),
+      mime = arr[0].match(/:(.*?);/)[1],
+      bstr = atob(arr[1]),
+      n = bstr.length,
+      u8arr = new Uint8Array(n);
+
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+
+    return new File([u8arr], filename, { type: mime });
+  }
 
   socket.on("follow", (posts) => {
     console.log(posts);
@@ -23,7 +47,9 @@ $(document).ready(function () {
       const newPost = createPost(post);
       postContainer.prepend(newPost);
     }
-    document.getElementById("postContainer").removeChild(document.getElementById('card'));
+    document
+      .getElementById("postContainer")
+      .removeChild(document.getElementById("card"));
     btnfollow.prop("disabled", false);
   });
 
@@ -37,8 +63,10 @@ $(document).ready(function () {
         document.getElementById("postContainer").removeChild(ele);
       }
     }
-    document.getElementById("postContainer").removeChild(document.getElementById('card')); 
-    btnfollow.prop("disabled", false); 
+    document
+      .getElementById("postContainer")
+      .removeChild(document.getElementById("card"));
+    btnfollow.prop("disabled", false);
   });
 
   socket.on("respone", (postData) => {
@@ -59,16 +87,81 @@ $(document).ready(function () {
     }
   });
 
-  btnupload.click(function(e) {
-    $('.uploadContainer').addClass('show');
-    $('body').addClass('scroll-none')
-  })
+  btnsubmitupload.click(function (e) {
+    e.preventDefault();
+    btnsubmitupload.text("");
+    btnsubmitupload.append(spinner("Updating..."));
+    setTimeout(function () {
+      btnsubmitupload.prop("disabled", true);
+      btnuploadcancel.prop("disabled", true);
+    }, 10);
+    if (!upload) {
+      alert("Image empty");
+      btnsubmitupload.prop("disabled", false);
+      btnuploadcancel.prop("disabled", false);
+      return;
+    }
+    let canvas = cropper.getCroppedCanvas();
+    if (!canvas) {
+      alert("Could not upload image.");
+      return;
+    }
+    canvas.toBlob((blob) => {
+      const data = new FormData();
+      data.append("avatar", blob);
+      $.ajax({
+        type: "POST",
+        url: "/api/upload-avatar",
+        data: data,
+        contentType: false,
+        processData: false,
+        success: () => {
+          window.location.reload();
+        },
+      });
+    });
+  });
 
-  // $('.uploadContainer').click(function (e){
-  //   $('.uploadContainer').removeClass('show');
-  //   $('body').removeClass('scroll-none')
-  // })
+  btnupload.click(function (e) {
+    $(".uploadContainer").addClass("show");
+    $("body").addClass("scroll-none");
+  });
 
+  btnuploadcancel.click(function (e) {
+    e.preventDefault();
+    $(".uploadContainer").removeClass("show");
+    $("body").removeClass("scroll-none");
+  });
+
+  inputUpload.change(function (e) {
+    const types = ["image/jpeg", "image/jpg", "image/png"];
+    upload = e.target.files[0];
+    console.log(upload);
+    if (!types.includes(upload.type)) {
+      alert("File not image");
+      inputUpload.val("");
+      $(".imagePreviewContainer").css("display", "none");
+      return;
+    } else if (upload.size > 2000000) {
+      alert("File too large, file small 2MB");
+      inputUpload.val("");
+      $(".imagePreviewContainer").css("display", "none");
+      return;
+    }
+    let reader = new FileReader();
+    reader.onload = (e) => {
+      $(".imagePreviewContainer").css("display", "block");
+      imagePreview.src = e.target.result;
+      if (cropper !== undefined) {
+        cropper.destroy();
+      }
+      cropper = new Cropper(imagePreview, {
+        aspectRatio: 1 / 1,
+        background: false,
+      });
+    };
+    reader.readAsDataURL(upload);
+  });
 
   btnfollow.click(function (e) {
     e.preventDefault();
@@ -96,7 +189,7 @@ $(document).ready(function () {
     e.preventDefault();
     socket.emit("mess", "hello");
     btnpost.text("");
-    btnpost.append(spinner);
+    btnpost.append(spinner("Tweet..."));
     btnpost.prop("disabled", true);
     const data = {
       content: value,

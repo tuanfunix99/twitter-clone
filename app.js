@@ -12,8 +12,6 @@ const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
 const http = require("http");
 const socketIO = require("socket.io");
-const multer = require("multer");
-const { v4: uuidv4 } = require("uuid");
 require("./utils/database");
 
 dotenv.config();
@@ -21,27 +19,6 @@ dotenv.config();
 const PORT = process.env.PORT || 5000;
 const SECRET = process.env.SECRET || "secret";
 const MONGO_URL = process.env.MONGO_URL || "";
-
-const fileStorge = multer.diskStorage({
-  destination: (req, file, callback) => {
-    callback(null, path.join(__dirname, "public", "uploads"));
-  },
-  filename: (req, file, callback) => {
-    callback(null, uuidv4());
-  },
-});
-
-const fileFilter = (req, file, callback) => {
-  if (
-    file.mimetype === "image/jpg" ||
-    file.mimetype === "image/png" ||
-    file.mimetype === "image/jpeg"
-  ) {
-    callback(null, true);
-  } else {
-    callback(null, false);
-  }
-};
 
 const app = express();
 const httpServer = http.createServer(app);
@@ -68,9 +45,7 @@ app.use(
 app.set("view engine", "ejs");
 app.set("views", "views");
 app.use(express.static(path.join(__dirname, "public")));
-app.use(
-  multer({ storage: fileStorge, fileFilter: fileFilter }).single("avatar")
-);
+app.use(express.static(path.join(__dirname, "uploads")));
 
 app.use(mainRoutes);
 app.use(authRoutes);

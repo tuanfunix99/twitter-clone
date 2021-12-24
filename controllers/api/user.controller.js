@@ -56,11 +56,11 @@ exports.uploadAvatar = async (req, res, next) => {
     }
     const user = await User.findById(_id);
     if(user.avatar !== '/images/profilePic.jpeg'){
-      fs.unlink(path.join(__dirname, '../../public', user.avatar), function() {
+      fs.unlink(path.join(__dirname, '../../uploads', user.avatar), function() {
         console.log('Image deleted');
     });
     }
-    user.avatar = '/uploads/' + filename;
+    user.avatar = '/avatar/' + filename;
     await user.save();
     res.redirect("/"); 
   } catch (error) {
