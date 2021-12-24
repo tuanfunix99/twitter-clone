@@ -249,7 +249,7 @@ a#search {
   font-size: 22px;
 }
 
-.followList {
+#followList {
   list-style: none;
   padding: 0px 0px;
 }

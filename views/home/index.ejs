@@ -59,13 +59,15 @@
                     <div id="followTittle" class="p-4">
                         <h1>Who to follow</h1>
                     </div>
-                    <ul class="followList">
+                    <ul id="followList">
                         <% for(let user of users) {%>
                             <% const displayName = user.firstName + " " + user.lastName; %>
                             <li class="followUser">
                                 <div class="followUserContainer">
                                     <div class='followUserImage'>
-                                        <img  class="rounded-circle"
+                                        <img  
+                                        data-image="<%= 'img' + user._id + 'png' %>"
+                                        class="rounded-circle"
                                         alt="avatar"
                                         width="45"
                                         height="45" src="<%= user.avatar %> ">

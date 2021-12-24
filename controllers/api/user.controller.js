@@ -50,6 +50,7 @@ exports.follow = async (req, res, next) => {
 exports.uploadAvatar = async (req, res, next) => {
   const { _id } = req.user;
   const { filename } = req.file;
+  const io = req.app.get("socketIo");
   try {
     if(!filename){
       throw new Error('error');
@@ -61,6 +62,7 @@ exports.uploadAvatar = async (req, res, next) => {
     });
     }
     user.avatar = '/avatar/' + filename;
+    io.emit('upload-avatar', { _id, avatar: user.avatar });
     await user.save();
     res.redirect("/"); 
   } catch (error) {

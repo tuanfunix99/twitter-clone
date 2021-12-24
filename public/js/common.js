@@ -27,6 +27,16 @@ $(document).ready(function () {
     return `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>${mess}`;
   };
 
+  socket.on("upload-avatar", (respone) => {
+    const { _id, avatar } = respone;
+    const ele = document.querySelector([
+      `[data-image='img${_id.toString().trim()}png']`,
+    ]);
+    if(ele){
+      ele.src = avatar;
+    }
+  })
+
   socket.on("follow", (posts) => {
     console.log(posts);
     for (let post of posts) {
@@ -40,7 +50,6 @@ $(document).ready(function () {
   });
 
   socket.on("unfollow", (posts) => {
-    console.log(posts);
     for (let child of postContainer.children()) {
       if (posts.includes(child.getAttribute("data-postid"))) {
         const ele = document.querySelector([
