@@ -27,19 +27,6 @@ $(document).ready(function () {
     return `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>${mess}`;
   };
 
-  function dataURLtoFile(dataurl, filename) {
-    let arr = dataurl.split(","),
-      mime = arr[0].match(/:(.*?);/)[1],
-      bstr = atob(arr[1]),
-      n = bstr.length,
-      u8arr = new Uint8Array(n);
-
-    while (n--) {
-      u8arr[n] = bstr.charCodeAt(n);
-    }
-
-    return new File([u8arr], filename, { type: mime });
-  }
 
   socket.on("follow", (posts) => {
     console.log(posts);
@@ -89,16 +76,18 @@ $(document).ready(function () {
 
   btnsubmitupload.click(function (e) {
     e.preventDefault();
-    btnsubmitupload.text("");
-    btnsubmitupload.append(spinner("Updating..."));
     setTimeout(function () {
       btnsubmitupload.prop("disabled", true);
       btnuploadcancel.prop("disabled", true);
+      btnsubmitupload.text("");
+      btnsubmitupload.append(spinner("Updating..."));
     }, 10);
     if (!upload) {
       alert("Image empty");
       btnsubmitupload.prop("disabled", false);
       btnuploadcancel.prop("disabled", false);
+      btnsubmitupload.text("Upload");
+      btnpost.remove(".spinner-border");
       return;
     }
     let canvas = cropper.getCroppedCanvas();
