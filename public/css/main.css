@@ -6,7 +6,7 @@
   --spacing: 15px;
 }
 
-body.scroll-none{
+body.scroll-none {
   overflow-y: hidden;
 }
 
@@ -70,6 +70,7 @@ nav .blue {
   padding: 0 var(--spacing);
   display: flex;
   align-items: center;
+  justify-content: space-between;
   flex-shrink: 0;
   background: white;
 }
@@ -79,17 +80,17 @@ nav .blue {
   flex-direction: column;
 }
 
-#uploadButton {
+.uploadButton {
   border: 0px;
   background: inherit;
 }
 
-#uploadButton:focus{
+.uploadButton:focus {
   border: 0px;
   outline: 0px;
 }
 
-#uploadButton:hover i {
+.uploadButton:hover i {
   color: rgb(104, 103, 103);
 }
 
@@ -106,13 +107,13 @@ nav .blue {
   transition: 0.7s ease-in-out;
 }
 
-.uploadContainer.show{
+.uploadContainer.show {
   display: flex;
   opacity: 1;
   visibility: visible;
 }
 
-.buttonUploadContainer{
+.buttonUploadContainer {
   display: flex;
   justify-content: flex-end;
 }
@@ -164,7 +165,7 @@ nav .blue {
   flex: 1;
 }
 
-.header{
+.header {
   display: flex;
   margin-bottom: 10px;
 }
@@ -174,7 +175,7 @@ nav .blue {
   padding-top: 5px;
 }
 
-.displayName{
+.displayName {
   font-weight: 500;
   text-transform: capitalize;
 }
@@ -263,6 +264,10 @@ a#search {
   background: #fafafa;
   border-radius: 10px;
   box-shadow: 0px 0px 2px 1px #0f0f0f0d;
+}
+
+#followTitle {
+  padding: 15px 20px;
 }
 
 .followFormContainer h1 {
@@ -395,32 +400,31 @@ a#search {
   background: rgb(175, 175, 175);
 }
 
-
 .boxUpload {
-    background: white;
-    padding: 23px;
-    width: 100%;
+  background: white;
+  padding: 23px;
+  width: 100%;
 }
 
 .boxUpload h1 {
-    font-size: 20px;
-    font-weight: 500;
-    margin-bottom: 15px;
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 15px;
 }
 
-.imagePreviewContainer{
+.imagePreviewContainer {
   height: 415px;
   overflow-y: scroll;
   overflow-x: hidden;
   display: none;
 }
 
-#imagePreview{
+#imagePreview {
   display: block;
   max-width: 100%;
 }
 
-.editorContainer{
+.editorContainer {
   position: absolute;
   width: 100%;
   height: 1000px;
@@ -433,33 +437,33 @@ a#search {
   transition: 0.5s;
 }
 
-.editorContainer.show{
+.editorContainer.show {
   display: flex;
   opacity: 1;
   visibility: visible;
   transition: 0.5s;
 }
 
-.editorContainer h1{
+.editorContainer h1 {
   font-size: 20px;
   font-weight: 500;
   margin-bottom: 15px;
 }
 
-.note-editing-area{
+.note-editing-area {
   height: 300px;
 }
 
-.buttonEditorContainer{
+.buttonEditorContainer {
   display: flex;
   justify-content: flex-end;
 }
 
-.btn-fullscreen{
+.btn-fullscreen {
   display: none;
 }
 
-.btn-codeview{
+.btn-codeview {
   display: none;
 }
 
@@ -468,7 +472,7 @@ a#search {
   background: inherit;
 }
 
-#editButton:focus{
+#editButton:focus {
   border: 0px;
   outline: 0px;
 }
@@ -477,18 +481,112 @@ a#search {
   color: rgb(104, 103, 103);
 }
 
-.postBody p{
+.postBody p {
+  max-width: 100%;
+  margin: 0px;
+}
+
+.postBody a {
   max-width: 100%;
 }
 
-.postBody iframe{
+.postBody font{
+  display: block !important;
+  max-width: 100% !important;
+}
+
+.postBody iframe {
   max-width: 100%;
 }
 
-.postBody span{
+.postBody span {
   max-width: 100%;
 }
 
-.postBody img{
+.postBody img {
   max-width: 100%;
+}
+
+.searchResult {
+  position: absolute;
+  box-shadow: 0px 0px 2px 3px #0f0f0f0d;
+  top: 52px;
+  left: 0px;
+  width: 100%;
+  min-height: 100px;
+  max-height: 450px;
+  margin: auto;
+  z-index: 10;
+  border-radius: 10px;
+  background: #f6f5f5;
+  display: none;
+  transition: 0.5s;
+  overflow-y: hidden;
+  padding: 0px !important;
+}
+
+.resultUser{
+  transition: 0.5s;
+}
+
+.resultUser:hover{
+  background: rgb(230, 236, 240);
+}
+
+
+.resultUserContainer {
+  display: flex;
+}
+
+.resultContent {
+  display: flex;
+  flex-direction: column;
+  margin-left: 15px;
+}
+
+.resultContent a {
+  font-size: 17px;
+  font-weight: 500;
+  text-transform: capitalize;
+  text-decoration: none;
+  transition: 0.4s;
+}
+
+.resultContent a:hover {
+  color: #494949;
+  text-decoration: underline;
+}
+
+.searchResult.visible {
+  display: inline-block;
+  padding: 0px !important;
+}
+
+ul#resultList {
+  list-style: none;
+  padding: 0px;
+}
+
+#not {
+  color: #3d3a3a;
+  padding-top: 10px;
+  text-align: center;
+}
+
+.not-found {
+  color: #3d3a3a;
+  padding-top: 10px;
+  text-align: center;
+}
+
+.load {
+  width: 100%;
+}
+
+li.resultUser {
+  padding: 10px 10px;
+}
+
+.note-group-select-from-files{
+  display: none;
 }

@@ -1,20 +1,22 @@
 let cropper;
+let value = "";
+let upload = null;
+let uploadTitle = "";
 
 $(document).ready(function () {
   const socket = io();
   const btnpost = $("#postButton");
   const btnfollow = $(".followButton");
-  const btnupload = $("#uploadButton");
+  const btnupload = $(".uploadButton");
   const btnuploadcancel = $("#btn-upload-cancel");
   const btnsubmitupload = $("#btn-submit-upload");
   const inputUpload = $("#input-upload");
   const imagePreview = document.getElementById("imagePreview");
   const textarea = $("#postTextarea");
   const postContainer = $("#postContainer");
-  let value = "";
-  let upload = null;
 
   const card = `<div id="card">
+  
   <div class="description">
   <div class="line line-1"></div>
   <div class="line line-2"></div>
@@ -27,16 +29,46 @@ $(document).ready(function () {
     return `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>${mess}`;
   };
 
+  $(".postBody p").children("br").remove();
+
   socket.on("upload-avatar", (respone) => {
     const { _id, avatar } = respone;
     const eles = document.querySelectorAll([
-      `[data-image='img${_id.toString().trim()}png']`,
+      `[data-avatar='img${_id.toString().trim()}png']`,
     ]);
     if (eles && eles.length > 0) {
       for (let ele of eles) {
         ele.src = avatar;
       }
     }
+    btnsubmitupload.prop("disabled", false);
+    btnuploadcancel.prop("disabled", false);
+    btnsubmitupload.text("Upload");
+    btnpost.remove(".spinner-border");
+    inputUpload.val("");
+    $(".imagePreviewContainer").css("display", "none");
+    $(".uploadContainer").removeClass("show");
+    $("body").removeClass("scroll-none");
+  });
+
+  socket.on("upload-background", (respone) => {
+    const { _id, background } = respone;
+    const eles = document.querySelectorAll([
+      `[data-background='img${_id.toString().trim()}png']`,
+    ]);
+    if (eles && eles.length > 0) {
+      for (let ele of eles) {
+        ele.src = background;
+      }
+    }
+    btnsubmitupload.prop("disabled", false);
+    btnuploadcancel.prop("disabled", false);
+    btnsubmitupload.text("Upload");
+    btnpost.remove(".spinner-border");
+    inputUpload.val("");
+    $(".imagePreviewContainer").css("display", "none");
+    $(".uploadContainer").removeClass("show");
+    $("body").removeClass("scroll-none");
   });
 
   socket.on("post", (postData) => {
@@ -45,6 +77,7 @@ $(document).ready(function () {
     btnpost.prop("disabled", true);
     textarea.val("");
     const newPost = createPost(postData);
+    const eles = document.querySelectorAll("")
     postContainer.prepend(newPost);
   });
 
@@ -71,28 +104,37 @@ $(document).ready(function () {
       btnpost.remove(".spinner-border");
       return;
     }
-    let canvas = cropper.getCroppedCanvas();
-    if (!canvas) {
-      alert("Could not upload image.");
-      return;
-    }
-    canvas.toBlob((blob) => {
-      const data = new FormData();
-      data.append("avatar", blob);
+    const data = new FormData();
+    if (uploadTitle === "background") {
+      data.append("background", upload);
       $.ajax({
         type: "POST",
-        url: "/api/upload-avatar",
+        url: "/api/upload-background",
         data: data,
         contentType: false,
         processData: false,
-        success: () => {
-          window.location.reload();
-        },
       });
-    });
+    } else if (uploadTitle === "avatar") {
+      let canvas = cropper.getCroppedCanvas();
+      if (!canvas) {
+        alert("Could not upload image.");
+        return;
+      }
+      canvas.toBlob((blob) => {
+        data.append("avatar", blob);
+        $.ajax({
+          type: "POST",
+          url: "/api/upload-avatar",
+          data: data,
+          contentType: false,
+          processData: false,
+        });
+      });
+    }
   });
 
   btnupload.click(function (e) {
+    uploadTitle = $(this).val();
     $(".uploadContainer").addClass("show");
     $("body").addClass("scroll-none");
   });
@@ -101,12 +143,13 @@ $(document).ready(function () {
     e.preventDefault();
     $(".uploadContainer").removeClass("show");
     $("body").removeClass("scroll-none");
+    inputUpload.val("");
+    $(".imagePreviewContainer").css("display", "none");
   });
 
   inputUpload.change(function (e) {
     const types = ["image/jpeg", "image/jpg", "image/png"];
     upload = e.target.files[0];
-    console.log(upload);
     if (!types.includes(upload.type)) {
       alert("File not image");
       inputUpload.val("");
@@ -122,13 +165,15 @@ $(document).ready(function () {
     reader.onload = (e) => {
       $(".imagePreviewContainer").css("display", "block");
       imagePreview.src = e.target.result;
-      if (cropper !== undefined) {
-        cropper.destroy();
+      if (uploadTitle === "avatar") {
+        if (cropper !== undefined) {
+          cropper.destroy();
+        }
+        cropper = new Cropper(imagePreview, {
+          aspectRatio: 1 / 1,
+          background: false,
+        });
       }
-      cropper = new Cropper(imagePreview, {
-        aspectRatio: 1 / 1,
-        background: false,
-      });
     };
     reader.readAsDataURL(upload);
   });
@@ -196,22 +241,23 @@ function createPost(post) {
   const { postedBy, content, createdAt, _id } = post;
   const displayName = postedBy.firstName + " " + postedBy.lastName;
   const time = moment(new Date(createdAt)).fromNow();
+  const link = `/user-profile/${postedBy.username}`;
   return `<div class='post p-2' data-postId=${_id}>
   <div class='mainContentContainer'>
       <div class='postContentContainer mx-2'>
           <div class="header">
           <div class="userImageContainer">
             <img
-              data-image="${"img" + postedBy._id + "png"}"
+              data-avatar="${"img" + postedBy._id + "png"}"
               class="rounded-circle"
               alt="avatar"
               width="40"
               height="40"
-              src="<%= postedBy.avatar %> "
+              src="${postedBy.avatar}"
             />
           </div>
           <div class="userInfo">
-            <a href="#" class="displayName">${displayName}</a>
+            <a href=${link} class="displayName">${displayName}</a>
             <span class="username">@${postedBy.username}</span> |
             <span class="date">${time}</span>
           </div>

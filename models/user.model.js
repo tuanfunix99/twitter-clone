@@ -51,6 +51,10 @@ const userSchema = new Schema({
     type: String,
     default: "/images/profilePic.jpeg"
   },
+  background:{
+    type: String,
+    default: "/images/background_default.png"
+  },
   following: [
     {
       type: Schema.Types.ObjectId,

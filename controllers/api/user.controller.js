@@ -1,16 +1,15 @@
 const Post = require("../../models/post.model");
 const User = require("../../models/user.model");
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
 exports.follow = async (req, res, next) => {
   const { username } = req.body;
   const { _id } = req.user;
-  let posts = await Post.find({} ,"content createdAt").populate(
+  let posts = await Post.find({}, "content createdAt").populate(
     "postedBy",
     "username firstName lastName avatar"
   );
-  const io = req.app.get("socketIo");
   try {
     const userFollowing = await User.findOne({ username: username });
     const user = await User.findById(_id);
@@ -50,20 +49,72 @@ exports.uploadAvatar = async (req, res, next) => {
   const { filename } = req.file;
   const io = req.app.get("socketIo");
   try {
-    if(!filename){
-      throw new Error('error');
+    if (!filename) {
+      throw new Error("error");
     }
     const user = await User.findById(_id);
-    if(user.avatar !== '/images/profilePic.jpeg'){
-      fs.unlink(path.join(__dirname, '../../uploads', user.avatar), function() {
-        console.log('Image deleted');
-    });
+    if (user.avatar !== "/images/profilePic.jpeg") {
+      fs.unlink(
+        path.join(__dirname, "../../uploads", user.avatar),
+        function () {
+          console.log("Image deleted");
+        }
+      );
     }
-    user.avatar = '/avatar/' + filename;
-    io.emit('upload-avatar', { _id, avatar: user.avatar });
+    user.avatar = "/avatar/" + filename;
+    io.emit("upload-avatar", {
+      _id,
+      avatar: user.avatar
+    });
     await user.save();
-    res.redirect("/"); 
   } catch (error) {
-    res.redirect("/"); 
+    res.redirect("/");
   }
-}
+};
+
+exports.uploadBackground = async (req, res, next) => {
+  const { _id } = req.user;
+  const { filename } = req.file;
+  const io = req.app.get("socketIo");
+  try {
+    if (!filename) {
+      throw new Error("error");
+    }
+    const user = await User.findById(_id);
+    if (user.background !== "/images/background_default.png") {
+      fs.unlink(
+        path.join(__dirname, "../../uploads", user.background),
+        function () {
+          console.log("Image deleted");
+        }
+      );
+    }
+    user.background = "/background/" + filename;
+    io.emit("upload-background", { _id, background: user.background });
+    await user.save();
+  } catch (error) {
+    res.redirect("/");
+  }
+};
+
+exports.searchUser = async (req, res, next) => {
+  const { value } = req.body;
+  try {
+    if (!value || value.trim().length === 0) {
+      return res.status(200).send([]);
+    }
+    let users = await User.find(
+      {
+        $or: [
+          { username: { $regex: ".*" + value + ".*" } },
+          { firstName: { $regex: ".*" + value + ".*" } },
+          { lastName: { $regex: ".*" + value + ".*" } },
+        ],
+      },
+      "_id avatar username firstName lastName"
+    );
+    res.status(200).send(users);
+  } catch (error) {
+    console.log(error);
+  }
+};

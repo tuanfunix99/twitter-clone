@@ -1,0 +1,53 @@
+<%- include('../layout/header') -%>
+<link rel="stylesheet" href="/css/main.css">
+<link rel="stylesheet" href="/css/user.css">
+<link rel="stylesheet" href="/css/responsive_web.css">
+<body>         
+<% if(isUser) {%>
+    <%- include('../layout/upload') -%>         
+<% } %>
+<div class="container">
+    <div class="row">
+        <nav class="col-2 fixed-top">
+                <a href="#" title="Twitter"><i class="fas fa-dove blue"></i></a>
+                <a href="#" title="Home"><i class="fas fa-home"></i></a>
+                <a href="#" title="Search" id="search"><i class="fas fa-search"></i></a>
+                <a href="#" title="Nofication"><i class="fas fa-bell"></i></a>
+                <a href="#" title="Mail"><i class="fas fa-envelope"></i></a>
+                <a href="#" title="Profile"><i class="fas fa-user"></i></a>
+                <a href="#" title="Explore"><i class="fas fa-globe"></i></a>
+                <a href="/logout" title="Logout"><i class="fas fa-sign-out-alt"></i></a>
+        </nav>
+        <div class="mainSectionContainer col-lg-6 col-10 p-0">
+            <div class="titleContainer fixed-top">
+                <span class="userProfile">
+                    <div class="backButtonContainer p-1">
+                        <button>
+                            <i class="fas fa-arrow-left"></i>
+                        </button>
+                      </div>
+                    <div class="infoUserContainer">
+                        <h1><%= username %> </h1>
+                        <p><%= posts.length + ' Tweets' %> </p>
+                    </div>  
+                </span>
+                <form class="formUserProfile">
+                    <button type="submit" class="btn btn-primary">
+                      Follow
+                    </button>
+                </form>
+            </div>
+            <%- include('./userform') -%>
+            <%- include('../layout/post') -%>
+        </div>
+        <div class="col-lg-4 third-col">
+            <%- include('../layout/search') -%>
+        </div>
+    </div>
+</div>
+<%- include('../layout/footer') -%>
+<script src="/js/common.js"></script>
+<script src="/js/search.js"></script>
+<script src="/js/user.js"></script>
+</body>
+</html>

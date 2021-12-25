@@ -56,7 +56,6 @@ exports.postLogin = async (req, res, next) => {
       });
       throw error; 
     }
-    console.log(user);
     req.session.user = {
       _id: user._id,
       isActive: user.isActive,

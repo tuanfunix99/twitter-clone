@@ -1,14 +1,15 @@
 <div id="postFormContainer" class="py-3 px-2 mb-2">
   <div class="postAvatar">
     <image
+    data-avatar="<%= 'img' + _id + 'png' %>"
       class="rounded-circle"
       src="<%= avatar %> "
       alt="avatar"
       width="50"
       height="50"
-      title="<%= username %> "
+      title="<%= username %>"
     ></image>
-    <button id="uploadButton" title="upload avatar">
+    <button class="uploadButton" title="upload avatar" value="avatar">
       <i class="fas fa-camera"></i>
     </button>
     <button id="editButton" title="edit">

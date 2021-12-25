@@ -2,14 +2,17 @@ const multer = require("multer");
 const { v4: uuidv4 } = require("uuid");
 const path = require("path");
 
-const fileStorge = multer.diskStorage({
-  destination: (req, file, callback) => {
-    callback(null, path.join(__dirname, "../uploads/avatar"));
-  },
-  filename: (req, file, callback) => {
-    callback(null, new Date().getTime() + '-' + uuidv4() + '.png');
-  },
-});
+const setFileStorge = (dir) => {
+  const fileStorge = multer.diskStorage({
+    destination: (req, file, callback) => {
+      callback(null, path.join(__dirname, "../uploads/" + dir));
+    },
+    filename: (req, file, callback) => {
+      callback(null, new Date().getTime() + "-" + uuidv4() + ".png");
+    },
+  });
+  return fileStorge;
+};
 
 const fileFilter = (req, file, callback) => {
   if (
@@ -24,9 +27,25 @@ const fileFilter = (req, file, callback) => {
 };
 
 exports.uploadAvatarMiddle = (req, res, next) => {
-  const upload = multer({ storage: fileStorge, fileFilter: fileFilter }).single(
-    "avatar"
-  );
+  const upload = multer({
+    storage: setFileStorge("avatar"),
+    fileFilter: fileFilter,
+  }).single("avatar");
+  upload(req, res, function (err) {
+    if (err instanceof multer.MulterError) {
+      return res.status(400).send(err.message);
+    } else if (err) {
+      return res.status(400).send(err.message);
+    }
+    next();
+  });
+};
+
+exports.uploadBackgroundMiddle = (req, res, next) => {
+  const upload = multer({
+    storage: setFileStorge("background"),
+    fileFilter: fileFilter,
+  }).single("background");
   upload(req, res, function (err) {
     if (err instanceof multer.MulterError) {
       return res.status(400).send(err.message);

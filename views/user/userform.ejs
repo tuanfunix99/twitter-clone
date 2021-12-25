@@ -1,0 +1,26 @@
+<div id="profileContainer" class="py-3 px-2 mb-2">
+  <div class="backgroundProfile">
+    <img data-background=<%= `img${_id}png` %> src="<%= background %> " alt="background" />
+    <% if(isUser) {%>
+    <div class="uploadBackgroundContainer">
+      <button class="uploadButton" title="upload background" value="background">
+        <i class="fas fa-camera"></i>
+      </button>
+    </div>
+    <% } %>
+  </div>
+  <div class="avatarProfile">
+    <div class="avatarProfileContainer">
+      <img
+        data-user-avatar="<%= username %>"
+        class="rounded-circle"
+        src="<%= avatar %> "
+        alt="avatar"
+        title="<%= username %>"
+      />
+    </div>
+    <form class="formFollowProfile">
+      <button type="submit" class="btn btn-primary">Follow</button>
+    </form>
+  </div>
+</div>

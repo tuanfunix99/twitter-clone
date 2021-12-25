@@ -51,13 +51,14 @@ function createPost(post) {
   const { postedBy, content, createdAt, _id } = post;
   const displayName = postedBy.firstName + " " + postedBy.lastName;
   const time = moment(new Date(createdAt)).fromNow();
+  const link = `/user-profile/${postedBy.username}`;
   return `<div class='post p-2' data-postId=${_id}>
   <div class='mainContentContainer'>
       <div class='postContentContainer mx-2'>
           <div class="header">
           <div class="userImageContainer">
             <img
-              data-image="${"img" + postedBy._id + "png"}"
+              data-avatar="${"img" + postedBy._id + "png"}"
               class="rounded-circle"
               alt="avatar"
               width="40"
@@ -66,7 +67,7 @@ function createPost(post) {
             />
           </div>
           <div class="userInfo">
-            <a href="#" class="displayName">${displayName}</a>
+            <a href=${link} class="displayName">${displayName}</a>
             <span class="username">@${postedBy.username}</span> |
             <span class="date">${time}</span>
           </div>

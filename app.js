@@ -6,6 +6,7 @@ const {
   postApiRoutes,
   mainRoutes,
   userApiRoutes,
+  userRoutes
 } = require("./routes/index.routes");
 const path = require("path");
 const session = require("express-session");
@@ -49,6 +50,7 @@ app.use(express.static(path.join(__dirname, "uploads")));
 
 app.use(mainRoutes);
 app.use(authRoutes);
+app.use(userRoutes);
 app.use("/api", postApiRoutes);
 app.use("/api", userApiRoutes);
 
