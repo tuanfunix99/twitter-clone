@@ -52,6 +52,7 @@ function createPost(post) {
   const displayName = postedBy.firstName + " " + postedBy.lastName;
   const time = moment(new Date(createdAt)).fromNow();
   const link = `/user-profile/${postedBy.username}`;
+  const urlImage = `/api/user-images/${postedBy.avatar}`
   return `<div class='post p-2' data-postId=${_id}>
   <div class='mainContentContainer'>
       <div class='postContentContainer mx-2'>
@@ -63,7 +64,7 @@ function createPost(post) {
               alt="avatar"
               width="40"
               height="40"
-              src="${postedBy.avatar}"
+              src="${urlImage}"
             />
           </div>
           <div class="userInfo">

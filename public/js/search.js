@@ -8,6 +8,7 @@ $(document).ready(function () {
   const loadResult = ({ _id, avatar, firstName, lastName, username }) => {
     const link = `/user-profile/${username}`;
     const displayName = `${firstName} ${lastName}`;
+    const urlImage = `/api/user-images/${avatar}`
     return `<li class="resultUser">
       <div class="resultUserContainer">
           <div class='resultUserImage'>
@@ -17,7 +18,7 @@ $(document).ready(function () {
               alt="avatar"
               width="45"
               height="45" 
-              src=${avatar}>
+              src=${urlImage}>
           </div>
           <div class="resultContent">
               <a href=${link}>${displayName}</a>

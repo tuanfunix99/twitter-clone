@@ -8,7 +8,7 @@ const setFileStorge = (dir) => {
       callback(null, path.join(__dirname, "../uploads/" + dir));
     },
     filename: (req, file, callback) => {
-      callback(null, new Date().getTime() + "-" + uuidv4() + ".png");
+      callback(null, new Date().getTime() + "-" + uuidv4());
     },
   });
   return fileStorge;

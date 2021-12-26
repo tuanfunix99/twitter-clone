@@ -31,16 +31,7 @@ $(document).ready(function () {
 
   $(".postBody p").children("br").remove();
 
-  socket.on("upload-avatar", (respone) => {
-    const { _id, avatar } = respone;
-    const eles = document.querySelectorAll([
-      `[data-avatar='img${_id.toString().trim()}png']`,
-    ]);
-    if (eles && eles.length > 0) {
-      for (let ele of eles) {
-        ele.src = avatar;
-      }
-    }
+  const uploadSuccess = function(){
     btnsubmitupload.prop("disabled", false);
     btnuploadcancel.prop("disabled", false);
     btnsubmitupload.text("Upload");
@@ -49,6 +40,19 @@ $(document).ready(function () {
     $(".imagePreviewContainer").css("display", "none");
     $(".uploadContainer").removeClass("show");
     $("body").removeClass("scroll-none");
+  }
+
+  socket.on("upload-avatar", (respone) => {
+    const { _id, avatar } = respone;
+    const eles = document.querySelectorAll([
+      `[data-avatar='img${_id.toString().trim()}png']`,
+    ]);
+    if (eles && eles.length > 0) {
+      for (let ele of eles) {
+        ele.src = `/api/user-images/${avatar}`;
+      }
+    }
+    uploadSuccess();
   });
 
   socket.on("upload-background", (respone) => {
@@ -58,17 +62,10 @@ $(document).ready(function () {
     ]);
     if (eles && eles.length > 0) {
       for (let ele of eles) {
-        ele.src = background;
+        ele.src = `/api/user-images/${background}`;
       }
     }
-    btnsubmitupload.prop("disabled", false);
-    btnuploadcancel.prop("disabled", false);
-    btnsubmitupload.text("Upload");
-    btnpost.remove(".spinner-border");
-    inputUpload.val("");
-    $(".imagePreviewContainer").css("display", "none");
-    $(".uploadContainer").removeClass("show");
-    $("body").removeClass("scroll-none");
+    uploadSuccess();
   });
 
   socket.on("post", (postData) => {
@@ -77,7 +74,6 @@ $(document).ready(function () {
     btnpost.prop("disabled", true);
     textarea.val("");
     const newPost = createPost(postData);
-    const eles = document.querySelectorAll("")
     postContainer.prepend(newPost);
   });
 
@@ -242,6 +238,7 @@ function createPost(post) {
   const displayName = postedBy.firstName + " " + postedBy.lastName;
   const time = moment(new Date(createdAt)).fromNow();
   const link = `/user-profile/${postedBy.username}`;
+  const urlImage = `/api/user-images/${postedBy.avatar}`
   return `<div class='post p-2' data-postId=${_id}>
   <div class='mainContentContainer'>
       <div class='postContentContainer mx-2'>
@@ -253,7 +250,7 @@ function createPost(post) {
               alt="avatar"
               width="40"
               height="40"
-              src="${postedBy.avatar}"
+              src="${urlImage}"
             />
           </div>
           <div class="userInfo">

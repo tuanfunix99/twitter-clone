@@ -1,6 +1,8 @@
 <div id="profileContainer" class="py-3 px-2 mb-2">
   <div class="backgroundProfile">
-    <img data-background=<%= `img${_id}png` %> src="<%= background %> " alt="background" />
+    <img data-background=<%= `img${_id}png`%>
+     src="<%= `/api/user-images/${background}`%>" 
+     alt="background" />
     <% if(isUser) {%>
     <div class="uploadBackgroundContainer">
       <button class="uploadButton" title="upload background" value="background">
@@ -14,7 +16,7 @@
       <img
         data-user-avatar="<%= username %>"
         class="rounded-circle"
-        src="<%= avatar %> "
+        src="<%= `/api/user-images/${avatar}` %> "
         alt="avatar"
         title="<%= username %>"
       />

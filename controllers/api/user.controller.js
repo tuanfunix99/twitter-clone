@@ -2,6 +2,7 @@ const Post = require("../../models/post.model");
 const User = require("../../models/user.model");
 const fs = require("fs");
 const path = require("path");
+const { uploadFile, getFileStream } = require("../../utils/aws/s3");
 
 exports.follow = async (req, res, next) => {
   const { username } = req.body;
@@ -53,7 +54,7 @@ exports.uploadAvatar = async (req, res, next) => {
       throw new Error("error");
     }
     const user = await User.findById(_id);
-    if (user.avatar !== "/images/profilePic.jpeg") {
+    if (user.avatar.trim().length > 0 && user.avatar !== "/images/profilePic.jpeg") {
       fs.unlink(
         path.join(__dirname, "../../uploads", user.avatar),
         function () {
@@ -61,7 +62,8 @@ exports.uploadAvatar = async (req, res, next) => {
         }
       );
     }
-    user.avatar = "/avatar/" + filename;
+    await uploadFile(req.file);
+    user.avatar = "avatar/" + filename;
     io.emit("upload-avatar", {
       _id,
       avatar: user.avatar
@@ -81,7 +83,7 @@ exports.uploadBackground = async (req, res, next) => {
       throw new Error("error");
     }
     const user = await User.findById(_id);
-    if (user.background !== "/images/background_default.png") {
+    if (user.background.trim().length > 0 && user.background !== "/images/background_default.png") {
       fs.unlink(
         path.join(__dirname, "../../uploads", user.background),
         function () {
@@ -89,13 +91,24 @@ exports.uploadBackground = async (req, res, next) => {
         }
       );
     }
-    user.background = "/background/" + filename;
+    await uploadFile(req.file);
+    user.background = "background/" + filename;
     io.emit("upload-background", { _id, background: user.background });
     await user.save();
   } catch (error) {
     res.redirect("/");
   }
 };
+
+exports.getUserImages = (req, res, next) => {
+  const { key } = req.params;
+  try {
+    const readStream = getFileStream(key);
+    readStream.pipe(res); 
+  } catch (error) {
+    console.log(error.message);
+  }
+}
 
 exports.searchUser = async (req, res, next) => {
   const { value } = req.body;

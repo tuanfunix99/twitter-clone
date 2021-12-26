@@ -41,7 +41,8 @@
                                         class="rounded-circle"
                                         alt="avatar"
                                         width="45"
-                                        height="45" src="<%= user.avatar %> ">
+                                        height="45"
+                                        src="<%=`/api/user-images/${user.avatar}`%> "/>
                                     </div>
                                     <div class="followContent">
                                         <a href="<%= `/user-profile/${user.username}`%>"><%= displayName %> </a>
