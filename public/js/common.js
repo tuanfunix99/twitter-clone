@@ -16,7 +16,6 @@ $(document).ready(function () {
   const postContainer = $("#postContainer");
 
   const card = `<div id="card">
-  
   <div class="description">
   <div class="line line-1"></div>
   <div class="line line-2"></div>
@@ -178,15 +177,12 @@ $(document).ready(function () {
     e.preventDefault();
     btnfollow.prop("disabled", true);
     postContainer.prepend(card);
-    const username = $(this).attr("data-name");
-    const text = $(this).text().trim();
-    text === "Follow" ? $(this).text("Following") : $(this).text("Follow");
-    text === "Follow"
-      ? $(this).prop("title", "Unfollow")
-      : $(this).prop("title", "Follow");
+    const username = $(this).attr("data-follow-username");
+    const btnThis = $(this);
     $.post("/api/follow", { username }, function (result) {
       const { posts, follow } = result;
       if (follow) {
+        btnThis.text("Following");
         for (let post of posts) {
           const newPost = createPost(post);
           postContainer.prepend(newPost);
@@ -196,12 +192,13 @@ $(document).ready(function () {
           .removeChild(document.getElementById("card"));
         btnfollow.prop("disabled", false);
       } else {
-        for (let child of postContainer.children()) {
-          if (posts.includes(child.getAttribute("data-postid"))) {
-            const ele = document.querySelector([
-              `[data-postid='${child.getAttribute("data-postid")}']`,
-            ]);
-            document.getElementById("postContainer").removeChild(ele);
+        btnThis.text("Follow")
+        const eles = document.querySelectorAll([
+          `[data-post-username='${username}']`,
+        ]);
+        if(eles && eles.length > 0){
+          for(let ele of eles){
+            ele.remove();
           }
         }
         document
@@ -234,12 +231,12 @@ $(document).ready(function () {
 });
 
 function createPost(post) {
-  const { postedBy, content, createdAt, _id } = post;
+  const { postedBy, content, createdAt } = post;
   const displayName = postedBy.firstName + " " + postedBy.lastName;
   const time = moment(new Date(createdAt)).fromNow();
   const link = `/user-profile/${postedBy.username}`;
   const urlImage = `/api/user-images/${postedBy.avatar}`
-  return `<div class='post p-2' data-postId=${_id}>
+  return `<div class='post p-2' data-post-username=${postedBy.username}>
   <div class='mainContentContainer'>
       <div class='postContentContainer mx-2'>
           <div class="header">

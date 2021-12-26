@@ -1,24 +1,30 @@
-<div class="px-0" id="postContainer" >
+<div class="px-0" id="postContainer">
   <% let count = 0 %> <% for(let post of posts) {%> <% const { postedBy,
   content, time } = post %> <% const displayName = postedBy.firstName + " " +
   postedBy.lastName; %>
 
-  <div class="post p-2" data-postId="<%= post._id %>">
+  <div class="post p-2" data-post-username="<%= postedBy.username %>">
     <div class="mainContentContainer">
       <div class="postContentContainer mx-2">
         <div class="header">
           <div class="userImageContainer">
-            <img
-              data-avatar="<%= 'img' + postedBy._id + 'png' %>"
-              class="rounded-circle"
-              alt="avatar"
-              width="40"
-              height="40"
-              src="<%= `/api/user-images/${postedBy.avatar}` %> "
-            />
+            <a
+            href="<%= `/user-profile/${postedBy.username}` %>"
+            >
+              <img
+                data-avatar="<%= 'img' + postedBy._id + 'png' %>"
+                class="rounded-circle"
+                alt="avatar"
+                width="40"
+                height="40"
+                src="<%= `/api/user-images/${postedBy.avatar}` %> "
+              />
+            </a>
           </div>
           <div class="userInfo">
-            <a href="<%= `/user-profile/${postedBy.username}` %>" class="displayName"
+            <a
+              href="<%= `/user-profile/${postedBy.username}` %>"
+              class="displayName"
               ><%= displayName %></a>
             <span class="username">@<%= postedBy.username %></span> |
             <span class="date"><%= time %></span>

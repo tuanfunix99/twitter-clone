@@ -27,10 +27,7 @@ exports.follow = async (req, res, next) => {
       await user.save();
       await userFollowing.save();
     } else {
-      posts = posts
-        .filter((post) => post.postedBy._id.toString() === following.toString())
-        .map((post) => post._id.toString());
-      res.status(200).send({ posts, follow: false });
+      res.status(200).send({ follow: false });
       user.following = user.following.filter(
         (f) => f._id.toString() !== following.toString()
       );

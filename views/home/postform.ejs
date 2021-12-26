@@ -1,14 +1,16 @@
 <div id="postFormContainer" class="py-3 px-2 mb-2">
   <div class="postAvatar">
-    <image
-    data-avatar="<%= 'img' + _id + 'png' %>"
-      class="rounded-circle"
-      src="<%= `/api/user-images/${avatar}` %> "
-      alt="avatar"
-      width="50"
-      height="50"
-      title="<%= username %>"
-    ></image>
+    <a href="<%= `/user-profile/${username}` %> ">
+      <image
+        data-avatar="<%= 'img' + _id + 'png' %>"
+        class="rounded-circle"
+        src="<%= `/api/user-images/${avatar}` %> "
+        alt="avatar"
+        width="50"
+        height="50"
+        title="<%= username %>"
+      ></image>
+    </a>
     <button class="uploadButton" title="upload avatar" value="avatar">
       <i class="fas fa-camera"></i>
     </button>
