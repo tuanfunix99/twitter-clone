@@ -7,10 +7,6 @@ const { uploadFile, getFileStream } = require("../../utils/aws/s3");
 exports.follow = async (req, res, next) => {
   const { username } = req.body;
   const { _id } = req.user;
-  let posts = await Post.find({}, "content createdAt").populate(
-    "postedBy",
-    "username firstName lastName avatar"
-  );
   try {
     const userFollowing = await User.findOne({ username: username });
     const user = await User.findById(_id);
@@ -18,9 +14,12 @@ exports.follow = async (req, res, next) => {
       (f) => f._id.toString() === userFollowing._id.toString()
     );
     if (!following) {
-      posts = posts.filter(
-        (post) => post.postedBy._id.toString() === userFollowing._id.toString()
-      );
+      const posts = await Post.find(
+        { postedBy: userFollowing._id },
+        "content createdAt"
+      )
+        .populate("postedBy", "username firstName lastName avatar")
+        .limit(5);
       res.status(200).send({ posts, follow: true });
       user.following.push(userFollowing._id);
       userFollowing.follower.push(user._id);
@@ -51,7 +50,10 @@ exports.uploadAvatar = async (req, res, next) => {
       throw new Error("error");
     }
     const user = await User.findById(_id);
-    if (user.avatar.trim().length > 0 && user.avatar !== "/images/profilePic.jpeg") {
+    if (
+      user.avatar.trim().length > 0 &&
+      user.avatar !== "/images/profilePic.jpeg"
+    ) {
       fs.unlink(
         path.join(__dirname, "../../uploads", user.avatar),
         function () {
@@ -63,7 +65,7 @@ exports.uploadAvatar = async (req, res, next) => {
     user.avatar = "avatar/" + filename;
     io.emit("upload-avatar", {
       _id,
-      avatar: user.avatar
+      avatar: user.avatar,
     });
     await user.save();
   } catch (error) {
@@ -80,7 +82,10 @@ exports.uploadBackground = async (req, res, next) => {
       throw new Error("error");
     }
     const user = await User.findById(_id);
-    if (user.background.trim().length > 0 && user.background !== "/images/background_default.png") {
+    if (
+      user.background.trim().length > 0 &&
+      user.background !== "/images/background_default.png"
+    ) {
       fs.unlink(
         path.join(__dirname, "../../uploads", user.background),
         function () {
@@ -101,11 +106,11 @@ exports.getUserImages = (req, res, next) => {
   const { key } = req.params;
   try {
     const readStream = getFileStream(key);
-    readStream.pipe(res); 
+    readStream.pipe(res);
   } catch (error) {
     console.log(error.message);
   }
-}
+};
 
 exports.searchUser = async (req, res, next) => {
   const { value } = req.body;

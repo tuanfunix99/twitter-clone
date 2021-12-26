@@ -49,11 +49,11 @@ const userSchema = new Schema({
   },
   avatar:{
     type: String,
-    default: "/images/profilePic.jpeg"
+    default: "/api/user-images/avatar/1640547515835-4f19859b-5877-4b3f-bca8-11ab567ce972"
   },
   background:{
     type: String,
-    default: "/images/background_default.png"
+    default: "/api/user-images/background/1640547595151-a562dbcd-706d-4df3-8b1b-84b90feddf54"
   },
   following: [
     {
