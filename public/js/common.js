@@ -4,12 +4,14 @@ let upload = null;
 let uploadTitle = "";
 
 $(document).ready(function () {
+  const socket = io();
   const btnfollow = $(".followButton");
   const btnupload = $(".uploadButton");
   const btnuploadcancel = $("#btn-upload-cancel");
   const btnsubmitupload = $("#btn-submit-upload");
   const inputUpload = $("#input-upload");
   const imagePreview = document.getElementById("imagePreview");
+  const postContainer = $("#postContainer");
 
   const card = `<div id="card">
   <div class="description">
@@ -178,6 +180,7 @@ $(document).ready(function () {
         document
           .getElementById("postContainer")
           .removeChild(document.getElementById("card"));
+        btnThis.attr("data-following", true);  
         btnfollow.prop("disabled", false);
       } else {
         const eles = document.querySelectorAll([
@@ -191,6 +194,7 @@ $(document).ready(function () {
         document
           .getElementById("postContainer")
           .removeChild(document.getElementById("card"));
+        btnThis.attr("data-following", false);  
         btnfollow.prop("disabled", false);
       }
     });
