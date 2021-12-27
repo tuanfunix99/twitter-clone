@@ -23,7 +23,11 @@
     </div>
     <% if(!isUser) {%>
     <form class="formFollowProfile">
-      <button type="submit" class="btn btn-primary">Follow</button>
+      <button
+        data-following="<%= isFollowing %>"  
+        data-follow-username="<%= username %>"
+        type="submit" 
+        class="btn btn-primary btnFollowProfile"><%= isFollowing ? "Following" : "Follow" %></button> </button>
     </form>
     <% } %>
   </div>

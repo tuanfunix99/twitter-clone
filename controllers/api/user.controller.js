@@ -5,7 +5,7 @@ const path = require("path");
 const { uploadFile, getFileStream, deleteFile } = require("../../utils/aws/s3");
 
 exports.follow = async (req, res, next) => {
-  const { username } = req.body;
+  const { username, main } = req.body;
   const { _id } = req.user;
   try {
     const userFollowing = await User.findOne({ username: username });
@@ -14,13 +14,18 @@ exports.follow = async (req, res, next) => {
       (f) => f._id.toString() === userFollowing._id.toString()
     );
     if (!following) {
-      const posts = await Post.find(
-        { postedBy: userFollowing._id },
-        "content createdAt"
-      )
-        .populate("postedBy", "username firstName lastName avatar")
-        .limit(5);
-      res.status(200).send({ posts, follow: true });
+      if(main){
+        const posts = await Post.find(
+          { postedBy: userFollowing._id },
+          "content createdAt"
+        )
+          .populate("postedBy", "username firstName lastName avatar")
+          .limit(5);
+        res.status(200).send({ posts, follow: true });
+      }
+      else{
+        res.status(200).send({ follow: true });
+      }
       user.following.push(userFollowing._id);
       userFollowing.follower.push(user._id);
       await user.save();

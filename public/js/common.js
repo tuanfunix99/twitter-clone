@@ -4,16 +4,12 @@ let upload = null;
 let uploadTitle = "";
 
 $(document).ready(function () {
-  const socket = io();
-  const btnpost = $("#postButton");
   const btnfollow = $(".followButton");
   const btnupload = $(".uploadButton");
   const btnuploadcancel = $("#btn-upload-cancel");
   const btnsubmitupload = $("#btn-submit-upload");
   const inputUpload = $("#input-upload");
   const imagePreview = document.getElementById("imagePreview");
-  const textarea = $("#postTextarea");
-  const postContainer = $("#postContainer");
 
   const card = `<div id="card">
   <div class="description">
@@ -65,15 +61,6 @@ $(document).ready(function () {
       }
     }
     uploadSuccess();
-  });
-
-  socket.on("post", (postData) => {
-    btnpost.remove(".spinner-border");
-    btnpost.text("Tweet");
-    btnpost.prop("disabled", true);
-    textarea.val("");
-    const newPost = createPost(postData);
-    postContainer.prepend(newPost);
   });
 
   $(window).scroll(function () {
@@ -175,14 +162,15 @@ $(document).ready(function () {
 
   btnfollow.click(function (e) {
     e.preventDefault();
+    const btnThis = $(this);
     btnfollow.prop("disabled", true);
     postContainer.prepend(card);
-    const username = $(this).attr("data-follow-username");
-    const btnThis = $(this);
-    $.post("/api/follow", { username }, function (result) {
+    const username = btnThis.attr("data-follow-username");
+    const isFollowing = btnThis.attr("data-following");
+    isFollowing === "true" ? btnThis.text("Follow") : btnThis.text("Following");
+    $.post("/api/follow", { username, main: true }, function (result) {
       const { posts, follow } = result;
       if (follow) {
-        btnThis.text("Following");
         for (let post of posts) {
           const newPost = createPost(post);
           postContainer.prepend(newPost);
@@ -192,7 +180,6 @@ $(document).ready(function () {
           .removeChild(document.getElementById("card"));
         btnfollow.prop("disabled", false);
       } else {
-        btnThis.text("Follow")
         const eles = document.querySelectorAll([
           `[data-post-username='${username}']`,
         ]);
@@ -208,75 +195,4 @@ $(document).ready(function () {
       }
     });
   });
-
-  $(textarea).keyup(function (e) {
-    value = $(e.target).val();
-    if (value.trim().length > 0) {
-      btnpost.prop("disabled", false);
-      return;
-    }
-    btnpost.prop("disabled", true);
-  });
-
-  btnpost.click(function (e) {
-    e.preventDefault();
-    btnpost.text("");
-    btnpost.append(spinner("Tweet..."));
-    btnpost.prop("disabled", true);
-    const data = {
-      content: value,
-    };
-    $.post("/api/post", data);
-  });
 });
-
-function createPost(post) {
-  const { postedBy, content, createdAt } = post;
-  const displayName = postedBy.firstName + " " + postedBy.lastName;
-  const time = moment(new Date(createdAt)).fromNow();
-  const link = `/user-profile/${postedBy.username}`;
-  const urlImage = getAvatar(postedBy.avatar);
-  return `<div class='post p-2' data-post-username=${postedBy.username}>
-  <div class='mainContentContainer'>
-      <div class='postContentContainer mx-2'>
-          <div class="header">
-          <div class="userImageContainer">
-            <img
-              data-avatar="${"img" + postedBy._id + "png"}"
-              class="rounded-circle"
-              alt="avatar"
-              width="40"
-              height="40"
-              src="${urlImage}"
-            />
-          </div>
-          <div class="userInfo">
-            <a href=${link} class="displayName">${displayName}</a>
-            <span class="username">@${postedBy.username}</span> |
-            <span class="date">${time}</span>
-          </div>
-        </div>
-          <div class='postBody'>
-              <span>${content}</span>
-          </div>
-          <div class='postFooter'>
-              <div class='postButtonContainer'>
-                  <button>
-                      <i class='far fa-comment'></i>
-                  </button>
-              </div>
-              <div class='postButtonContainer'>
-                  <button>
-                      <i class='fas fa-retweet'></i>
-                  </button>
-              </div>
-              <div class='postButtonContainer'>
-                  <button>
-                      <i class='far fa-heart'></i>
-                  </button>
-              </div>
-          </div>
-      </div>
-  </div>
-</div>`;
-}

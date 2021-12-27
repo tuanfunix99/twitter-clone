@@ -14,6 +14,9 @@ exports.userProfile = async (req, res, next) => {
       { username: username },
       "_id avatar firstName lastName background"
     );
+    const isFollowing = req.user.following.find(
+      (f) => f._id.toString() === _id.toString()
+    );
     let posts = await Post.find(
       { postedBy: _id },
       "_id content createdAt"
@@ -38,7 +41,8 @@ exports.userProfile = async (req, res, next) => {
       isUser,
       _id,
       getAvatar,
-      getBackground
+      getBackground,
+      isFollowing: isFollowing !== undefined
     });
   } catch (error) {
     console.log(error.message);

@@ -9,7 +9,8 @@
 <div class="container">
     <div class="row">
         <%- include('../layout/navbar') -%>
-        <div class="mainSectionContainer col-lg-6 col-10 p-0">
+        <div data-parent-profile=<%= username %> 
+            class="mainSectionContainer col-lg-6 col-10 p-0">
             <div class="titleContainer fixed-top">
                 <span class="userProfile">
                     <div class="backButtonContainer p-1">
@@ -19,14 +20,16 @@
                       </div>
                     <div class="infoUserContainer">
                         <h1><%= username %> </h1>
-                        <p><%= posts.length + ' Tweets' %> </p>
+                        <p data-tweets="<%= username %>"><%= posts.length + ' Tweets' %> </p>
                     </div>  
                 </span>
                 <% if(!isUser) {%>
                 <form class="formUserProfile">
-                    <button type="submit" class="btn btn-primary">
-                      Follow
-                    </button>
+                    <button
+                    data-following="<%= isFollowing %>"  
+                    data-follow-username="<%= username %>"
+                    type="submit" 
+                    class="btn btn-primary btnFollowProfile"><%= isFollowing ? "Following" : "Follow" %></button></button>
                 </form>
                 <% } %>
             </div>
@@ -39,7 +42,6 @@
     </div>
 </div>
 <%- include('../layout/footer') -%>
-<script src="/js/helper.js"></script>
 <script src="/js/common.js"></script>
 <script src="/js/search.js"></script>
 <script src="/js/user.js"></script>
