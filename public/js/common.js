@@ -32,7 +32,7 @@ $(document).ready(function () {
     btnsubmitupload.prop("disabled", false);
     btnuploadcancel.prop("disabled", false);
     btnsubmitupload.text("Upload");
-    btnpost.remove(".spinner-border");
+    btnsubmitupload.remove(".spinner-border");
     inputUpload.val("");
     $(".imagePreviewContainer").css("display", "none");
     $(".uploadContainer").removeClass("show");
@@ -85,7 +85,7 @@ $(document).ready(function () {
       btnsubmitupload.prop("disabled", false);
       btnuploadcancel.prop("disabled", false);
       btnsubmitupload.text("Upload");
-      btnpost.remove(".spinner-border");
+      btnsubmitupload.remove(".spinner-border");
       return;
     }
     const data = new FormData();
