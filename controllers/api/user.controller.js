@@ -2,7 +2,7 @@ const Post = require("../../models/post.model");
 const User = require("../../models/user.model");
 const fs = require("fs");
 const path = require("path");
-const { uploadFile, getFileStream } = require("../../utils/aws/s3");
+const { uploadFile, getFileStream, deleteFile } = require("../../utils/aws/s3");
 
 exports.follow = async (req, res, next) => {
   const { username } = req.body;
@@ -54,6 +54,8 @@ exports.uploadAvatar = async (req, res, next) => {
       user.avatar.trim().length > 0 &&
       user.avatar !== "/images/profilePic.jpeg"
     ) {
+      const key = user.avatar.split("/")[1];
+      await deleteFile(key);
       fs.unlink(
         path.join(__dirname, "../../uploads", user.avatar),
         function () {
@@ -86,6 +88,8 @@ exports.uploadBackground = async (req, res, next) => {
       user.background.trim().length > 0 &&
       user.background !== "/images/background_default.png"
     ) {
+      const key = user.background.split("/")[1];
+      await deleteFile(key);
       fs.unlink(
         path.join(__dirname, "../../uploads", user.background),
         function () {

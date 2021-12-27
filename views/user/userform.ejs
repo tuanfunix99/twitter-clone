@@ -1,7 +1,7 @@
 <div id="profileContainer" class="py-3 px-2 mb-2">
   <div class="backgroundProfile">
     <img data-background=<%= `img${_id}png`%>
-     src="<%= `/api/user-images/${background}`%>" 
+     src="<%= getBackground(background) %> " 
      alt="background" />
     <% if(isUser) {%>
     <div class="uploadBackgroundContainer">
@@ -16,13 +16,15 @@
       <img
         data-user-avatar="<%= username %>"
         class="rounded-circle"
-        src="<%= `/api/user-images/${avatar}` %> "
+        src="<%= getAvatar(avatar) %> "
         alt="avatar"
         title="<%= username %>"
       />
     </div>
+    <% if(!isUser) {%>
     <form class="formFollowProfile">
       <button type="submit" class="btn btn-primary">Follow</button>
     </form>
+    <% } %>
   </div>
 </div>

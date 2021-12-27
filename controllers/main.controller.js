@@ -1,6 +1,7 @@
 const Post = require("../models/post.model");
 const User = require("../models/user.model");
 const moment = require("moment");
+const { getAvatar } = require("../utils/file/user");
 
 exports.main = async (req, res) => {
   const title = "Home";
@@ -30,6 +31,8 @@ exports.main = async (req, res) => {
       (p1, p2) =>
         new Date(p2.createdAt).getTime() - new Date(p1.createdAt).getTime()
     );
+
+    
   res
     .status(200)
     .render("home", {
@@ -39,5 +42,6 @@ exports.main = async (req, res) => {
       avatar: user_main.avatar,
       username: user_main.username,
       _id: user_main._id,
+      getAvatar
     });
 };

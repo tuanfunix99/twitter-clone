@@ -1,6 +1,7 @@
 const User = require("../models/user.model");
 const Post = require("../models/post.model");
 const moment = require("moment");
+const { getAvatar, getBackground } = require("../utils/file/user");
 
 exports.userProfile = async (req, res, next) => {
   const username = req.params.username;
@@ -35,7 +36,9 @@ exports.userProfile = async (req, res, next) => {
       posts,
       background,
       isUser,
-      _id
+      _id,
+      getAvatar,
+      getBackground
     });
   } catch (error) {
     console.log(error.message);

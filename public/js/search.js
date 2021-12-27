@@ -8,17 +8,22 @@ $(document).ready(function () {
   const loadResult = ({ _id, avatar, firstName, lastName, username }) => {
     const link = `/user-profile/${username}`;
     const displayName = `${firstName} ${lastName}`;
-    const urlImage = `/api/user-images/${avatar}`
+    const urlImage = getAvatar(avatar);
+    const urlProfile = `/user-profile/${username}`;
     return `<li class="resultUser">
       <div class="resultUserContainer">
           <div class='resultUserImage'>
+             <a href="${urlProfile}">
               <img  
               data-avatar="${"img" + _id + "png"}"
               class="rounded-circle"
               alt="avatar"
               width="45"
               height="45" 
-              src=${urlImage}>
+              src=${urlImage}
+              title=${username}
+              >
+              </a>
           </div>
           <div class="resultContent">
               <a href=${link}>${displayName}</a>
