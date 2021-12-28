@@ -10,9 +10,17 @@ exports.userProfile = async (req, res, next) => {
     res.redirect("/");
   }
   try {
-    const { _id, avatar, firstName, lastName, background } = await User.findOne(
+    const {
+      _id,
+      avatar,
+      firstName,
+      lastName,
+      background,
+      following,
+      follower,
+    } = await User.findOne(
       { username: username },
-      "_id avatar firstName lastName background"
+      "_id avatar firstName lastName background following follower"
     );
     const isFollowing = req.user.following.find(
       (f) => f._id.toString() === _id.toString()
@@ -43,8 +51,8 @@ exports.userProfile = async (req, res, next) => {
       getAvatar,
       getBackground,
       isFollowing: isFollowing !== undefined,
-      following: req.user.following.length,
-      follower: req.user.follower.length
+      following: following.length,
+      follower: follower.length,
     });
   } catch (error) {
     console.log(error.message);
