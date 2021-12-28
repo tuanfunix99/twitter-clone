@@ -13,7 +13,6 @@ $(document).ready(function () {
     $(`p[data-tweets='${post.postedBy.username}']`).text(`${tweets + 1} Tweets`);
     const newPost = createPost(post); 
     postContainer.prepend(newPost);
-    window.location.reload();
   }
 
   socket.on("edit", (postData) => {

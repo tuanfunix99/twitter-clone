@@ -6,7 +6,6 @@ $(document).ready(function () {
     .last();
   const btnpost = $("#postButton");
   const textarea = $("#postTextarea");
-  const btnDelete = $(".btnDeleteFunction");
   const deletePostAction = $("#delete-post-action");
   const deletePostCancel = $("#delete-post-cancel");
   let deleteId = "";
@@ -18,7 +17,7 @@ $(document).ready(function () {
     textarea.val("");
     const newPost = createPost(postData);
     postContainer.prepend(newPost);
-    window.location.reload();
+    $("#postContainer").load(window.location.href + " #postContainer");
   });
 
   socket.on("deleted-post", ({ postId }) => {
@@ -49,9 +48,10 @@ $(document).ready(function () {
     $.post("/api/post/post", data);
   });
 
-  btnDelete.click(function (e) {
+  $("#postContainer").on("click", '.btnDeleteFunction', function (e){
+    console.log($(this));
     deleteId = $(this).attr("data-delete-id");
-  });
+  })
 
   deletePostAction.click(function (e) {
     deletePostAction.text("");
@@ -60,15 +60,11 @@ $(document).ready(function () {
     deletePostCancel.prop("disabled", true);
     $.post("/api/post/delete", { postId: deleteId }, function (data) {
       if (data.deleted) {
-        $(".modal.fade").removeClass("show");
-        $(".modal.fade").attr("aria-hidden", "true");
-        $(".modal.fade").removeAttr("aria-modal");
-        $("body").removeClass("modal-open");
-        $(".modal-backdrop.fade.show").remove();
         deletePostAction.remove(".spinner-border");
         deletePostAction.text("Delete");
         deletePostAction.prop("disabled", false);
         deletePostCancel.prop("disabled", false);
+        $('#deleteModal').modal('hide');
       }
     });
   });

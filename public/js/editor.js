@@ -18,7 +18,7 @@ $(document).ready(function () {
     $("body").removeClass("scroll-none");
     const newPost = createPost(postData);
     postContainer.prepend(newPost);
-    window.location.reload();
+    $("#postContainer").load(location.href + " #postContainer");
   });
 
   btnEdit.click(function (e) {
