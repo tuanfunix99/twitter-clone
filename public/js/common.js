@@ -38,7 +38,6 @@ $(document).ready(function () {
     $(".imagePreviewContainer").css("display", "none");
     $(".uploadContainer").removeClass("show");
     $("body").removeClass("scroll-none");
-    window.location.reload();
   }
 
   socket.on("upload-avatar", (respone) => {
