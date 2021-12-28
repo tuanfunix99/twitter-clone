@@ -49,7 +49,7 @@ form.formUserProfile {
   visibility: hidden;
 }
 
-.formUserProfile.show{
+.formUserProfile.show {
   opacity: 1;
   visibility: visible;
 }
@@ -90,6 +90,28 @@ form.formUserProfile button {
   width: 150px;
   border: 6px solid white;
   border-radius: 50%;
+  position: relative;
+}
+
+.avatarProfileContainer:hover .uploadAvatarContainer{
+  opacity: 1;
+  visibility: visible;
+}
+
+.uploadAvatarContainer {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.24);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.5s;
 }
 
 .avatarProfileContainer img {
@@ -123,15 +145,15 @@ form.formFollowProfile button {
   transition: 0.5s;
 }
 
-.backgroundProfile:hover .uploadBackgroundContainer{
+.backgroundProfile:hover .uploadBackgroundContainer {
   opacity: 1;
   visibility: visible;
 }
 
-.uploadBackgroundContainer .uploadButton{
+.uploadBackgroundContainer .uploadButton {
   background: #ffffff45 !important;
 }
 
-.uploadBackgroundContainer .uploadButton i{
+.uploadBackgroundContainer .uploadButton i {
   font-size: 25px;
 }

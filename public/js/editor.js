@@ -4,7 +4,10 @@ $(document).ready(function () {
   const btnEdit = $("#editButton");
   const btnEditCancel = $("#btn-edit-cancel");
   const btnSaveEdit = $("#btn-save-edit");
-  const postContainer = $("#postContainer");
+  const postContainer = $(`[data-parent-profile='main']`)
+    .children()
+    .next()
+    .last();
 
   socket.on("edit", (postData) => {
     btnSaveEdit.remove(".spinner-border");
@@ -20,6 +23,7 @@ $(document).ready(function () {
   btnEdit.click(function (e) {
     $(".editorContainer").addClass("show");
     $("body").addClass("scroll-none");
+    $("#editorTop").css("top", $(window).scrollTop())
   });
 
   btnEditCancel.click(function (e) {

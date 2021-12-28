@@ -97,7 +97,7 @@ nav .blue {
 .uploadContainer {
   position: absolute;
   width: 100%;
-  height: 1000px;
+  height: 10000px;
   background: #00000095;
   z-index: 2000;
   display: none;
@@ -116,6 +116,10 @@ nav .blue {
 .buttonUploadContainer {
   display: flex;
   justify-content: flex-end;
+}
+
+#uploadTop{
+  position: relative;
 }
 
 #postFormContainer {
@@ -148,13 +152,26 @@ nav .blue {
   background: var(--blueblack);
 }
 
+#formSelectPost{
+  width: 100px;
+}
+
 #postContainer {
   width: 100%;
+  overflow-x: hidden;
   background: white;
 }
 
 .post {
   border-bottom: 1px solid var(--lightGrey);
+}
+
+.postFormContent{
+  position: relative;
+}
+
+#editButton{
+  
 }
 
 .mainContentContainer {
@@ -163,6 +180,7 @@ nav .blue {
 
 .postContentContainer {
   flex: 1;
+  width: 100%;
 }
 
 .header {
@@ -414,7 +432,7 @@ a#search {
 }
 
 .imagePreviewContainer {
-  height: 415px;
+  max-height: 400px;
   overflow-y: scroll;
   overflow-x: hidden;
   display: none;
@@ -428,7 +446,7 @@ a#search {
 .editorContainer {
   position: absolute;
   width: 100%;
-  height: 1000px;
+  height: 10000px;
   background: #00000095;
   z-index: 2000;
   display: none;
@@ -451,13 +469,13 @@ a#search {
   margin-bottom: 15px;
 }
 
-.note-editing-area {
-  height: 300px;
-}
-
 .buttonEditorContainer {
   display: flex;
   justify-content: flex-end;
+}
+
+#editorTop{
+  position: relative;
 }
 
 .btn-fullscreen {
@@ -471,6 +489,9 @@ a#search {
 #editButton {
   border: 0px;
   background: inherit;
+  position: absolute;
+  left: 470px;
+  top: 8px;
 }
 
 #editButton:focus {
@@ -480,6 +501,14 @@ a#search {
 
 #editButton:hover i {
   color: rgb(104, 103, 103);
+}
+
+.postBody{
+  width: 100%;
+}
+
+.postBody span {
+  max-width: 100%;
 }
 
 .postBody p {
@@ -500,7 +529,7 @@ a#search {
   max-width: 100%;
 }
 
-.postBody span {
+.postBody code{
   max-width: 100%;
 }
 
@@ -590,4 +619,30 @@ li.resultUser {
 
 .note-group-select-from-files{
   display: none;
+}
+
+
+/* editor */
+
+.note-editing-area {
+  height: 400px;
+}
+
+.note-editing-area p{
+  margin: 0px;
+}
+
+.modal-header{
+  align-items: center !important;
+}
+
+.modal-header .close {
+  padding: 1rem 1rem;
+  margin: -1rem -1rem -1rem 0rem;
+}
+
+.modal-header .close{
+  box-shadow: 0px;
+  outline: 0px;
+  border: 0px;
 }

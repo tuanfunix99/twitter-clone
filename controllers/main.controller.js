@@ -42,6 +42,7 @@ exports.main = async (req, res) => {
       avatar: user_main.avatar,
       username: user_main.username,
       _id: user_main._id,
-      getAvatar
+      getAvatar,
+      isUser: null
     });
 };

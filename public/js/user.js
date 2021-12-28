@@ -1,9 +1,8 @@
 $(document).ready(function () {
   const socket = io();
   const btnFollow = $(".btnFollowProfile");
-  $(".backButtonContainer button").click(function () {
-    window.history.go(-1);
-  });
+
+  $(".backButtonContainer a").attr("href", document.referrer);
 
   const updateNewPost = function(post) {
     const postContainer = $(`[data-parent-profile='${post.postedBy.username}']`)

@@ -10,6 +10,7 @@ $(document).ready(function () {
   const btnuploadcancel = $("#btn-upload-cancel");
   const btnsubmitupload = $("#btn-submit-upload");
   const inputUpload = $("#input-upload");
+  const editButton = $("#editButton");
   const imagePreview = document.getElementById("imagePreview");
   const postContainer = $("#postContainer");
 
@@ -74,6 +75,10 @@ $(document).ready(function () {
     }
   });
 
+  editButton.click(function (e) {
+    e.preventDefault();
+  })
+
   btnsubmitupload.click(function (e) {
     e.preventDefault();
     btnsubmitupload.prop("disabled", true);
@@ -121,6 +126,7 @@ $(document).ready(function () {
     uploadTitle = $(this).val();
     $(".uploadContainer").addClass("show");
     $("body").addClass("scroll-none");
+    $("#uploadTop").css("top", $(window).scrollTop())
   });
 
   btnuploadcancel.click(function (e) {

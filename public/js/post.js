@@ -1,9 +1,11 @@
 $(document).ready(function () {
   const socket = io();  
-  const postContainer = $("#postContainer");
+  const postContainer = $(`[data-parent-profile='main']`)
+  .children().next().last();
   const btnpost = $("#postButton");
   const textarea = $("#postTextarea");
 
+  
   socket.on("post", (postData) => {
     btnpost.remove(".spinner-border");
     btnpost.text("Tweet");

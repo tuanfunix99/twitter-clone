@@ -4,7 +4,8 @@
 <link rel="stylesheet" href="/css/responsive_web.css">
 <body>         
 <% if(isUser) {%>
-    <%- include('../layout/upload') -%>         
+    <%- include('../layout/upload') -%>
+    <%- include('../layout/editor') -%>           
 <% } %>
 <div class="container">
     <div class="row">
@@ -14,9 +15,11 @@
             <div class="titleContainer fixed-top">
                 <span class="userProfile">
                     <div class="backButtonContainer p-1">
+                        <a href="#">
                         <button>
                             <i class="fas fa-arrow-left"></i>
                         </button>
+                    </a>
                       </div>
                     <div class="infoUserContainer">
                         <h1><%= username %> </h1>
@@ -34,6 +37,9 @@
                 <% } %>
             </div>
             <%- include('./userform') -%>
+            <% if(isUser) {%>
+            <%- include('../layout/postform') -%> 
+            <% } %> 
             <%- include('../layout/post') -%>
         </div>
         <div class="col-lg-4 third-col">
@@ -43,6 +49,8 @@
 </div>
 <%- include('../layout/footer') -%>
 <script src="/js/common.js"></script>
+<script src="/js/post.js"></script>
+<script src="/js/editor.js"></script>
 <script src="/js/search.js"></script>
 <script src="/js/user.js"></script>
 <script src="/js/video.js"></script>

@@ -7,11 +7,12 @@
 <div class="container">
     <div class="row">
         <%- include('../layout/navbar') -%>
-        <div class="mainSectionContainer col-lg-6 col-10 p-0">
+        <div data-parent-profile="main"
+             class="mainSectionContainer col-lg-6 col-10 p-0">
             <div class="titleContainer fixed-top">
                 <h1><%= title %> </h1>
             </div>
-            <%- include('./postform') -%>
+            <%- include('../layout/postform') -%>
             <%- include('../layout/post') -%>
         </div>
         <div class="col-lg-4 third-col">

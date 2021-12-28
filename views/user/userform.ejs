@@ -14,12 +14,19 @@
   <div class="avatarProfile">
     <div class="avatarProfileContainer">
       <img
-        data-user-avatar="<%= username %>"
+        data-avatar="<%= 'img' + _id + 'png' %>"
         class="rounded-circle"
-        src="<%= getAvatar(avatar) %> "
+        src="<%= getAvatar(avatar) %>"
         alt="avatar"
         title="<%= username %>"
       />
+      <% if(isUser) {%>
+      <div class="uploadAvatarContainer">
+      <button class="uploadButton" title="upload avatar" value="avatar">
+        <i class="fas fa-camera"></i>
+      </button>
+    </div>
+    <% } %>
     </div>
     <% if(!isUser) {%>
     <form class="formFollowProfile">
