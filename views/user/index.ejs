@@ -2,11 +2,12 @@
 <link rel="stylesheet" href="/css/main.css">
 <link rel="stylesheet" href="/css/user.css">
 <link rel="stylesheet" href="/css/responsive_web.css">
-<body>         
+<body data-authenticate-user=<%= isUser %>>         
 <% if(isUser) {%>
     <%- include('../layout/upload') -%>
     <%- include('../layout/editor') -%>           
-<% } %>
+    <%- include('../layout/deletemodal') -%>           
+    <% } %>
 <div class="container">
     <div class="row">
         <%- include('../layout/navbar') -%>
@@ -15,11 +16,9 @@
             <div class="titleContainer fixed-top">
                 <span class="userProfile">
                     <div class="backButtonContainer p-1">
-                        <a href="#">
                         <button>
                             <i class="fas fa-arrow-left"></i>
                         </button>
-                    </a>
                       </div>
                     <div class="infoUserContainer">
                         <h1><%= username %> </h1>

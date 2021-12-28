@@ -51,8 +51,8 @@ app.use(express.static(path.join(__dirname, "uploads")));
 app.use(mainRoutes);
 app.use(authRoutes);
 app.use(userRoutes);
-app.use("/api", postApiRoutes);
-app.use("/api", userApiRoutes);
+app.use("/api/post", postApiRoutes);
+app.use("/api/user", userApiRoutes);
 
 httpServer.listen(PORT, () => {
   log.info("listening on port " + PORT);

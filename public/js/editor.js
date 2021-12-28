@@ -18,6 +18,7 @@ $(document).ready(function () {
     $("body").removeClass("scroll-none");
     const newPost = createPost(postData);
     postContainer.prepend(newPost);
+    window.location.reload();
   });
 
   btnEdit.click(function (e) {
@@ -43,6 +44,6 @@ $(document).ready(function () {
       content: content.toString(),
       edit: true,
     };
-    $.post("/api/post", data);
+    $.post("/api/post/post", data);
   });
 });

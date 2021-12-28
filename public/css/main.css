@@ -225,6 +225,11 @@ nav .blue {
   color: white;
 }
 
+.postButtonContainer button:focus{
+  box-shadow: 0px;
+  outline: 0px;
+}
+
 .date {
   color: gray;
   font-weight: 500;

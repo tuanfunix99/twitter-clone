@@ -38,6 +38,7 @@ $(document).ready(function () {
     $(".imagePreviewContainer").css("display", "none");
     $(".uploadContainer").removeClass("show");
     $("body").removeClass("scroll-none");
+    window.location.reload();
   }
 
   socket.on("upload-avatar", (respone) => {
@@ -47,7 +48,7 @@ $(document).ready(function () {
     ]);
     if (eles && eles.length > 0) {
       for (let ele of eles) {
-        ele.src = `/api/user-images/${avatar}`;
+        ele.src = `/api/user/user-images/${avatar}`;
       }
     }
     uploadSuccess();
@@ -60,7 +61,7 @@ $(document).ready(function () {
     ]);
     if (eles && eles.length > 0) {
       for (let ele of eles) {
-        ele.src = `/api/user-images/${background}`;
+        ele.src = `/api/user/user-images/${background}`;
       }
     }
     uploadSuccess();
@@ -98,7 +99,7 @@ $(document).ready(function () {
       data.append("background", upload);
       $.ajax({
         type: "POST",
-        url: "/api/upload-background",
+        url: "/api/user/upload-background",
         data: data,
         contentType: false,
         processData: false,
@@ -113,7 +114,7 @@ $(document).ready(function () {
         data.append("avatar", blob);
         $.ajax({
           type: "POST",
-          url: "/api/upload-avatar",
+          url: "/api/user/upload-avatar",
           data: data,
           contentType: false,
           processData: false,
@@ -176,7 +177,7 @@ $(document).ready(function () {
     const username = btnThis.attr("data-follow-username");
     const isFollowing = btnThis.attr("data-following");
     isFollowing === "true" ? btnThis.text("Follow") : btnThis.text("Following");
-    $.post("/api/follow", { username, main: true }, function (result) {
+    $.post("/api/user/follow", { username, main: true }, function (result) {
       const { posts, follow } = result;
       if (follow) {
         for (let post of posts) {

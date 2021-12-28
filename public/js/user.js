@@ -2,7 +2,9 @@ $(document).ready(function () {
   const socket = io();
   const btnFollow = $(".btnFollowProfile");
 
-  $(".backButtonContainer a").attr("href", document.referrer);
+  $(".backButtonContainer").click(function (e){
+    window.history.go(-1)
+  })
 
   const updateNewPost = function(post) {
     const postContainer = $(`[data-parent-profile='${post.postedBy.username}']`)
@@ -11,6 +13,7 @@ $(document).ready(function () {
     $(`p[data-tweets='${post.postedBy.username}']`).text(`${tweets + 1} Tweets`);
     const newPost = createPost(post); 
     postContainer.prepend(newPost);
+    window.location.reload();
   }
 
   socket.on("edit", (postData) => {
@@ -28,7 +31,7 @@ $(document).ready(function () {
       const username = btnThis.attr("data-follow-username");
       const isFollowing = btnThis.attr("data-following");
       isFollowing === "true" ? btnFollow.text("Follow") : btnFollow.text("Following");
-      $.post("/api/follow", { username, main: false }, function (result) {
+      $.post("/api/user/follow", { username, main: false }, function (result) {
         const { follow } = result;
         if (follow) {
           btnFollow.attr("data-following", true);

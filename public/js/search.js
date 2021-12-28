@@ -46,7 +46,7 @@ $(document).ready(function () {
   searchUser.keyup(function (e) {
     $(".searchResult").addClass("visible");
     resultList.children("#not").remove();
-    $.post("/api/search-user", { value: e.target.value }, function (results) {
+    $.post("/api/user/search-user", { value: e.target.value }, function (results) {
       if (results.length > 0) {
         resultList.children(".resultUser").remove();
         resultList.children(".not-found").remove();

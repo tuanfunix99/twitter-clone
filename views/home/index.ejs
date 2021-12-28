@@ -1,7 +1,7 @@
 <%- include('../layout/header') -%>
 <link rel="stylesheet" href="/css/main.css">
 <link rel="stylesheet" href="/css/responsive_web.css">
-<body>
+<body data-authenticate-user=<%= isUser %>>
 <%- include('../layout/upload') -%>    
 <%- include('../layout/editor') -%>    
 <div class="container">

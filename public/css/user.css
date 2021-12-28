@@ -114,6 +114,10 @@ form.formUserProfile button {
   transition: 0.5s;
 }
 
+.uploadAvatarContainer .uploadButton {
+  background: no-repeat;
+}
+
 .avatarProfileContainer img {
   width: 100%;
   height: 100%;
@@ -134,6 +138,7 @@ form.formFollowProfile button {
 .uploadBackgroundContainer {
   display: flex;
   justify-content: center;
+  align-items: center;
   position: absolute;
   top: 0px;
   left: 0px;
@@ -151,9 +156,50 @@ form.formFollowProfile button {
 }
 
 .uploadBackgroundContainer .uploadButton {
-  background: #ffffff45 !important;
+  background: no-repeat;
 }
 
 .uploadBackgroundContainer .uploadButton i {
   font-size: 25px;
+}
+
+.userFunction {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btnUpdateFunction{
+  border: 0px;
+  background: white;
+  font-size: 20px;
+  color: #00d0ffa6;
+  transition: 0.5s;
+}
+
+.btnUpdateFunction:hover{
+  color: #00d0ff;
+}
+
+.btnUpdateFunction:focus{
+  outline: 0px;
+  box-shadow: 0px;
+}
+
+.btnDeleteFunction{
+  border: 0px;
+  outline: 0px;
+  box-shadow: 0px;
+  background: white;
+  color: #f80c37a3;
+  transition: 0.5s;
+}
+
+.btnDeleteFunction:hover{
+  color: #f80c37fa;
+}
+
+.btnDeleteFunction:focus{
+  outline: 0px;
+  box-shadow: 0px;
 }
