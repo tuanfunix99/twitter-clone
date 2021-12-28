@@ -6,6 +6,10 @@
   --spacing: 15px;
 }
 
+body{
+  overflow-x: hidden;
+}
+
 body.scroll-none {
   overflow-y: hidden;
 }
@@ -495,7 +499,7 @@ a#search {
   border: 0px;
   background: inherit;
   position: absolute;
-  left: 470px;
+  left: 95%;
   top: 8px;
 }
 
@@ -630,7 +634,7 @@ li.resultUser {
 /* editor */
 
 .note-editing-area {
-  height: 400px;
+  height: 350px;
 }
 
 .note-editing-area p{

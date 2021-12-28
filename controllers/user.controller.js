@@ -42,7 +42,9 @@ exports.userProfile = async (req, res, next) => {
       _id,
       getAvatar,
       getBackground,
-      isFollowing: isFollowing !== undefined
+      isFollowing: isFollowing !== undefined,
+      following: req.user.following.length,
+      follower: req.user.follower.length
     });
   } catch (error) {
     console.log(error.message);

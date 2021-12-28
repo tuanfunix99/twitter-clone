@@ -2,7 +2,8 @@
 <link rel="stylesheet" href="/css/main.css">
 <link rel="stylesheet" href="/css/user.css">
 <link rel="stylesheet" href="/css/responsive_web.css">
-<body data-authenticate-user=<%= isUser %>>         
+<body data-authenticate-user=<%= isUser %>>      
+<% let displayName = firstName + ' ' + lastName %>        
 <% if(isUser) {%>
     <%- include('../layout/upload') -%>
     <%- include('../layout/editor') -%>           
@@ -21,7 +22,7 @@
                         </button>
                       </div>
                     <div class="infoUserContainer">
-                        <h1><%= username %> </h1>
+                        <h1><%= displayName %></h1>
                         <p data-tweets="<%= username %>"><%= posts.length + ' Tweets' %> </p>
                     </div>  
                 </span>

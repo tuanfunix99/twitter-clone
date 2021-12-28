@@ -203,3 +203,31 @@ form.formFollowProfile button {
   outline: 0px;
   box-shadow: 0px;
 }
+
+.detailProfileContainer{
+  margin-left: 20px;
+}
+
+.detailProfileContainer h4{
+  margin: 0px;
+}
+
+.detailProfileContainer p{
+  margin: 0px;
+}
+
+.followDetail{
+  display: flex;
+}
+
+.followDetail span{
+  display: flex;
+  align-items: center;
+  margin-right: 15px;
+}
+
+.followDetail span h6{
+  margin: 0px;
+  margin-right: 3px;
+  font-weight: 700;
+}

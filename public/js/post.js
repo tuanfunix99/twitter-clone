@@ -25,6 +25,7 @@ $(document).ready(function () {
     for (let ele of eles) {
       ele.remove();
     }
+    $("#postContainer").load(location.href + " #postContainer");
   });
 
 
