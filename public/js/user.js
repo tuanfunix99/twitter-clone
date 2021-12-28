@@ -23,6 +23,11 @@ $(document).ready(function () {
     updateNewPost(postData);
   });
 
+  socket.on("deleted-post", ({ username }) => {
+    const tweets = parseInt($(`p[data-tweets='${username}']`).text().split(" ")[0]);
+    $(`p[data-tweets='${username}']`).text(`${tweets - 1} Tweets`);
+  });
+
   btnFollow.click(function (e) {
       e.preventDefault();
       const btnThis = $(this);

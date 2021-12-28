@@ -22,7 +22,7 @@ exports.createNewPost = async (req, res, next) => {
 
 exports.deletePost = async (req, res, next) => {
   const { postId } = req.body;
-  const { _id } = req.user;
+  const { _id, username } = req.user;
   const io = req.app.get("socketIo");
   try {
     if (!postId) {
@@ -36,7 +36,7 @@ exports.deletePost = async (req, res, next) => {
       throw new Error("User not allowed");
     }
     await Post.findByIdAndRemove(post._id);
-    io.emit("deleted-post", { postId: post._id });
+    io.emit("deleted-post", { postId: post._id, username });
     res.status(200).send({ deleted: true });
   } catch (error) {
     console.log(error.message);

@@ -205,8 +205,13 @@ form.formFollowProfile button {
 }
 
 .detailProfileContainer{
-  margin-left: 20px;
+  /* margin-left: 20px; */
+  position: relative;
+  top: -75px;
+  left: 45px;
+  text-transform: capitalize;
 }
+
 
 .detailProfileContainer h4{
   margin: 0px;

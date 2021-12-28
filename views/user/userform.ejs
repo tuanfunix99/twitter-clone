@@ -1,5 +1,5 @@
 <% let displayName = firstName + ' ' + lastName %>  
-<div id="profileContainer" class="py-3 px-2 mb-2">
+<div id="profileContainer" class="pt-3 px-2 mb-2">
   <div class="backgroundProfile">
     <img data-background=<%= `img${_id}png`%>
      src="<%= getBackground(background) %> " 
@@ -28,24 +28,6 @@
       </button>
     </div>
     <% } %>
-    <div class="detailProfileContainer">
-      <h4><%= displayName %></h4>
-      <p>@<%= username %> </p>
-      <div class="followDetail">
-        <span>
-          <h6><%= following %> </h6>
-          <p>Following</p>
-        </span>
-        <span>
-          <h6><%= follower %> </h6>
-          <% if(follower > 1){ %>
-            <p>Followers</p>
-            <% } else {%>
-              <p>Follower</p>
-          <% } %>    
-        </span>
-      </div>
-    </div>
     </div>
     <% if(!isUser) {%>
     <form class="formFollowProfile">
@@ -56,5 +38,23 @@
         class="btn btn-primary btnFollowProfile"><%= isFollowing ? "Following" : "Follow" %></button> </button>
     </form>
     <% } %>
+  </div>
+  <div class="detailProfileContainer">
+    <h4><%= displayName %></h4>
+    <p>@<%= username %> </p>
+    <div class="followDetail">
+      <span>
+        <h6><%= following %> </h6>
+        <p>Following</p>
+      </span>
+      <span>
+        <h6><%= follower %> </h6>
+        <% if(follower > 1){ %>
+          <p>Followers</p>
+          <% } else {%>
+            <p>Follower</p>
+        <% } %>    
+      </span>
+    </div>
   </div>
 </div>
