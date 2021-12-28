@@ -22,6 +22,7 @@ $(document).ready(function () {
   });
 
   btnEdit.click(function (e) {
+    $(".summernote").summernote({ focus: true });
     $(".editorContainer").addClass("show");
     $("body").addClass("scroll-none");
     $("#editorTop").css("top", $(window).scrollTop())
@@ -31,6 +32,7 @@ $(document).ready(function () {
     e.preventDefault();
     $(".editorContainer").removeClass("show");
     $("body").removeClass("scroll-none");
+    $(".note-editable").text('');
   });
 
   btnSaveEdit.click(function (e) {
