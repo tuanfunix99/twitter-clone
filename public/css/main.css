@@ -174,9 +174,6 @@ nav .blue {
   position: relative;
 }
 
-#editButton{
-  
-}
 
 .mainContentContainer {
   display: flex;
@@ -514,6 +511,7 @@ a#search {
 
 .postBody{
   width: 100%;
+  font-family: 'Open Sans', sans-serif !important;
 }
 
 .postBody span {
@@ -633,9 +631,9 @@ li.resultUser {
 
 /* editor */
 
-.note-editing-area {
+/* .note-editing-area {
   height: 350px;
-}
+} */
 
 .note-editing-area p{
   margin: 0px;
