@@ -4,8 +4,9 @@ const moment = require("moment");
 const { getAvatar, getBackground } = require("../utils/file/user");
 
 exports.userProfile = async (req, res, next) => {
+  const user = req.user;
   const username = req.params.username;
-  let isUser = req.user.username === username;
+  let isUser = user.username === username;
   if (!username) {
     res.redirect("/");
   }
@@ -22,7 +23,7 @@ exports.userProfile = async (req, res, next) => {
       { username: username },
       "_id avatar firstName lastName background following follower"
     );
-    const isFollowing = req.user.following.find(
+    const isFollowing = user.following.find(
       (f) => f._id.toString() === _id.toString()
     );
     let posts = await Post.find(

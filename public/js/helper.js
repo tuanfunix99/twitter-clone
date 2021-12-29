@@ -16,6 +16,11 @@ const spinner = (mess) => {
   return `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>${mess}`;
 };
 
+$(".backButtonContainer").click(function (e){
+  window.history.go(-1)
+})
+
+
 function showUserFunction(isUser, postId){
   if(isUser.length > 0 && isUser === 'true'){
     return `

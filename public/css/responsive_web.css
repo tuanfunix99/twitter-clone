@@ -5,4 +5,11 @@
   .third-col{
     display: none;
   }
+
+  .toolContainer{
+    position: absolute;
+    left: 85%;
+    top: 8px;
+    display: flex;
+  }
 }

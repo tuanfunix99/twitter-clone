@@ -1,11 +1,7 @@
 $(document).ready(function () {
   const socket = io();
   const btnFollow = $(".btnFollowProfile");
-
-  $(".backButtonContainer").click(function (e){
-    window.history.go(-1)
-  })
-
+  
   const updateNewPost = function(post) {
     const postContainer = $(`[data-parent-profile='${post.postedBy.username}']`)
     .children().next().last();

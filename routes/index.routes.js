@@ -7,4 +7,6 @@ exports.userApiRoutes = require('./api/user.route');
 
 exports.mainRoutes = require('./main.route');
 
+exports.postRoutes = require('./post.route');
+
 exports.userRoutes = require('./user.route');
