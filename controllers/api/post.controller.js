@@ -2,6 +2,30 @@ const Post = require("../../models/post.model");
 const User = require("../../models/user.model");
 const Nofication = require("../../models/nofication.model");
 
+exports.updatePost = async (req, res, next) => {
+  const { content, postId } = req.body;
+  const user = req.user;
+  const io = req.app.get("socketIo");
+  try {
+    if (!postId) {
+      throw new Error("Id not provided");
+    }
+    const post = await Post.findById(postId, "_id content postedBy");
+    if (!post) {
+      throw new Error("Post not found");
+    }
+    if (post.postedBy.toString() !== user._id.toString()) {
+      throw new Error("User not allowed");
+    }
+    post.content = content;
+    await post.save();
+    io.emit("update", post);
+    res.status(200);
+  } catch (error) {
+    res.status(400);
+  }
+};
+
 exports.createNewPost = async (req, res, next) => {
   const user = req.user;
   const { content, edit } = req.body;
@@ -23,7 +47,7 @@ exports.createNewPost = async (req, res, next) => {
       createdBy: user._id,
       recivers: user.follower,
       content: "CREATE_NEW_POST",
-      postId: post._id
+      postId: post._id,
     });
 
     for (let f of user.follower) {
@@ -33,7 +57,7 @@ exports.createNewPost = async (req, res, next) => {
       await userFollower.save();
     }
 
-    io.emit("nofication-new-post", { followers: user.follower } )
+    io.emit("nofication-new-post", { followers: user.follower });
     res.status(200);
   } catch (error) {
     res.status(400);
@@ -57,8 +81,28 @@ exports.deletePost = async (req, res, next) => {
     }
     await Post.findByIdAndRemove(post._id);
     io.emit("deleted-post", { postId: post._id, username });
-    await Nofication.deleteMany({ postId: post._id })
+    await Nofication.deleteMany({ postId: post._id });
     res.status(200).send({ deleted: true });
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+exports.loadPost = async (req, res, next) => {
+  const { postId } = req.body;
+  const { _id } = req.user;
+  try {
+    if (!postId) {
+      throw new Error("Id not provided");
+    }
+    const post = await Post.findById(postId, "_id content postedBy");
+    if (!post) {
+      throw new Error("Post not found");
+    }
+    if (post.postedBy.toString() !== _id.toString()) {
+      throw new Error("User not allowed");
+    }
+    res.status(200).send({ post: post });
   } catch (error) {
     console.log(error.message);
   }

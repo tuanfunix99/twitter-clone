@@ -85,7 +85,7 @@ function createPost(post) {
           ${ showUserFunction(isUser, post._id) }
         </div>
           <div class='postBody'>
-              <span>${content}</span>
+              <span data-post-span-id=${post._id}}>${content}</span>
           </div>
           <div class='postFooter'>
               <div class='postButtonContainer'>

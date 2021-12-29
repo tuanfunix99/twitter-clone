@@ -1,10 +1,7 @@
 <div class="px-0" id="postContainer">
-  <% const { postedBy, content, time } = post %>
-  <% const displayName = postedBy.firstName + " " + postedBy.lastName; %>
-  <div
-    class="post p-2"
-    data-post-id="<%= post._id %>"
-  >
+  <% const { postedBy, content, time } = post %> <% const displayName =
+  postedBy.firstName + " " + postedBy.lastName; %>
+  <div class="post p-2" data-post-id="<%= post._id %>">
     <div class="mainContentContainer">
       <div class="postContentContainer mx-2">
         <div class="header">
@@ -31,24 +28,28 @@
             <span class="date"><%= time %></span>
           </div>
           <% if(isUser) {%>
-            <div class="userFunction">
-              <button class="btnUpdateFunction" title="Update">
-                <i class="fas fa-pen-square"></i>
-              </button>
-              <button
-                class="btnDeleteFunction"
-                title="Delete"
-                data-toggle="modal"
-                data-target="#deleteModal"
-                data-delete-id="<%= `${post._id}` %>"
-              >
-                <i class="fas fa-trash"></i>
-              </button>
-            </div>
-            <% } %>
+          <div class="userFunction">
+            <button
+              class="btnUpdateFunction"
+              title="Update"
+              data-update-id="<%= `${post._id}` %>"
+            >
+              <i class="fas fa-pen-square"></i>
+            </button>
+            <button
+              class="btnDeleteFunction"
+              title="Delete"
+              data-toggle="modal"
+              data-target="#deleteModal"
+              data-delete-id="<%= `${post._id}` %>"
+            >
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+          <% } %>
         </div>
         <div class="postBody">
-          <span><%- content %></span>
+          <span data-post-span-id="<%= post._id %>"><%- content %></span>
         </div>
         <div class="postFooter">
           <div class="postButtonContainer p-1">

@@ -47,7 +47,7 @@ $(document).ready(function () {
       }
     }
   });
-
+  
   socket.on("upload-avatar", (respone) => {
     const { _id, avatar } = respone;
     const eles = document.querySelectorAll([

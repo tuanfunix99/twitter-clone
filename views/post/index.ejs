@@ -3,7 +3,8 @@
 <link rel="stylesheet" href="/css/post.css">
 <link rel="stylesheet" href="/css/responsive_web.css">
 <body>      
-    <% if(isUser) {%>           
+    <% if(isUser) {%>    
+        <%- include('../layout/editor') -%>        
         <%- include('../layout/deletemodal') -%>           
     <% } %>
 <div class="container">
@@ -29,6 +30,7 @@
 <%- include('../layout/footer') -%>
 <script src="/js/common.js"></script>
 <script src="/js/post.js"></script>
+<script src="/js/editor.js"></script>
 <script src="/js/search.js"></script>
 <script src="/js/user.js"></script>
 <script src="/js/video.js"></script>
