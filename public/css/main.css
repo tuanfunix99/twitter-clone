@@ -537,14 +537,14 @@ a#search {
 .postBody{
   width: 100%;
   font-family: 'Open Sans', sans-serif !important;
-  font-size: 16px;
+  font-size: 16px !important;
   font-weight: 500;
 }
 
 .postBody span {
   max-width: 100%;
   font-family: 'Open Sans', sans-serif !important;
-  font-size: 16px;
+  font-size: 16px !important;
   font-weight: 500;
 }
 
@@ -552,21 +552,27 @@ a#search {
   max-width: 100%;
   margin: 0px;
   font-family: 'Open Sans', sans-serif !important;
-  font-size: 16px;
+  font-size: 16px !important;
   font-weight: 500;
 }
 
 .postBody a {
   max-width: 100%;
   font-family: 'Open Sans', sans-serif !important;
-  font-size: 18px !important;
+  font-size: 15px !important;
   font-weight: 500;
 }
 
 .postBody font{
   max-width: 100% !important;
   font-family: 'Open Sans', sans-serif !important;
-  font-size: 16px;
+  font-size: 16px !important;
+  font-weight: 500;
+}
+
+.postBody b{
+  font-family: 'Open Sans', sans-serif !important;
+  font-size: 16px !important;
   font-weight: 500;
 }
 
