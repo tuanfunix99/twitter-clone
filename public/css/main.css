@@ -730,3 +730,65 @@ li.resultUser {
 .backButtonContainer button:hover {
   background: rgba(231, 230, 230, 0.623);
 }
+
+
+
+/* nofication */
+
+#noficationContainer {
+  position: relative;
+}
+
+#noficationAmount {
+    position: absolute;
+    top: 5px;
+    left: 25px;
+    font-size: 12px;
+    background: red;
+    padding: 0px 5px;
+    border-radius: 50%;
+    color: white;
+}
+
+
+/* User Function */
+.userFunction {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btnUpdateFunction{
+  border: 0px;
+  background: white;
+  font-size: 20px;
+  color: #00d0ffa6;
+  transition: 0.5s;
+}
+
+.btnUpdateFunction:hover{
+  color: #00d0ff;
+}
+
+.btnUpdateFunction:focus{
+  outline: 0px;
+  box-shadow: 0px;
+}
+
+.btnDeleteFunction{
+  border: 0px;
+  outline: 0px;
+  box-shadow: 0px;
+  background: white;
+  color: #f80c37a3;
+  transition: 0.5s;
+}
+
+.btnDeleteFunction:hover{
+  color: #f80c37fa;
+}
+
+.btnDeleteFunction:focus{
+  outline: 0px;
+  box-shadow: 0px;
+}

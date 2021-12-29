@@ -34,12 +34,14 @@ $(document).ready(function () {
     $("#postContainer").load(location.href + " #postContainer");
   });
 
-  emojiButton.addEventListener("click", function(e) {
-    e.preventDefault();
-    picker.togglePicker(emojiButton);
-  })
+  if (emojiButton) {
+    emojiButton.addEventListener("click", function (e) {
+      e.preventDefault();
+      picker.togglePicker(emojiButton);
+    });
+  }
 
-  picker.on('emoji', emoji => {
+  picker.on("emoji", (emoji) => {
     text.value += emoji;
   });
 
@@ -63,9 +65,9 @@ $(document).ready(function () {
     $.post("/api/post/post", data);
   });
 
-  $("#postContainer").on("click", '.btnDeleteFunction', function (e){
+  $("#postContainer").on("click", ".btnDeleteFunction", function (e) {
     deleteId = $(this).attr("data-delete-id");
-  })
+  });
 
   deletePostAction.click(function (e) {
     deletePostAction.text("");
@@ -78,7 +80,7 @@ $(document).ready(function () {
         deletePostAction.text("Delete");
         deletePostAction.prop("disabled", false);
         deletePostCancel.prop("disabled", false);
-        $('#deleteModal').modal('hide');
+        $("#deleteModal").modal("hide");
       }
     });
   });

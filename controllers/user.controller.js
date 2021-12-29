@@ -2,6 +2,7 @@ const User = require("../models/user.model");
 const Post = require("../models/post.model");
 const moment = require("moment");
 const { getAvatar, getBackground } = require("../utils/file/user");
+const { getAmountNofication } = require("../utils/helper")
 
 exports.userProfile = async (req, res, next) => {
   const user = req.user;
@@ -54,6 +55,7 @@ exports.userProfile = async (req, res, next) => {
       isFollowing: isFollowing !== undefined,
       following: following.length,
       follower: follower.length,
+      noficationAmount: getAmountNofication(user.noficationAmount)
     });
   } catch (error) {
     console.log(error.message);

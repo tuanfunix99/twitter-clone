@@ -7,7 +7,7 @@ const {
   mainRoutes,
   userApiRoutes,
   userRoutes,
-  postRoutes
+  postRoutes,
 } = require("./routes/index.routes");
 const path = require("path");
 const session = require("express-session");
@@ -56,7 +56,12 @@ app.use(postRoutes);
 app.use("/api/post", postApiRoutes);
 app.use("/api/user", userApiRoutes);
 app.use((req, res, next) => {
-  res.render("notfound", { title: "Not Found", username: null})
+  res.render("notfound", {
+    title: "Not Found",
+    username: null,
+    _id: null,
+    noficationAmount: 0,
+  });
 });
 
 httpServer.listen(PORT, () => {

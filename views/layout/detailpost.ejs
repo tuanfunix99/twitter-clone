@@ -30,6 +30,22 @@
             <span class="username">@<%= postedBy.username %></span> |
             <span class="date"><%= time %></span>
           </div>
+          <% if(isUser) {%>
+            <div class="userFunction">
+              <button class="btnUpdateFunction" title="Update">
+                <i class="fas fa-pen-square"></i>
+              </button>
+              <button
+                class="btnDeleteFunction"
+                title="Delete"
+                data-toggle="modal"
+                data-target="#deleteModal"
+                data-delete-id="<%= `${post._id}` %>"
+              >
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+            <% } %>
         </div>
         <div class="postBody">
           <span><%- content %></span>

@@ -36,6 +36,18 @@ $(document).ready(function () {
     $("body").removeClass("scroll-none");
   };
 
+  socket.on("nofication-new-post", ({ followers }) => {
+    for (let follower of followers) {
+      const ele = document.querySelector([
+        `[data-nofication-id='${follower.toString().trim()}']`,
+      ]);
+      if (ele) {
+        const amount = parseInt(ele.innerHTML.toString()) + 1;
+        ele.innerHTML = getAmountNofication(amount);
+      }
+    }
+  });
+
   socket.on("upload-avatar", (respone) => {
     const { _id, avatar } = respone;
     const eles = document.querySelectorAll([

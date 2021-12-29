@@ -2,6 +2,8 @@ const Post = require("../models/post.model");
 const User = require("../models/user.model");
 const moment = require("moment");
 const { getAvatar } = require("../utils/file/user");
+const { get } = require("mongoose");
+const { getAmountNofication } = require("../utils/helper")
 
 exports.main = async (req, res) => {
   const title = "Home";
@@ -43,6 +45,7 @@ exports.main = async (req, res) => {
       username: user_main.username,
       _id: user_main._id,
       getAvatar,
-      isUser: null
+      isUser: null,
+      noficationAmount: getAmountNofication(user_main.noficationAmount)
     });
 };

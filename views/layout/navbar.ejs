@@ -2,7 +2,12 @@
     <a href="/" title="Twitter"><i class="fas fa-dove blue"></i></a>
     <a href=<%= `/user-profile/${username}` %>  title="Home"><i class="fas fa-home"></i></a>
     <a href="#" title="Search" id="search"><i class="fas fa-search"></i></a>
-    <a href="#" title="Nofication"><i class="fas fa-bell"></i></a>
+    <a href="#" title="Nofication" id="noficationContainer">
+        <p id="noficationAmount" data-nofication-id="<%= _id %>">
+            <%= noficationAmount %> 
+        </p>
+        <i class="fas fa-bell"></i>
+    </a>
     <a href="#" title="Message"><i class="fas fa-paper-plane"></i></a>
     <a href="#" title="Profile"><i class="fas fa-user"></i></a>
     <a href="#" title="Explore"><i class="fas fa-globe"></i></a>

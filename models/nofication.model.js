@@ -13,7 +13,11 @@ const noficationSchema = new Schema(
         ref: "User",
       }
     ],
-    content: String
+    content: String,
+    postId: {
+      type: Schema.Types.ObjectId,
+      ref: "Post",
+    }
   },
   {
     timestamps: true,

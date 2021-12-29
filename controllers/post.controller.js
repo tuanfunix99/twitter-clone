@@ -2,11 +2,12 @@ const User = require("../models/user.model");
 const Post = require("../models/post.model");
 const moment = require("moment");
 const { getAvatar, getBackground } = require("../utils/file/user");
+const { getAmountNofication } = require("../utils/helper")
 
 exports.postPage = async (req, res, next) => {
   const user = req.user;
   const { username, postId } = req.params;
-  const isUser = username && user.username;
+  const isUser = username === user.username;
   try {
     if (!username || !postId) {
       return res.redirect("/not-found");
@@ -28,7 +29,10 @@ exports.postPage = async (req, res, next) => {
       username: req.user.username,
       post,
       user: userLoad,
-      getAvatar
+      getAvatar,
+      _id: user._id,
+      noficationAmount: getAmountNofication(user.noficationAmount),
+      isUser
     });
   } catch (error) {}
 };

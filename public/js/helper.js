@@ -1,15 +1,23 @@
-getAvatar = (avatar) => {
+const getAvatar = (avatar) => {
   if (avatar != "/images/profilePic.jpeg") {
     return `/api/user/user-images/${avatar}`;
   }
   return avatar;
 };
 
-getBackground = (background) => {
+const getBackground = (background) => {
   if (background != "/images/background_default.png") {
     return `/api/user/user-images/${background}`;
   }
   return background;
+};
+
+const getAmountNofication = (amount) => {
+  if (amount > 99) {
+    return (99 + "+");
+  } else {
+    return amount;
+  }
 };
 
 const spinner = (mess) => {
