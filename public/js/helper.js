@@ -78,6 +78,8 @@ function createPost(post) {
           <div class="userInfo">
             <a href=${link} class="displayName">${displayName}</a>
             <span class="username">@${postedBy.username}</span> |
+            <span class="view"><a
+            href="${`/view-post/${postedBy.username}/${post._id}`}">View Post</a></span> |
             <span class="date">${time}</span>
           </div>
           ${ showUserFunction(isUser, post._id) }
