@@ -23,13 +23,9 @@ $(document).ready(function () {
   </div>
   `;
 
-  const spinner = (mess) => {
-    return `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>${mess}`;
-  };
-
   $(".postBody p").children("br").remove();
 
-  const uploadSuccess = function(){
+  const uploadSuccess = function () {
     btnsubmitupload.prop("disabled", false);
     btnuploadcancel.prop("disabled", false);
     btnsubmitupload.text("Upload");
@@ -38,7 +34,7 @@ $(document).ready(function () {
     $(".imagePreviewContainer").css("display", "none");
     $(".uploadContainer").removeClass("show");
     $("body").removeClass("scroll-none");
-  }
+  };
 
   socket.on("upload-avatar", (respone) => {
     const { _id, avatar } = respone;
@@ -77,7 +73,7 @@ $(document).ready(function () {
 
   editButton.click(function (e) {
     e.preventDefault();
-  })
+  });
 
   btnsubmitupload.click(function (e) {
     e.preventDefault();
@@ -126,7 +122,7 @@ $(document).ready(function () {
     uploadTitle = $(this).val();
     $(".uploadContainer").addClass("show");
     $("body").addClass("scroll-none");
-    $("#uploadTop").css("top", $(window).scrollTop())
+    $("#uploadTop").css("top", $(window).scrollTop());
   });
 
   btnuploadcancel.click(function (e) {
@@ -186,21 +182,21 @@ $(document).ready(function () {
         document
           .getElementById("postContainer")
           .removeChild(document.getElementById("card"));
-        btnThis.attr("data-following", true);  
+        btnThis.attr("data-following", true);
         btnfollow.prop("disabled", false);
       } else {
         const eles = document.querySelectorAll([
           `[data-post-username='${username}']`,
         ]);
-        if(eles && eles.length > 0){
-          for(let ele of eles){
+        if (eles && eles.length > 0) {
+          for (let ele of eles) {
             ele.remove();
           }
         }
         document
           .getElementById("postContainer")
           .removeChild(document.getElementById("card"));
-        btnThis.attr("data-following", false);  
+        btnThis.attr("data-following", false);
         btnfollow.prop("disabled", false);
       }
     });

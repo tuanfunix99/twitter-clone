@@ -492,12 +492,16 @@ a#search {
   display: none;
 }
 
+.toolContainer{
+  position: absolute;
+  left: 90%;
+  top: 8px;
+  display: flex;
+}
+
 #editButton {
   border: 0px;
   background: inherit;
-  position: absolute;
-  left: 95%;
-  top: 8px;
 }
 
 #editButton:focus {
@@ -508,6 +512,21 @@ a#search {
 #editButton:hover i {
   color: rgb(104, 103, 103);
 }
+
+#emojiButton {
+  border: 0px;
+  background: inherit;
+}
+
+#emojiButton:focus {
+  border: 0px;
+  outline: 0px;
+}
+
+#emojiButton:hover i {
+  color: rgb(104, 103, 103);
+}
+
 
 .postBody{
   width: 100%;

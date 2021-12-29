@@ -6,9 +6,15 @@ $(document).ready(function () {
     .last();
   const btnpost = $("#postButton");
   const textarea = $("#postTextarea");
+  const text = document.getElementById("postTextarea");
   const deletePostAction = $("#delete-post-action");
   const deletePostCancel = $("#delete-post-cancel");
+  const emojiButton = document.getElementById("emojiButton");
   let deleteId = "";
+
+  const picker = new EmojiButton({
+    position: "bottom",
+  });
 
   socket.on("post", (postData) => {
     btnpost.remove(".spinner-border");
@@ -28,6 +34,14 @@ $(document).ready(function () {
     $("#postContainer").load(location.href + " #postContainer");
   });
 
+  emojiButton.addEventListener("click", function(e) {
+    e.preventDefault();
+    picker.togglePicker(emojiButton);
+  })
+
+  picker.on('emoji', emoji => {
+    text.value += emoji;
+  });
 
   $(textarea).keyup(function (e) {
     value = $(e.target).val();
@@ -44,13 +58,12 @@ $(document).ready(function () {
     btnpost.append(spinner("Tweet..."));
     btnpost.prop("disabled", true);
     const data = {
-      content: value,
+      content: text.value,
     };
     $.post("/api/post/post", data);
   });
 
   $("#postContainer").on("click", '.btnDeleteFunction', function (e){
-    console.log($(this));
     deleteId = $(this).attr("data-delete-id");
   })
 
