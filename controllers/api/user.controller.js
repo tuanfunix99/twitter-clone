@@ -122,21 +122,8 @@ exports.getUserImages = (req, res, next) => {
 };
 
 exports.searchUser = async (req, res, next) => {
-  const { value } = req.body;
   try {
-    if (!value || value.trim().length === 0) {
-      return res.status(200).send([]);
-    }
-    let users = await User.find(
-      {
-        $or: [
-          { username: { $regex: ".*" + value + ".*" } },
-          { firstName: { $regex: ".*" + value + ".*" } },
-          { lastName: { $regex: ".*" + value + ".*" } },
-        ],
-      },
-      "_id avatar username firstName lastName"
-    );
+    let users = await User.find({}, "_id avatar username firstName lastName");
     res.status(200).send(users);
   } catch (error) {
     console.log(error);

@@ -1,6 +1,7 @@
 $(document).ready(function () {
   const searchUser = $("#search-user");
   const resultList = $("#resultList");
+  let users = [];
 
   const notFound =
     '<li class="not-found">No results for people or keywords</li>';
@@ -39,27 +40,50 @@ $(document).ready(function () {
     );
   }
 
-  $(".searchFormContainer").click(function () {
-    $(".searchResult").toggleClass("visible");
+  $(".searchFormContainer").click(function (){
+    $(".searchResult").addClass("visible");
+    if (users.length <= 0) {
+      $.post("/api/user/search-user", function (results) {
+        users = results;
+      });
+    }
   });
+
+  $('.mainSectionContainer').click(function () {
+    $(".searchResult").removeClass("visible");
+  })
+
+  $('.third-col').click(function () {
+    $(".searchResult").removeClass("visible");
+  })
+
 
   searchUser.keyup(function (e) {
     $(".searchResult").addClass("visible");
     resultList.children("#not").remove();
-    $.post("/api/user/search-user", { value: e.target.value }, function (results) {
-      if (results.length > 0) {
-        resultList.children(".resultUser").remove();
-        resultList.children(".not-found").remove();
-        for (let result of results) {
-          const content = loadResult(result);
-          resultList.prepend(content);
-        }
-      } else {
-        resultList.children(".resultUser").remove();
-        resultList.children(".not-found").remove();
-        resultList.prepend(notFound);
+    const value = $(e.target).val();
+    let results = [];
+    const userClone = [...users];
+    if(value.trim().length > 0){
+      results = userClone.filter(
+        (user) =>
+          user.username.includes(value) ||
+          user.firstName.includes(value) ||
+          user.lastName.includes(value)
+      );
+    }
+    if (results.length > 0) {
+      resultList.children(".resultUser").remove();
+      resultList.children(".not-found").remove();
+      for (let result of results) {
+        const content = loadResult(result);
+        resultList.prepend(content);
       }
-    });
+    } else {
+      resultList.children(".resultUser").remove();
+      resultList.children(".not-found").remove();
+      resultList.prepend(notFound);
+    };
   });
 
   searchUser.keydown(function (e) {
