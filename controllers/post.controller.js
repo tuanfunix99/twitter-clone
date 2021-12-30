@@ -12,27 +12,26 @@ exports.postPage = async (req, res, next) => {
     if (!username || !postId) {
       return res.redirect("/not-found");
     }
-    const userLoad = await User.findOne(
+    const profile = await User.findOne(
       { username: username },
-      "_id avatar firstName lastName background following follower"
+      "username avatar firstName lastName background following follower"
     );
     const post = await Post.findById(postId).populate("postedBy");
-    if (!userLoad || !post) {
+    if (!profile || !post) {
       return res.redirect("/not-found");
     }
-    if (userLoad._id.toString() !== post.postedBy._id.toString()) {
+    if (profile._id.toString() !== post.postedBy._id.toString()) {
       return res.redirect("/not-found");
     }
     post.time = moment(new Date(post.createdAt)).fromNow();
     res.render("post", {
       title: "Post",
-      username: req.user.username,
       post,
-      user: userLoad,
+      user,
+      profile,
       getAvatar,
-      _id: user._id,
+      isUser,
       noficationAmount: getAmountNofication(user.noficationAmount),
-      isUser
     });
   } catch (error) {}
 };

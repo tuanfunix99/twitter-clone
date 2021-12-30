@@ -1,14 +1,14 @@
 <div id="postFormContainer" class="py-3 px-2 mb-2">
   <div class="postAvatar">
-    <a href="<%= `/user-profile/${username}` %> ">
+    <a href="<%= `/user-profile/${user.username}` %> ">
       <image
-        data-avatar="<%= 'img' + _id + 'png' %>"
+        data-avatar="<%= 'img' + user._id + 'png' %>"
         class="rounded-circle"
-        src="<%= getAvatar(avatar) %> "
+        src="<%= getAvatar(user.avatar) %> "
         alt="avatar"
         width="50"
         height="50"
-        title="<%= username %>"
+        title="<%= user.username %>"
       ></image>
     </a>
   </div>

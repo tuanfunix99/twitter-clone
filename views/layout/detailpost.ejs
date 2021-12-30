@@ -1,5 +1,5 @@
 <div class="px-0" id="postContainer">
-  <% const { postedBy, content, time } = post %> <% const displayName =
+  <% const { postedBy, content, time, isUpload } = post %> <% const displayName =
   postedBy.firstName + " " + postedBy.lastName; %>
   <div class="post p-2" data-post-id="<%= post._id %>">
     <div class="mainContentContainer">
@@ -29,13 +29,15 @@
           </div>
           <% if(isUser) {%>
           <div class="userFunction">
-            <button
-              class="btnUpdateFunction"
-              title="Update"
-              data-update-id="<%= `${post._id}` %>"
-            >
-              <i class="fas fa-pen-square"></i>
-            </button>
+            <% if(!isUpload) {%>
+              <button
+                class="btnUpdateFunction"
+                title="Update"
+                data-update-id="<%= `${post._id}` %>"
+              >
+                <i class="fas fa-pen-square"></i>
+              </button>
+              <%}%>
             <button
               class="btnDeleteFunction"
               title="Delete"

@@ -67,6 +67,7 @@ nav .blue {
   display: flex;
   flex-direction: column;
   background: #f0f0f08c;
+  min-height: 600px;
 }
 
 .titleContainer {

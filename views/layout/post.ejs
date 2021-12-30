@@ -1,7 +1,7 @@
 <div class="px-0" id="postContainer">
   <% let count = 0 %> <% for(let post of posts) {%> <% const { postedBy,
-  content, time } = post %> <% const displayName = postedBy.firstName + " " +
-  postedBy.lastName; %>
+  content, isUpload, time } = post %> <% const displayName = postedBy.firstName
+  + " " + postedBy.lastName; %>
 
   <div
     class="post p-2"
@@ -30,17 +30,23 @@
               class="displayName"
               ><%= displayName %></a>
             <span class="username">@<%= postedBy.username %></span> |
-            <span class="view"><a
-                href="<%= `/view-post/${postedBy.username}/${post._id}` %>">View Post</a></span>
+            <span class="view"
+              ><a href="<%= `/view-post/${postedBy.username}/${post._id}` %>"
+                >View Post</a></span>
             |
             <span class="date"><%= time %></span>
           </div>
           <% if(isUser) {%>
           <div class="userFunction">
-            <button class="btnUpdateFunction" title="Update" 
-            data-update-id="<%= `${post._id}` %>">
+            <% if(!isUpload) {%>
+            <button
+              class="btnUpdateFunction"
+              title="Update"
+              data-update-id="<%= `${post._id}` %>"
+            >
               <i class="fas fa-pen-square"></i>
             </button>
+            <%}%>
             <button
               class="btnDeleteFunction"
               title="Delete"

@@ -42,8 +42,6 @@ exports.createNewPost = async (req, res, next) => {
     } else {
       io.emit("post", post);
     }
-
-
     for (let f of user.follower) {
       const userFollower = await User.findById(f);
       const nofication = await Nofication.create({
@@ -55,9 +53,15 @@ exports.createNewPost = async (req, res, next) => {
       userFollower.nofications.push(nofication._id);
       userFollower.noficationAmount += 1;
       await userFollower.save();
+      const nof =
+      await nofication.populate(
+        "createdBy",
+        "username firstName lastName avatar"
+        );
+      io.emit("nofication-new-post", { follower: f });
+      io.emit("created-nofication", { nof });
     }
 
-    io.emit("nofication-new-post", { followers: user.follower });
     res.status(200);
   } catch (error) {
     res.status(400);

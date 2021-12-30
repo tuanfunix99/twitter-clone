@@ -9,4 +9,6 @@ exports.mainRoutes = require('./main.route');
 
 exports.postRoutes = require('./post.route');
 
+exports.noficationRoutes = require('./nofication.route');
+
 exports.userRoutes = require('./user.route');

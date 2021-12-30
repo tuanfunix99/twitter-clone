@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="/css/user.css">
 <link rel="stylesheet" href="/css/responsive_web.css">
 <body data-authenticate-user=<%= isUser %>>      
-<% let displayName = firstName + ' ' + lastName %>        
+<% let displayName = profile.firstName + ' ' + profile.lastName %>        
 <% if(isUser) {%>
     <%- include('../layout/upload') -%>
     <%- include('../layout/editor') -%>           
@@ -12,7 +12,7 @@
 <div class="container">
     <div class="row">
         <%- include('../layout/navbar') -%>
-        <div data-parent-profile=<%= username %> 
+        <div data-parent-profile=<%= profile.username %> 
             class="mainSectionContainer col-lg-6 col-10 p-0">
             <div class="titleContainer fixed-top">
                 <span class="userProfile">
@@ -23,14 +23,14 @@
                       </div>
                     <div class="infoUserContainer">
                         <h1><%= displayName %></h1>
-                        <p data-tweets="<%= username %>"><%= posts.length + ' Tweets' %> </p>
+                        <p data-tweets="<%= profile.username %>"><%= posts.length + ' Tweets' %> </p>
                     </div>  
                 </span>
                 <% if(!isUser) {%>
                 <form class="formUserProfile">
                     <button
                     data-following="<%= isFollowing %>"  
-                    data-follow-username="<%= username %>"
+                    data-follow-username="<%= profile.username %>"
                     type="submit" 
                     class="btn btn-primary btnFollowProfile"><%= isFollowing ? "Following" : "Follow" %></button></button>
                 </form>

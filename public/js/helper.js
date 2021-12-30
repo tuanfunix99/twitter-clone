@@ -14,7 +14,7 @@ const getBackground = (background) => {
 
 const getAmountNofication = (amount) => {
   if (amount > 99) {
-    return (99 + "+");
+    return 99 + "+";
   } else {
     return amount;
   }
@@ -24,18 +24,25 @@ const spinner = (mess) => {
   return `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>${mess}`;
 };
 
-$(".backButtonContainer").click(function (e){
-  window.history.go(-1)
-})
+$(".backButtonContainer").click(function (e) {
+  window.history.go(-1);
+});
 
+const showUpdateFunction = (isUpload) => {
+  if (!isUpload) {
+    return `<button class="btnUpdateFunction" title="Update">
+      <i class="fas fa-pen-square"></i>
+    </button>`;
+  } else {
+    return ``;
+  }
+};
 
-function showUserFunction(isUser, postId){
-  if(isUser.length > 0 && isUser === 'true'){
+function showUserFunction(isUser, postId, isUpload) {
+  if (isUser && isUser === "true") {
     return `
     <div class="userFunction">
-    <button class="btnUpdateFunction" title="Update">
-      <i class="fas fa-pen-square"></i>
-    </button>
+    ${showUpdateFunction(isUpload)}
     <button class="btnDeleteFunction" 
     title="Delete" data-toggle="modal" 
     data-target="#deleteModal"
@@ -43,15 +50,96 @@ function showUserFunction(isUser, postId){
       <i class="fas fa-trash"></i>
     </button>
   </div>
-    `
-  }
-  else{
-    return '';
+    `;
+  } else {
+    return "";
   }
 }
 
+const getNoficationContent = (input) => {
+  const { content, createdBy, postId, createdAt } = input;
+  const displayName = createdBy.firstName + " " + createdBy.lastName;
+  const linkUser = `/user-profile/${createdBy.username}`;
+  const linkPost = `/view-post/${createdBy.username}/${postId}`;
+  const time = moment(new Date(createdAt)).fromNow();
+  switch (content) {
+    case "CREATE_NEW_POST":
+      return {
+        content: `
+        <p><a href=${linkUser}>${displayName}</a> just upload new post.Let's <a href=${linkPost}>visit it</a></p>
+        `,
+        displayName,
+        linkUser,
+        linkPost,
+        time,
+        createdBy,
+      };
+    case "UPLOAD_NEW_AVATAR":
+      return {
+        content: `
+          <p><a href=${linkUser}>${displayName}</a> just upload new avatar.Let's <a href=${linkPost}>visit it</a></p>
+          `,
+        displayName,
+        linkUser,
+        linkPost,
+        time,
+        createdBy,
+      };
+    case "UPLOAD_NEW_BACKGROUND":
+      return {
+        content: `
+        <p><a href=${linkUser}>${displayName}</a> just upload new background.Let's <a href=${linkPost}>visit it</a></p>
+        `,
+        displayName,
+        linkUser,
+        linkPost,
+        time,
+        createdBy,
+      };
+    default:
+      return null;
+  }
+};
+
+
+function createNofication(nofication) {
+  return $(` <li class="noficationContent">
+  <div class="noficationContentHeader">
+    <div class="noficationContentHeaderContainer">
+      <div class="userImageContainer">
+        <a href="${nofication.linkUser}">
+          <img
+            data-avatar="${'img' + nofication.createdBy._id + 'png'}"
+            class="rounded-circle"
+            alt="avatar"
+            width="40"
+            height="40"
+            src="${getAvatar(nofication.createdBy.avatar)}"
+            title="${nofication.createdBy.username}"
+          />
+        </a>
+      </div>
+      <div class="userInfo">
+        <a href="${nofication.linkUser}" class="displayName"
+          >${nofication.displayName }</a
+        >
+        <span class="username"
+          >@${nofication.createdBy.username}</span
+        >
+        |
+        <span class="date">${nofication.time} </span>
+      </div>
+    </div>
+    <button class="btnDeleteFunction" title="Delete">
+      <i class="fas fa-trash"></i>
+    </button>
+  </div>
+  <div class="content">${nofication.content}</div>
+</li>`);
+}
+
 function createPost(post) {
-  const isUser = $("body").attr("data-authenticate-user").trim();
+  const isUser = $("body").attr("data-authenticate-user");
   const { postedBy, content, createdAt } = post;
   const displayName = postedBy.firstName + " " + postedBy.lastName;
   const time = moment(new Date(createdAt)).fromNow();
@@ -82,7 +170,7 @@ function createPost(post) {
             href="${`/view-post/${postedBy.username}/${post._id}`}">View Post</a></span> |
             <span class="date">${time}</span>
           </div>
-          ${ showUserFunction(isUser, post._id) }
+          ${showUserFunction(isUser, post._id, post.isUpload)}
         </div>
           <div class='postBody'>
               <span data-post-span-id=${post._id}}>${content}</span>
@@ -108,4 +196,3 @@ function createPost(post) {
   </div>
 </div>`);
 }
-

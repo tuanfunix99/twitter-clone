@@ -36,23 +36,21 @@ $(document).ready(function () {
     $("body").removeClass("scroll-none");
     upload = null;
     uploadTitle = "";
-    if(imagePreview){
+    if (imagePreview) {
       imagePreview.src = "";
     }
   };
 
-  socket.on("nofication-new-post", ({ followers }) => {
-    for (let follower of followers) {
-      const ele = document.querySelector([
-        `[data-nofication-id='${follower.toString().trim()}']`,
-      ]);
-      if (ele) {
-        const amount = parseInt(ele.innerHTML.toString()) + 1;
-        ele.innerHTML = getAmountNofication(amount);
-      }
+  socket.on("nofication-new-post", ({ follower }) => {
+    const ele = document.querySelector([
+      `[data-nofication-id='${follower.toString().trim()}']`,
+    ]);
+    if (ele) {
+      const amount = parseInt(ele.innerHTML.toString()) + 1;
+      ele.innerHTML = getAmountNofication(amount);
     }
   });
-  
+
   socket.on("upload-avatar", (respone) => {
     const { _id, linkImage } = respone;
     const eles = document.querySelectorAll([
@@ -88,6 +86,10 @@ $(document).ready(function () {
     }
   });
 
+  $(".fas.fa-bell").click(function () {
+    $.post("/api/user/reset-nofication");
+  });
+
   editButton.click(function (e) {
     e.preventDefault();
   });
@@ -120,7 +122,7 @@ $(document).ready(function () {
     } else if (uploadTitle === "avatar") {
       let canvas = cropper.getCroppedCanvas();
       if (!canvas) {
-      alert("Could not upload image.");
+        alert("Could not upload image.");
         return;
       }
       canvas.toBlob((blob) => {

@@ -17,47 +17,7 @@
         </div>
         <div class="col-lg-4 third-col">
             <%- include('../layout/search') -%>
-            <div class="followContainer px-3 mt-3">
-                <div class="followFormContainer">
-                    <div id="followTitle">
-                        <h1>Who to follow</h1>
-                    </div>
-                    <ul id="followList">
-                        <% for(let user of users) {%>
-                            <% const displayName = user.firstName + " " + user.lastName; %>
-                            <li class="followUser">
-                                <div class="followUserContainer">
-                                    <div class='followUserImage'>
-                                        <a href="<%= `/user-profile/${user.username}` %> ">
-                                        <img  
-                                        data-avatar="<%= 'img' + user._id + 'png' %>"
-                                        class="rounded-circle"
-                                        alt="avatar"
-                                        width="45"
-                                        height="45"
-                                        src="<%= getAvatar(user.avatar) %>"
-                                        title="<%= user.username %>"
-                                        />
-                                    </a>
-                                    </div>
-                                    <div class="followContent">
-                                        <a href="<%= `/user-profile/${user.username}`%>"><%= displayName %> </a>
-                                        <span class='username'>@<%= user.username %></span>
-                                    </div>
-                                </div>
-                                    <button
-                                        data-following="false"  
-                                        data-follow-username=<%= user.username %>  
-                                        type="submit" 
-                                        class="btn btn-primary followButton" 
-                                        title="Follow">
-                                        Follow
-                                      </button>                               
-                            </li>
-                            <% } %>  
-                    </ul>
-                </div>
-            </div>
+            <%- include('../layout/follow') -%>
         </div>
     </div>
 </div>

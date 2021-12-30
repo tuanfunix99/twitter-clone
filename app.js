@@ -8,12 +8,15 @@ const {
   userApiRoutes,
   userRoutes,
   postRoutes,
+  noficationRoutes,
 } = require("./routes/index.routes");
 const path = require("path");
 const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
 const http = require("http");
 const socketIO = require("socket.io");
+const { auth } = require('./middleware/auth');
+const { getAmountNofication } = require("./utils/helper");
 require("./utils/database");
 
 dotenv.config();
@@ -53,14 +56,15 @@ app.use(mainRoutes);
 app.use(authRoutes);
 app.use(userRoutes);
 app.use(postRoutes);
+app.use(noficationRoutes);
 app.use("/api/post", postApiRoutes);
 app.use("/api/user", userApiRoutes);
-app.use((req, res, next) => {
+
+app.use(auth, (req, res, next) => {
   res.render("notfound", {
     title: "Not Found",
-    username: null,
-    _id: null,
-    noficationAmount: 0,
+    noficationAmount: getAmountNofication(req.user.noficationAmount),
+    user: req.user,
   });
 });
 

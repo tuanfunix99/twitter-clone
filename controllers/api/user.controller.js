@@ -88,6 +88,7 @@ const upload = async (title, req, res, next) => {
     const post = await Post.create({
       content: `<img src='/api/user/user-images/${user[title]}'>`,
       postedBy: req.user._id,
+      isUpload: true,
     });
     await post.populate("postedBy");
     io.emit("upload-new-image", post);
@@ -102,8 +103,14 @@ const upload = async (title, req, res, next) => {
       userFollower.nofications.push(nofication._id);
       userFollower.noficationAmount += 1;
       await userFollower.save();
+      const nof =
+      await nofication.populate(
+        "createdBy",
+        "username firstName lastName avatar"
+        );
+      io.emit("nofication-new-post", { follower: f });
+      io.emit("created-nofication", { nof });
     }
-    io.emit("nofication-new-post", { followers: user.follower });
   } catch (error) {
     res.redirect("/");
   }
@@ -143,6 +150,17 @@ exports.searchUser = async (req, res, next) => {
   try {
     let users = await User.find({}, "_id avatar username firstName lastName");
     res.status(200).send(users);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+exports.resetNofication = async (req, res, next) => {
+  try {
+    let user = await User.findById(req.user._id);
+    user.noficationAmount = 0;
+    await user.save();
+    res.status(200);
   } catch (error) {
     console.log(error);
   }

@@ -1,0 +1,41 @@
+<div class="followContainer px-3 mt-3">
+  <div class="followFormContainer">
+    <div id="followTitle">
+      <h1>Who to follow</h1>
+    </div>
+    <ul id="followList">
+      <% for(let userFollow of userFollows) {%> <% const displayName =
+      userFollow.firstName + " " + userFollow.lastName; %>
+      <li class="followUser">
+        <div class="followUserContainer">
+          <div class="followUserImage">
+            <a href="<%= `/user-profile/${userFollow.username}` %> ">
+              <img
+                data-avatar="<%= 'img' + userFollow._id + 'png' %>"
+                class="rounded-circle"
+                alt="avatar"
+                width="45"
+                height="45"
+                src="<%= getAvatar(userFollow.avatar) %>"
+                title="<%= userFollow.username %>"
+              />
+            </a>
+          </div>
+          <div class="followContent">
+            <a href="<%= `/user-profile/${userFollow.username}`%>"
+              ><%= displayName %>
+            </a>
+            <span class="username">@<%= userFollow.username %></span>
+          </div>
+        </div>
+        <button
+          data-following="false"
+          data-follow-username="<%=userFollow.username%>"
+          type="submit" class="btn btn-primary followButton" title="Follow">
+          Follow
+        </button>
+      </li>
+      <% } %>
+    </ul>
+  </div>
+</div>

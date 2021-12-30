@@ -1,0 +1,32 @@
+<%- include('../layout/header') -%>
+<link rel="stylesheet" href="/css/main.css">
+<link rel="stylesheet" href="/css/nofication.css">
+<link rel="stylesheet" href="/css/responsive_web.css">
+<body>      
+<div class="container">
+    <div class="row">
+        <%- include('../layout/navbar') -%>
+        <div class="mainSectionContainer col-lg-6 col-10 p-0">
+            <div class="titleContainer fixed-top">
+                <span class="userProfile">
+                    <div class="backButtonContainer p-1">
+                        <button>
+                            <i class="fas fa-arrow-left"></i>
+                        </button>
+                    </div>
+                </span>
+            </div>
+            <%- include('../layout/noficationlist') -%>
+        </div>
+        <div class="col-lg-4 third-col">
+            <%- include('../layout/search') -%>
+        </div>
+    </div>
+</div>
+<%- include('../layout/footer') -%>
+<script src="/js/common.js"></script>
+<script src="/js/search.js"></script>
+<script src="/js/user.js"></script>
+<script src="/js/nofication.js"></script>
+</body>
+</html>
