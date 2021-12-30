@@ -675,6 +675,9 @@ li.resultUser {
 
 
 /* editor */
+.note-editable{
+  height: 400px !important;
+}
 
 /* .note-editing-area {
   height: 350px;
