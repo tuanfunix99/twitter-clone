@@ -81,7 +81,6 @@ exports.deletePost = async (req, res, next) => {
     }
     await Post.findByIdAndRemove(post._id);
     io.emit("deleted-post", { postId: post._id, username });
-    await Nofication.deleteMany({ postId: post._id });
     res.status(200).send({ deleted: true });
   } catch (error) {
     console.log(error.message);

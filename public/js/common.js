@@ -34,6 +34,11 @@ $(document).ready(function () {
     $(".imagePreviewContainer").css("display", "none");
     $(".uploadContainer").removeClass("show");
     $("body").removeClass("scroll-none");
+    upload = null;
+    uploadTitle = "";
+    if(imagePreview){
+      imagePreview.src = "";
+    }
   };
 
   socket.on("nofication-new-post", ({ followers }) => {
@@ -49,26 +54,26 @@ $(document).ready(function () {
   });
   
   socket.on("upload-avatar", (respone) => {
-    const { _id, avatar } = respone;
+    const { _id, linkImage } = respone;
     const eles = document.querySelectorAll([
       `[data-avatar='img${_id.toString().trim()}png']`,
     ]);
     if (eles && eles.length > 0) {
       for (let ele of eles) {
-        ele.src = `/api/user/user-images/${avatar}`;
+        ele.src = `/api/user/user-images/${linkImage}`;
       }
     }
     uploadSuccess();
   });
 
   socket.on("upload-background", (respone) => {
-    const { _id, background } = respone;
+    const { _id, linkImage } = respone;
     const eles = document.querySelectorAll([
       `[data-background='img${_id.toString().trim()}png']`,
     ]);
     if (eles && eles.length > 0) {
       for (let ele of eles) {
-        ele.src = `/api/user/user-images/${background}`;
+        ele.src = `/api/user/user-images/${linkImage}`;
       }
     }
     uploadSuccess();
@@ -89,10 +94,6 @@ $(document).ready(function () {
 
   btnsubmitupload.click(function (e) {
     e.preventDefault();
-    btnsubmitupload.prop("disabled", true);
-    btnuploadcancel.prop("disabled", true);
-    btnsubmitupload.text("");
-    btnsubmitupload.append(spinner("Uploading..."));
     if (!upload) {
       alert("Image empty");
       btnsubmitupload.prop("disabled", false);
@@ -101,9 +102,14 @@ $(document).ready(function () {
       btnsubmitupload.remove(".spinner-border");
       return;
     }
+    btnsubmitupload.prop("disabled", true);
+    btnuploadcancel.prop("disabled", true);
+    btnsubmitupload.text("");
+    btnsubmitupload.append(spinner("Uploading..."));
     const data = new FormData();
     if (uploadTitle === "background") {
       data.append("background", upload);
+      data.append("uploadTitle", uploadTitle);
       $.ajax({
         type: "POST",
         url: "/api/user/upload-background",
@@ -114,11 +120,12 @@ $(document).ready(function () {
     } else if (uploadTitle === "avatar") {
       let canvas = cropper.getCroppedCanvas();
       if (!canvas) {
-        alert("Could not upload image.");
+      alert("Could not upload image.");
         return;
       }
       canvas.toBlob((blob) => {
         data.append("avatar", blob);
+        data.append("uploadTitle", uploadTitle);
         $.ajax({
           type: "POST",
           url: "/api/user/upload-avatar",
@@ -131,6 +138,7 @@ $(document).ready(function () {
   });
 
   btnupload.click(function (e) {
+    imagePreview.src = "";
     uploadTitle = $(this).val();
     $(".uploadContainer").addClass("show");
     $("body").addClass("scroll-none");
@@ -143,6 +151,7 @@ $(document).ready(function () {
     $("body").removeClass("scroll-none");
     inputUpload.val("");
     $(".imagePreviewContainer").css("display", "none");
+    imagePreview.src = "";
   });
 
   inputUpload.change(function (e) {
@@ -163,10 +172,10 @@ $(document).ready(function () {
     reader.onload = (e) => {
       $(".imagePreviewContainer").css("display", "block");
       imagePreview.src = e.target.result;
+      if (cropper !== undefined) {
+        cropper.destroy();
+      }
       if (uploadTitle === "avatar") {
-        if (cropper !== undefined) {
-          cropper.destroy();
-        }
         cropper = new Cropper(imagePreview, {
           aspectRatio: 1 / 1,
           background: false,

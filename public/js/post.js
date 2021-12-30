@@ -28,8 +28,10 @@ $(document).ready(function () {
 
   socket.on("deleted-post", ({ postId }) => {
     const eles = document.querySelectorAll([`[data-post-id='${postId}']`]);
-    for (let ele of eles) {
-      ele.remove();
+    if(eles && eles.length > 0) {
+      for (let ele of eles) {
+        ele.remove();
+      }
     }
     $("#postContainer").load(location.href + " #postContainer");
   });
@@ -43,6 +45,7 @@ $(document).ready(function () {
 
   picker.on("emoji", (emoji) => {
     text.value += emoji;
+    btnpost.prop("disabled", false);
   });
 
   $(textarea).keyup(function (e) {

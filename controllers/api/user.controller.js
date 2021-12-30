@@ -1,5 +1,6 @@
 const Post = require("../../models/post.model");
 const User = require("../../models/user.model");
+const Nofication = require("../../models/nofication.model");
 const fs = require("fs");
 const path = require("path");
 const { uploadFile, getFileStream, deleteFile } = require("../../utils/aws/s3");
@@ -14,7 +15,7 @@ exports.follow = async (req, res, next) => {
       (f) => f._id.toString() === userFollowing._id.toString()
     );
     if (!following) {
-      if(main){
+      if (main) {
         const posts = await Post.find(
           { postedBy: userFollowing._id },
           "content createdAt"
@@ -22,8 +23,7 @@ exports.follow = async (req, res, next) => {
           .populate("postedBy", "username firstName lastName avatar")
           .limit(5);
         res.status(200).send({ posts, follow: true });
-      }
-      else{
+      } else {
         res.status(200).send({ follow: true });
       }
       user.following.push(userFollowing._id);
@@ -46,7 +46,8 @@ exports.follow = async (req, res, next) => {
   }
 };
 
-exports.uploadAvatar = async (req, res, next) => {
+
+const upload = async (title, req, res, next) => {
   const { _id } = req.user;
   const { filename } = req.file;
   const io = req.app.get("socketIo");
@@ -56,58 +57,76 @@ exports.uploadAvatar = async (req, res, next) => {
     }
     const user = await User.findById(_id);
     if (
-      user.avatar.trim().length > 0 &&
-      user.avatar !== "/images/profilePic.jpeg"
+      user[title].trim().length > 0 &&
+      user[title].trim() !== "/images/profilePic.jpeg"
     ) {
-      const key = user.avatar.split("/")[1];
+      const key = user[title].split("/")[1];
       await deleteFile(key);
+      const postDel = await Post.findOneAndRemove({
+        content: `<img src='/api/user/user-images/${user[title]}'>`,
+      });
+      if (postDel) {
+        io.emit("deleted-post", {
+          postId: postDel._id,
+          username: user.username,
+        });
+      }
       fs.unlink(
-        path.join(__dirname, "../../uploads", user.avatar),
+        path.join(__dirname, "../../uploads", user[title]),
         function () {
           console.log("Image deleted");
         }
       );
     }
     await uploadFile(req.file);
-    user.avatar = "avatar/" + filename;
-    io.emit("upload-avatar", {
-      _id,
-      avatar: user.avatar,
+    user[title] = `${title}/` + filename;
+    io.emit(`upload-${title}`, {
+      _id: user._id,
+      linkImage: user[title],
     });
     await user.save();
+    const post = await Post.create({
+      content: `<img src='/api/user/user-images/${user[title]}'>`,
+      postedBy: req.user._id,
+    });
+    await post.populate("postedBy");
+    io.emit("upload-new-image", post);
+    const nofication = await Nofication.create({
+      createdBy: user._id,
+      recivers: user.follower,
+      content: title === 'avatar' ? "UPLOAD_NEW_AVATAR" : "UPLOAD_NEW_BACKGROUND",
+      postId: post._id,
+    });
+
+    for (let f of user.follower) {
+      const userFollower = await User.findById(f);
+      userFollower.nofications.push(nofication._id);
+      userFollower.noficationAmount += 1;
+      await userFollower.save();
+    }
+    io.emit("nofication-new-post", { followers: user.follower });
   } catch (error) {
     res.redirect("/");
+  }
+}
+
+exports.uploadAvatar = async (req, res, next) => {
+  const { uploadTitle } = req.body;
+  if(uploadTitle && uploadTitle.trim() === "avatar"){
+    upload(uploadTitle.trim(), req, res, next);
+  }
+  else{
+    res.status(400);
   }
 };
 
 exports.uploadBackground = async (req, res, next) => {
-  const { _id } = req.user;
-  const { filename } = req.file;
-  const io = req.app.get("socketIo");
-  try {
-    if (!filename) {
-      throw new Error("error");
-    }
-    const user = await User.findById(_id);
-    if (
-      user.background.trim().length > 0 &&
-      user.background !== "/images/background_default.png"
-    ) {
-      const key = user.background.split("/")[1];
-      await deleteFile(key);
-      fs.unlink(
-        path.join(__dirname, "../../uploads", user.background),
-        function () {
-          console.log("Image deleted");
-        }
-      );
-    }
-    await uploadFile(req.file);
-    user.background = "background/" + filename;
-    io.emit("upload-background", { _id, background: user.background });
-    await user.save();
-  } catch (error) {
-    res.redirect("/");
+  const { uploadTitle } = req.body;
+  if(uploadTitle && uploadTitle.trim() === "background"){
+    upload(uploadTitle.trim(), req, res, next);
+  }
+  else{
+    res.status(400);
   }
 };
 
