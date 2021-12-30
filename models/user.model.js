@@ -67,7 +67,7 @@ const userSchema = new Schema({
       ref: 'User'
     }
   ],
-  nofications: [
+  nofications:[
     {
       type: Schema.Types.ObjectId,
       ref: 'Nofication'

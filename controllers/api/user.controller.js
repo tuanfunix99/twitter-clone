@@ -91,15 +91,14 @@ const upload = async (title, req, res, next) => {
     });
     await post.populate("postedBy");
     io.emit("upload-new-image", post);
-    const nofication = await Nofication.create({
-      createdBy: user._id,
-      recivers: user.follower,
-      content: title === 'avatar' ? "UPLOAD_NEW_AVATAR" : "UPLOAD_NEW_BACKGROUND",
-      postId: post._id,
-    });
-
     for (let f of user.follower) {
       const userFollower = await User.findById(f);
+      const nofication = await Nofication.create({
+        createdBy: user._id,
+        reciver: userFollower._id,
+        content: title === 'avatar' ? "UPLOAD_NEW_AVATAR" : "UPLOAD_NEW_BACKGROUND",
+        postId: post._id,
+      });
       userFollower.nofications.push(nofication._id);
       userFollower.noficationAmount += 1;
       await userFollower.save();

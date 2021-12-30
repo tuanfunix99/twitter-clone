@@ -43,15 +43,15 @@ exports.createNewPost = async (req, res, next) => {
       io.emit("post", post);
     }
 
-    const nofication = await Nofication.create({
-      createdBy: user._id,
-      recivers: user.follower,
-      content: "CREATE_NEW_POST",
-      postId: post._id,
-    });
 
     for (let f of user.follower) {
       const userFollower = await User.findById(f);
+      const nofication = await Nofication.create({
+        createdBy: user._id,
+        reciver: userFollower._id,
+        content: "CREATE_NEW_POST",
+        postId: post._id,
+      });
       userFollower.nofications.push(nofication._id);
       userFollower.noficationAmount += 1;
       await userFollower.save();

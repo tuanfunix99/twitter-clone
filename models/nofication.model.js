@@ -3,21 +3,19 @@ const { Schema } = mongoose;
 
 const noficationSchema = new Schema(
   {
-    createdBy: {
+    createdBy:{
       type: Schema.Types.ObjectId,
       ref: "User",
     },
-    recivers: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "User",
-      }
-    ],
+    reciver:{
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
     content: String,
-    postId: {
+    postId:{
       type: Schema.Types.ObjectId,
       ref: "Post",
-    }
+    },
   },
   {
     timestamps: true,
