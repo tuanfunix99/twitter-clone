@@ -16,6 +16,10 @@ const noficationSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "Post",
     },
+    seen: {
+      type: Boolean,
+      default: false,
+    }
   },
   {
     timestamps: true,

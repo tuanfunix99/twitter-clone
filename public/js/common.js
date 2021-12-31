@@ -86,10 +86,6 @@ $(document).ready(function () {
     }
   });
 
-  $(".fas.fa-bell").click(function () {
-    $.post("/api/user/reset-nofication");
-  });
-
   editButton.click(function (e) {
     e.preventDefault();
   });

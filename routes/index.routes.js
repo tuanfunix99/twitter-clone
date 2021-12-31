@@ -5,6 +5,8 @@ exports.postApiRoutes = require('./api/post.route');
 
 exports.userApiRoutes = require('./api/user.route');
 
+exports.noficationApiRoutes = require('./api/nofication.route');
+
 exports.mainRoutes = require('./main.route');
 
 exports.postRoutes = require('./post.route');

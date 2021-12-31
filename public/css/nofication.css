@@ -1,45 +1,64 @@
-
-ul#noficationList{
-    list-style: none;
-    background: white;
-    padding: 0px;
+ul#noficationList {
+  list-style: none;
+  background: white;
+  padding: 0px;
 }
 
-li.noficationContent{
-    width: 100%;
-    padding: 15px 20px;
+li.noficationContent {
+  width: 100%;
+  padding: 15px 20px;
 }
 
-.noficationMessage{
-    display: flex;
-    flex: 1;
-    padding-left: 10px;
+.noficationMessage {
+  display: flex;
+  flex: 1;
+  padding-left: 10px;
 }
 
 .noficationMessage p {
-    margin: 0px 5px;
+  margin: 0px 5px;
 }
 
 .content a {
-    margin: 0px;
-    font-size: 16px;
-    font-weight: 500;
-    text-transform: capitalize;
+  margin: 0px;
+  font-size: 16px;
+  font-weight: 500;
+  text-transform: capitalize;
 }
 
-.noficationMessage .date{
-    padding-top: 4px;
+.noficationMessage .date {
+  padding-top: 4px;
 }
 
 .noficationContentHeader {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .noficationContentHeaderContainer {
-    display: flex;
+  display: flex;
 }
 
 .content {
-    padding: 0px 50px;
+  padding: 0px 50px;
+}
+
+.not-seen {
+  background: #f83c3c;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 5px;
+  border-radius: 25px;
+  color: white;
+  text-transform: capitalize;
+}
+
+.seen {
+  background: #0ec30e;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 5px;
+  border-radius: 25px;
+  color: white;
+  text-transform: capitalize;
 }

@@ -9,4 +9,10 @@ $(document).ready(function () {
     }
     $("#noficationList").load(location.href + " #noficationList");
   });
+
+  $('#noficationList').on('click', '.buttonSeenNofication', function (e) {
+    const noficationId = $(this).attr('data-button-seen-nofication');
+    const userId = $('#noficationList').attr('data-nofication-list-id');
+    $.post('/api/nofication/seen', ({ _id: noficationId, userId: userId }));
+  })
 });

@@ -30,6 +30,5 @@ router.post("/search-user", auth, searchUser);
 
 router.get("/user-images/:title/:key", auth, getUserImages);
 
-router.post("/reset-nofication", auth, resetNofication);
 
 module.exports = router;

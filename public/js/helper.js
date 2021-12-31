@@ -101,6 +101,10 @@ const getNoficationContent = (input) => {
   }
 };
 
+const displaySeen = (seen) => {
+  if(seen) return `<span>seen</span>`;
+  else return `<span>not seen</span>`
+}
 
 function createNofication(nofication) {
   return $(` <li class="noficationContent">
@@ -128,6 +132,7 @@ function createNofication(nofication) {
         >
         |
         <span class="date">${nofication.time} </span>
+        ${ displaySeen(nofication.seen) }
       </div>
     </div>
     <button class="btnDeleteFunction" title="Delete">

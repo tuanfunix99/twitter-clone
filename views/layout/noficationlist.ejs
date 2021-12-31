@@ -1,39 +1,42 @@
 <div class="noficationContainer">
   <ul id="noficationList" data-nofication-list-id="<%= user._id %>">
     <% for(let nofication of nofications) {%>
-      <li class="noficationContent">
-        <div class="noficationContentHeader">
-          <div class="noficationContentHeaderContainer">
-            <div class="userImageContainer">
-              <a href="<%= nofication.linkUser %> ">
-                <img
-                  data-avatar="<%= 'img' + nofication.createdBy._id + 'png' %>"
-                  class="rounded-circle"
-                  alt="avatar"
-                  width="40"
-                  height="40"
-                  src="<%= getAvatar(nofication.createdBy.avatar) %>"
-                  title="<%= nofication.createdBy.username %>"
-                />
-              </a>
-            </div>
-            <div class="userInfo">
-              <a href="<%= nofication.linkUser %>" class="displayName"
-                ><%= nofication.displayName %></a
-              >
-              <span class="username"
-                >@<%= nofication.createdBy.username %></span
-              >
-              |
-              <span class="date"><%= nofication.time %> </span>
-            </div>
+    <li class="noficationContent">
+      <div class="noficationContentHeader">
+        <div class="noficationContentHeaderContainer">
+          <div class="userImageContainer">
+            <a href="<%= nofication.linkUser %> ">
+              <img
+                data-avatar="<%= 'img' + nofication.createdBy._id + 'png' %>"
+                class="rounded-circle"
+                alt="avatar"
+                width="40"
+                height="40"
+                src="<%= getAvatar(nofication.createdBy.avatar) %>"
+                title="<%= nofication.createdBy.username %>"
+              />
+            </a>
           </div>
-          <button class="btnDeleteFunction" title="Delete">
-            <i class="fas fa-trash"></i>
-          </button>
+          <div class="userInfo">
+            <a href="<%= nofication.linkUser %>" class="displayName"
+              ><%= nofication.displayName %></a
+            >
+            <span class="username">@<%= nofication.createdBy.username %></span>
+            |
+            <span class="date"><%= nofication.time %> </span>
+            <% if(nofication.seen) {%>
+            <span class="seen">seen</span>
+            <% } else {%>
+            <span class="not-seen">not seen</span>
+            <% } %>
+          </div>
         </div>
-        <div class="content"><%- nofication.content %></div>
-      </li>
+        <button class="btnDeleteFunction" title="Delete">
+          <i class="fas fa-trash"></i>
+        </button>
+      </div>
+      <div class="content"><%- nofication.content %></div>
+    </li>
     <% } %>
   </ul>
 </div>

@@ -18,7 +18,7 @@ exports.noficationPage = async (req, res, next) => {
     const profile = await User.findOne(
       { username: username },
       "_id nofications"
-    ).populate("nofications", "_id createdBy content postId createdAt");
+    ).populate("nofications", "_id createdBy content postId seen createdAt");
     if (!profile) {
       res.redirect("/not-found");
     }
@@ -27,16 +27,18 @@ exports.noficationPage = async (req, res, next) => {
         new Date(p2.createdAt).getTime() - new Date(p1.createdAt).getTime()
     );
     for (let nofication of nofs) {
-      const { content, createdBy, postId, createdAt } =
+      const { _id, content, createdBy, postId, createdAt, seen } =
         await nofication.populate(
           "createdBy",
           "username firstName lastName avatar"
         );
       const nofTemplate = getNoficationContent({
+        _id,
         content,
         createdBy,
         postId,
         createdAt,
+        seen
       });
       if (nofTemplate) {
         nofications.push(nofTemplate);
@@ -48,7 +50,7 @@ exports.noficationPage = async (req, res, next) => {
       nofications,
       getAvatar,
       isUser,
-      noficationAmount: getAmountNofication(0),
+      noficationAmount: getAmountNofication(user.noficationAmount),
     });
   } catch (error) {
     console.log(error);

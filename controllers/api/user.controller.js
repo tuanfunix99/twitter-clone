@@ -154,14 +154,3 @@ exports.searchUser = async (req, res, next) => {
     console.log(error);
   }
 };
-
-exports.resetNofication = async (req, res, next) => {
-  try {
-    let user = await User.findById(req.user._id);
-    user.noficationAmount = 0;
-    await user.save();
-    res.status(200);
-  } catch (error) {
-    console.log(error);
-  }
-};

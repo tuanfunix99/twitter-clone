@@ -9,6 +9,7 @@ const {
   userRoutes,
   postRoutes,
   noficationRoutes,
+  noficationApiRoutes,
 } = require("./routes/index.routes");
 const path = require("path");
 const session = require("express-session");
@@ -59,6 +60,7 @@ app.use(postRoutes);
 app.use(noficationRoutes);
 app.use("/api/post", postApiRoutes);
 app.use("/api/user", userApiRoutes);
+app.use("/api/nofication", noficationApiRoutes);
 
 app.use(auth, (req, res, next) => {
   res.render("notfound", {
