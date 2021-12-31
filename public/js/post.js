@@ -23,7 +23,7 @@ $(document).ready(function () {
     textarea.val("");
     const newPost = createPost(postData);
     postContainer.prepend(newPost);
-    $("#postContainer:first-child").load(window.location.href + " #postContainer");
+    $(`[data-post-id='${postData._id}']`).load(location.href + " #postContainer");
   });
 
   socket.on("deleted-post", ({ postId }) => {
@@ -70,6 +70,7 @@ $(document).ready(function () {
   $("#postContainer").on("click", ".btnDeleteFunction", function (e) {
     deleteId = $(this).attr("data-delete-id");
   });
+
 
   deletePostAction.click(function (e) {
     deletePostAction.text("");

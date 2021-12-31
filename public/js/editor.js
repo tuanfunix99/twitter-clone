@@ -20,7 +20,7 @@ $(document).ready(function () {
     $("body").removeClass("scroll-none");
     const newPost = createPost(postData);
     postContainer.prepend(newPost);
-    $(`[data-post-id=${postData._id}]`).load(location.href + " #postContainer");
+    $(`[data-post-id='${postData._id}']`).load(location.href + " #postContainer");
   });
 
   socket.on("update", (postData) => {
@@ -38,7 +38,6 @@ $(document).ready(function () {
     span.prepend(postData.content);
     isUpdate = false;
     updateId = "";
-    $("#postContainer:first-child").load(location.href + " #postContainer");
   });
 
   btnEdit.click(function (e) {
