@@ -23,7 +23,7 @@ $(document).ready(function () {
     textarea.val("");
     const newPost = createPost(postData);
     postContainer.prepend(newPost);
-    $("#postContainer").load(window.location.href + " #postContainer");
+    $("#postContainer:first-child").load(window.location.href + " #postContainer");
   });
 
   socket.on("deleted-post", ({ postId }) => {
@@ -33,7 +33,6 @@ $(document).ready(function () {
         ele.remove();
       }
     }
-    $("#postContainer").load(location.href + " #postContainer");
   });
 
   if (emojiButton) {

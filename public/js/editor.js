@@ -20,7 +20,7 @@ $(document).ready(function () {
     $("body").removeClass("scroll-none");
     const newPost = createPost(postData);
     postContainer.prepend(newPost);
-    $("#postContainer").load(location.href + " #postContainer");
+    $(`[data-post-id=${postData._id}]`).load(location.href + " #postContainer");
   });
 
   socket.on("update", (postData) => {
@@ -30,12 +30,15 @@ $(document).ready(function () {
     btnEditCancel.prop("disabled", false);
     $(".editorContainer").removeClass("show");
     $("body").removeClass("scroll-none");
+    $(".note-editable").children().remove();
+    $(".note-editable").text("");
     const span = $(`[data-post-span-id='${postData._id}']`);
+    span.text("");
     span.children().remove();
     span.prepend(postData.content);
     isUpdate = false;
     updateId = "";
-    $("#postContainer").load(location.href + " #postContainer");
+    $("#postContainer:first-child").load(location.href + " #postContainer");
   });
 
   btnEdit.click(function (e) {
@@ -43,6 +46,7 @@ $(document).ready(function () {
     $(".editorContainer").addClass("show");
     $("body").addClass("scroll-none");
     $("#editorTop").css("top", $(window).scrollTop());
+    $(".note-editable").children().remove();
   });
 
   $("#postContainer").on("click", ".btnUpdateFunction", function (e) {
@@ -51,6 +55,7 @@ $(document).ready(function () {
     $("body").addClass("scroll-none");
     $("#editorTop").css("top", $(window).scrollTop());
     $(".note-editable").children().remove();
+    $(".note-editable").text("");
     updateId = $(this).attr("data-update-id");
     $.post("/api/post/load", { postId: updateId }, function ({ post }) {
         isUpdate = true;
@@ -63,6 +68,7 @@ $(document).ready(function () {
     $(".editorContainer").removeClass("show");
     $("body").removeClass("scroll-none");
     $(".note-editable").children().remove();
+    $(".note-editable").text("");
     isUpdate = false;
     updateId = "";
   });

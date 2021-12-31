@@ -6,8 +6,6 @@ $(document).ready(function () {
         video.src += "?autoplay=1&loop=1&amp;mute=1";
         video.setAttribute("frameborder", 0);
         video.setAttribute("allowfullscreen", 1);
-        // video.attr("frameborder", 0);
-        // video.attr("allowfullscreen", 1);
       }
       else if(video.src.includes("vimeo")){
         video.src += "?autoplay=1&loop=1&autopause=0";
