@@ -84,7 +84,19 @@ $(document).ready(function () {
     } else {
       $(".titleContainer").css("background", "#ffffffff");
     }
+
+    if(top > 400){
+      $('.back-to-top').addClass('display');
+    }
+    else{
+      $('.back-to-top').removeClass('display');
+    }
+
+    $('.back-to-top').click(function () {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    })
   });
+
 
   editButton.click(function (e) {
     e.preventDefault();

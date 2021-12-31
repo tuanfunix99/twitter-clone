@@ -6,7 +6,7 @@
   --spacing: 15px;
 }
 
-body{
+body {
   overflow-x: hidden;
 }
 
@@ -123,7 +123,7 @@ nav .blue {
   justify-content: flex-end;
 }
 
-#uploadTop{
+#uploadTop {
   position: relative;
 }
 
@@ -157,7 +157,7 @@ nav .blue {
   background: var(--blueblack);
 }
 
-#formSelectPost{
+#formSelectPost {
   width: 100px;
 }
 
@@ -171,10 +171,9 @@ nav .blue {
   border-bottom: 1px solid var(--lightGrey);
 }
 
-.postFormContent{
+.postFormContent {
   position: relative;
 }
-
 
 .mainContentContainer {
   display: flex;
@@ -227,12 +226,12 @@ nav .blue {
   color: white;
 }
 
-.postButtonContainer button:focus{
+.postButtonContainer button:focus {
   box-shadow: 0px;
   outline: 0px;
 }
 
-.view{
+.view {
   color: gray;
   font-weight: 500;
   font-size: 14px;
@@ -489,7 +488,7 @@ a#search {
   justify-content: flex-end;
 }
 
-#editorTop{
+#editorTop {
   position: relative;
 }
 
@@ -501,7 +500,7 @@ a#search {
   display: none;
 }
 
-.toolContainer{
+.toolContainer {
   position: absolute;
   left: 90%;
   top: 8px;
@@ -536,17 +535,16 @@ a#search {
   color: rgb(104, 103, 103);
 }
 
-
-.postBody{
+.postBody {
   width: 100%;
-  font-family: 'Open Sans', sans-serif !important;
+  font-family: "Open Sans", sans-serif !important;
   font-size: 16px !important;
   font-weight: 500;
 }
 
 .postBody span {
   max-width: 100%;
-  font-family: 'Open Sans', sans-serif !important;
+  font-family: "Open Sans", sans-serif !important;
   font-size: 16px !important;
   font-weight: 500;
 }
@@ -554,27 +552,27 @@ a#search {
 .postBody p {
   max-width: 100%;
   margin: 0px;
-  font-family: 'Open Sans', sans-serif !important;
+  font-family: "Open Sans", sans-serif !important;
   font-size: 16px !important;
   font-weight: 500;
 }
 
 .postBody a {
   max-width: 100%;
-  font-family: 'Open Sans', sans-serif !important;
+  font-family: "Open Sans", sans-serif !important;
   font-size: 15px !important;
   font-weight: 500;
 }
 
-.postBody font{
+.postBody font {
   max-width: 100% !important;
-  font-family: 'Open Sans', sans-serif !important;
+  font-family: "Open Sans", sans-serif !important;
   font-size: 16px !important;
   font-weight: 500;
 }
 
-.postBody b{
-  font-family: 'Open Sans', sans-serif !important;
+.postBody b {
+  font-family: "Open Sans", sans-serif !important;
   font-size: 16px !important;
   font-weight: 500;
 }
@@ -583,7 +581,7 @@ a#search {
   max-width: 100%;
 }
 
-.postBody code{
+.postBody code {
   max-width: 100%;
 }
 
@@ -609,14 +607,13 @@ a#search {
   padding: 0px !important;
 }
 
-.resultUser{
+.resultUser {
   transition: 0.5s;
 }
 
-.resultUser:hover{
+.resultUser:hover {
   background: rgb(230, 236, 240);
 }
-
 
 .resultUserContainer {
   display: flex;
@@ -671,13 +668,12 @@ li.resultUser {
   padding: 10px 10px;
 }
 
-.note-group-select-from-files{
+.note-group-select-from-files {
   display: none;
 }
 
-
 /* editor */
-.note-editable{
+.note-editable {
   max-height: 400px !important;
 }
 
@@ -685,11 +681,11 @@ li.resultUser {
   height: 350px;
 } */
 
-.note-editing-area p{
+.note-editing-area p {
   margin: 0px;
 }
 
-.modal-header{
+.modal-header {
   align-items: center !important;
 }
 
@@ -698,27 +694,26 @@ li.resultUser {
   margin: -1rem -1rem -1rem 0rem;
 }
 
-.modal-header .close{
+.modal-header .close {
   box-shadow: 0px;
   outline: 0px;
   border: 0px;
 }
 
-.notfoundContainer{
+.notfoundContainer {
   background: white;
   width: 100%;
 }
 
-.notfoundContainer img{
+.notfoundContainer img {
   max-width: 100%;
   max-height: auto;
 }
 
-.notfoundContainer h1{
+.notfoundContainer h1 {
   margin-top: 10px;
   margin-left: 20px;
 }
-
 
 /* back button */
 .backButtonContainer {
@@ -743,8 +738,6 @@ li.resultUser {
   background: rgba(231, 230, 230, 0.623);
 }
 
-
-
 /* nofication */
 
 #noficationContainer {
@@ -752,16 +745,15 @@ li.resultUser {
 }
 
 #noficationAmount {
-    position: absolute;
-    top: 5px;
-    left: 25px;
-    font-size: 12px;
-    background: red;
-    padding: 0px 5px;
-    border-radius: 50%;
-    color: white;
+  position: absolute;
+  top: 5px;
+  left: 25px;
+  font-size: 12px;
+  background: red;
+  padding: 0px 5px;
+  border-radius: 50%;
+  color: white;
 }
-
 
 /* User Function */
 .userFunction {
@@ -770,7 +762,7 @@ li.resultUser {
   justify-content: flex-end;
 }
 
-.btnUpdateFunction{
+.btnUpdateFunction {
   border: 0px;
   background: white;
   font-size: 20px;
@@ -778,16 +770,16 @@ li.resultUser {
   transition: 0.5s;
 }
 
-.btnUpdateFunction:hover{
+.btnUpdateFunction:hover {
   color: #00d0ff;
 }
 
-.btnUpdateFunction:focus{
+.btnUpdateFunction:focus {
   outline: 0px;
   box-shadow: 0px;
 }
 
-.btnDeleteFunction{
+.btnDeleteFunction {
   border: 0px;
   outline: 0px;
   box-shadow: 0px;
@@ -796,11 +788,38 @@ li.resultUser {
   transition: 0.5s;
 }
 
-.btnDeleteFunction:hover{
+.btnDeleteFunction:hover {
   color: #f80c37fa;
 }
 
-.btnDeleteFunction:focus{
+.btnDeleteFunction:focus {
   outline: 0px;
   box-shadow: 0px;
+}
+
+.back-to-top {
+  position: fixed;
+  /* width: 50%; */
+  left: 70%;
+  top: 500px;
+  z-index: 2000;
+  font-size: 25px;
+  background: var(--blue);
+  color: white;
+  padding: 8px 14px;
+  border-radius: 50%;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transform: rotate3d(3, 135, 0, 190deg);
+  transition: 0.5s;
+}
+
+.back-to-top.display {
+  opacity: 1;
+  visibility: visible;
+}
+
+.back-to-top:hover {
+  box-shadow: 2px 0px 5px #918f8f;
 }

@@ -12,4 +12,9 @@
     top: 8px;
     display: flex;
   }
+
+  .back-to-top {
+    display: none;
+  }
+  
 }
