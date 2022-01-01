@@ -67,9 +67,9 @@ $(document).ready(function () {
     if(value.length > 0){
       results = userClone.filter(
         (user) =>
-          user.username.includes(value) ||
-          user.firstName.includes(value) ||
-          user.lastName.includes(value)
+          user.username.toLowerCase().trim().includes(value) ||
+          user.firstName.toLowerCase().trim().includes(value) ||
+          user.lastName.toLowerCase().trim().includes(value)
       );
     }
     if (results.length > 0) {
