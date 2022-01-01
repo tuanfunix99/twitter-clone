@@ -23,6 +23,11 @@ const userSchema = new Schema({
     type: String,
     required: [true, "Username is required"],
     unique: true,
+    validate(value){
+      if(value.includes(" ")){
+        throw new Error("Username not contain space character");
+      }
+    }
   },
   email: {
     type: String,
