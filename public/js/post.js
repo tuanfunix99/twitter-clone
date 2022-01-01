@@ -23,7 +23,6 @@ $(document).ready(function () {
     textarea.val("");
     const newPost = createPost(postData);
     postContainer.prepend(newPost);
-    $(`[data-post-id='${postData._id}']`).load(location.href + " #postContainer");
   });
 
   socket.on("deleted-post", ({ postId }) => {

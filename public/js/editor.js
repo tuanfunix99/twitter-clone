@@ -20,7 +20,6 @@ $(document).ready(function () {
     $("body").removeClass("scroll-none");
     const newPost = createPost(postData);
     postContainer.prepend(newPost);
-    $(`[data-post-id='${postData._id}']`).load(location.href + " #postContainer");
   });
 
   socket.on("update", (postData) => {
@@ -79,6 +78,8 @@ $(document).ready(function () {
     btnSaveEdit.prepend(spinner("Saving..."));
     btnSaveEdit.prop("disabled", true);
     btnEditCancel.prop("disabled", true);
+    console.log(isUpdate);
+    console.log(updateId);
     if (isUpdate) {
       const data = {
         content: content.toString(),

@@ -28,9 +28,9 @@ $(".backButtonContainer").click(function (e) {
   window.history.go(-1);
 });
 
-const showUpdateFunction = (isUpload) => {
+const showUpdateFunction = (isUpload, postId) => {
   if (!isUpload) {
-    return `<button class="btnUpdateFunction" title="Update">
+    return `<button class="btnUpdateFunction" title="Update" data-update-id=${postId}>
       <i class="fas fa-pen-square"></i>
     </button>`;
   } else {
@@ -42,7 +42,7 @@ function showUserFunction(isUser, postId, isUpload) {
   if (isUser && isUser === "true") {
     return `
     <div class="userFunction">
-    ${showUpdateFunction(isUpload)}
+    ${showUpdateFunction(isUpload, postId)}
     <button class="btnDeleteFunction" 
     title="Delete" data-toggle="modal" 
     data-target="#deleteModal"
@@ -102,9 +102,9 @@ const getNoficationContent = (input) => {
 };
 
 const displaySeen = (seen) => {
-  if(seen) return `<span>seen</span>`;
-  else return `<span>not seen</span>`
-}
+  if (seen) return `<span>seen</span>`;
+  else return `<span>not seen</span>`;
+};
 
 function createNofication(nofication) {
   return $(` <li class="noficationContent">
@@ -113,7 +113,7 @@ function createNofication(nofication) {
       <div class="userImageContainer">
         <a href="${nofication.linkUser}">
           <img
-            data-avatar="${'img' + nofication.createdBy._id + 'png'}"
+            data-avatar="${"img" + nofication.createdBy._id + "png"}"
             class="rounded-circle"
             alt="avatar"
             width="40"
@@ -125,14 +125,14 @@ function createNofication(nofication) {
       </div>
       <div class="userInfo">
         <a href="${nofication.linkUser}" class="displayName"
-          >${nofication.displayName }</a
+          >${nofication.displayName}</a
         >
         <span class="username"
           >@${nofication.createdBy.username}</span
         >
         |
         <span class="date">${nofication.time} </span>
-        ${ displaySeen(nofication.seen) }
+        ${displaySeen(nofication.seen)}
       </div>
     </div>
     <button class="btnDeleteFunction" title="Delete">
@@ -178,7 +178,7 @@ function createPost(post) {
           ${showUserFunction(isUser, post._id, post.isUpload)}
         </div>
           <div class='postBody'>
-              <span data-post-span-id=${post._id}}>${content}</span>
+              <span data-post-span-id=${post._id}>${content}</span>
           </div>
           <div class='postFooter'>
               <div class='postButtonContainer'>
