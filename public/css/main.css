@@ -603,7 +603,7 @@ a#search {
   background: #f6f5f5;
   display: none;
   transition: 0.5s;
-  overflow-y: hidden;
+  overflow-y: scroll;
   padding: 0px !important;
 }
 
