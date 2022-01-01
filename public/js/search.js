@@ -61,10 +61,10 @@ $(document).ready(function () {
   searchUser.keyup(function (e) {
     $(".searchResult").addClass("visible");
     resultList.children("#not").remove();
-    const value = $(e.target).val();
+    const value = $(e.target).val().toLowerCase().trim();
     let results = [];
     const userClone = [...users];
-    if(value.trim().length > 0){
+    if(value.length > 0){
       results = userClone.filter(
         (user) =>
           user.username.includes(value) ||
