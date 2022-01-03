@@ -46,7 +46,6 @@ exports.follow = async (req, res, next) => {
   }
 };
 
-
 const upload = async (title, req, res, next) => {
   const { _id } = req.user;
   const { filename } = req.file;
@@ -97,41 +96,54 @@ const upload = async (title, req, res, next) => {
       const nofication = await Nofication.create({
         createdBy: user._id,
         reciver: userFollower._id,
-        content: title === 'avatar' ? "UPLOAD_NEW_AVATAR" : "UPLOAD_NEW_BACKGROUND",
+        content:
+          title === "avatar" ? "UPLOAD_NEW_AVATAR" : "UPLOAD_NEW_BACKGROUND",
         postId: post._id,
       });
       userFollower.nofications.push(nofication._id);
       userFollower.noficationAmount += 1;
       await userFollower.save();
-      const nof =
-      await nofication.populate(
+      const nofica = await nofication.populate(
         "createdBy",
         "username firstName lastName avatar"
-        );
-      io.emit("nofication-new-post", { follower: f });
+      );
+      const nofPost = {
+        _id: post._id,
+        postedBy: {
+          username: post.postedBy.username,
+        },
+      };
+      const nof = {
+        _id: nofica._id,
+        content: nofica.content,
+        createdBy: nofica.createdBy,
+        reciver: nofica.reciver,
+        createdAt: nofica.createdAt,
+        seen: nofica.seen,
+        nofPost: nofPost,
+      };
+      io.emit("new-nofication", { reciver: f });
       io.emit("created-nofication", { nof });
     }
   } catch (error) {
     res.redirect("/");
   }
-}
+};
 
 exports.uploadAvatar = async (req, res, next) => {
   const { uploadTitle } = req.body;
-  if(uploadTitle && uploadTitle.trim() === "avatar"){
+  if (uploadTitle && uploadTitle.trim() === "avatar") {
     upload(uploadTitle.trim(), req, res, next);
-  }
-  else{
+  } else {
     res.status(400);
   }
 };
 
 exports.uploadBackground = async (req, res, next) => {
   const { uploadTitle } = req.body;
-  if(uploadTitle && uploadTitle.trim() === "background"){
+  if (uploadTitle && uploadTitle.trim() === "background") {
     upload(uploadTitle.trim(), req, res, next);
-  }
-  else{
+  } else {
     res.status(400);
   }
 };
@@ -150,6 +162,18 @@ exports.searchUser = async (req, res, next) => {
   try {
     let users = await User.find({}, "_id avatar username firstName lastName");
     res.status(200).send(users);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+exports.resetNofication = async (req, res, next) => {
+  const { _id } = req.user;
+  try {
+    let user = await User.findById(_id, 'noficationAmount');
+    user.noficationAmount = 0;
+    await user.save();
+    res.status(200);
   } catch (error) {
     console.log(error);
   }

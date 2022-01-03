@@ -41,9 +41,9 @@ $(document).ready(function () {
     }
   };
 
-  socket.on("nofication-new-post", ({ follower }) => {
+  socket.on("new-nofication", ({ reciver }) => {
     const ele = document.querySelector([
-      `[data-nofication-id='${follower.toString().trim()}']`,
+      `[data-nofication-id='${reciver.toString().trim()}']`,
     ]);
     if (ele) {
       const amount = parseInt(ele.innerHTML.toString()) + 1;
@@ -85,18 +85,21 @@ $(document).ready(function () {
       $(".titleContainer").css("background", "#ffffffff");
     }
 
-    if(top > 400){
-      $('.back-to-top').addClass('display');
-    }
-    else{
-      $('.back-to-top').removeClass('display');
+    if (top > 400) {
+      $(".back-to-top").addClass("display");
+    } else {
+      $(".back-to-top").removeClass("display");
     }
 
-    $('.back-to-top').click(function () {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    })
+    $(".back-to-top").click(function () {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
   });
 
+  $('.fas.fa-bell').click(function () {
+    console.log('click');
+    $.post('/api/user/reset-nofication');
+  })
 
   editButton.click(function (e) {
     e.preventDefault();

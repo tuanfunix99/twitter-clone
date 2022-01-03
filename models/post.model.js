@@ -15,16 +15,22 @@ const postSchema = new Schema(
       type: Boolean,
       default: false,
     },
-    isUpload:{
+    isUpload: {
       type: Boolean,
       default: false,
-    }
+    },
+    likes: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
   },
   {
     timestamps: true,
   }
 );
 
-const Post = mongoose.model('Post', postSchema);
+const Post = mongoose.model("Post", postSchema);
 
 module.exports = Post;

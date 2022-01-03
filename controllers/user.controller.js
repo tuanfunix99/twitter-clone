@@ -26,7 +26,7 @@ exports.userProfile = async (req, res, next) => {
 
     let posts = await Post.find(
       { postedBy: profile._id },
-      "_id content isUpload createdAt"
+      "_id content isUpload createdAt likes"
     ).populate("postedBy", "_id avatar firstName lastName username");
 
     posts = posts

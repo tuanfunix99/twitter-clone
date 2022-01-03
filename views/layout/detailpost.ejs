@@ -1,6 +1,7 @@
 <div class="px-0" id="postContainer">
   <% const { postedBy, content, time, isUpload } = post %> <% const displayName =
   postedBy.firstName + " " + postedBy.lastName; %>
+  <% let liked = post.likes.includes(user._id) %>
   <div class="post p-2" data-post-id="<%= post._id %>">
     <div class="mainContentContainer">
       <div class="postContentContainer mx-2">
@@ -55,19 +56,33 @@
         </div>
         <div class="postFooter">
           <div class="postButtonContainer p-1">
-            <button>
-              <i class="far fa-comment"></i>
-            </button>
+            <div class="commentContainer">
+              <button>
+                <i class="far fa-comment"></i>
+              </button>
+            </div>
           </div>
           <div class="postButtonContainer p-1">
-            <button>
-              <i class="fas fa-retweet"></i>
-            </button>
+            <div class="retweetContainer">
+              <button>
+                <i class="fas fa-retweet"></i>
+              </button>  
+            </div>
           </div>
           <div class="postButtonContainer p-1">
-            <button>
-              <i class="far fa-heart"></i>
-            </button>
+            <div class="<%=`likeContainer ${liked ? 'liked' : ''}`%>">
+              <% if(liked) {%>
+              <button>
+                <i class="fas fa-heart"></i>
+              </button>
+              <%}else {%>
+              <button>
+                <i class="far fa-heart"></i>
+              </button>
+              <%}%> <% if(post.likes.length > 0) {%>
+              <div class="amountLike"><%= post.likes.length %></div>
+              <%}%>
+            </div>
           </div>
         </div>
       </div>

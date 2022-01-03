@@ -2,10 +2,10 @@ const mogoose = require("mongoose");
 const { Schema } = mogoose;
 const validator = require("validator");
 const bcrypt = require("bcrypt");
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 const { Error } = require("mongoose");
 const dotenv = require("dotenv");
-const generator = require('generate-password');
+const generator = require("generate-password");
 dotenv.config();
 
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
@@ -23,11 +23,11 @@ const userSchema = new Schema({
     type: String,
     required: [true, "Username is required"],
     unique: true,
-    validate(value){
-      if(value.includes(" ")){
+    validate(value) {
+      if (value.includes(" ")) {
         throw new Error("Username not contain space character");
       }
-    }
+    },
   },
   email: {
     type: String,
@@ -49,50 +49,58 @@ const userSchema = new Schema({
     type: Boolean,
     default: false,
   },
-  token:{
+  token: {
     type: String,
   },
-  avatar:{
+  avatar: {
     type: String,
-    default: "/images/profilePic.jpeg"
+    default: "/images/profilePic.jpeg",
   },
-  background:{
+  background: {
     type: String,
-    default: "/images/background_default.png"
+    default: "/images/background_default.png",
   },
   following: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'User'
-    }
+      ref: "User",
+    },
   ],
-  follower:[
+  follower: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'User'
-    }
+      ref: "User",
+    },
   ],
-  nofications:[
+  nofications: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'Nofication'
-    }
+      ref: "Nofication",
+    },
   ],
-  noficationAmount:{
+  noficationAmount: {
     type: Number,
     default: 0,
-  }
+  },
+  likes: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Post",
+    },
+  ],
 });
 
-userSchema.methods.setToken = function(){
+userSchema.methods.setToken = function () {
   const user = this;
   const key_secret = generator.generate({
     length: 15,
-    symbols: true
-  })
-  const token = jwt.sign({ _id: user._id, key_secret }, PRIVATE_KEY, { expiresIn: '24h' });
+    symbols: true,
+  });
+  const token = jwt.sign({ _id: user._id, key_secret }, PRIVATE_KEY, {
+    expiresIn: "24h",
+  });
   return token;
-}
+};
 
 userSchema.statics.authenticate = async (name, password) => {
   const username = await User.findOne({ username: name });
@@ -124,7 +132,6 @@ userSchema.pre("save", async function (next) {
   }
   next();
 });
-
 
 const User = mogoose.model("User", userSchema);
 

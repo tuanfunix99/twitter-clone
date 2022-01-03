@@ -1,14 +1,19 @@
 $(document).ready(function () {
-  const socket = io();  
+  const socket = io();
+
   socket.on('created-nofication', function ({ nof }){
+    console.log('recive');
     const noficationTemplate = getNoficationContent(nof);
+    console.log(noficationTemplate)
     const newNof = createNofication(noficationTemplate); 
-    const ul = $(`[data-nofication-list-id='${nof.createdBy._id}']`);
+    console.log(newNof)
+    console.log(nof.reciver);
+    const ul = $(`[data-nofication-list-id='${nof.reciver}']`);
     if(ul){
         ul.prepend(newNof);
     }
-    $("#noficationList").load(location.href + " #noficationList");
   });
+
 
   $('#noficationList').on('click', '.buttonSeenNofication', function (e) {
     const noficationId = $(this).attr('data-button-seen-nofication');

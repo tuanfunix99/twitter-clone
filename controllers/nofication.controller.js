@@ -1,5 +1,6 @@
 const User = require("../models/user.model");
 const Nofication = require("../models/nofication.model");
+const Post = require("../models/post.model");
 const { getAvatar } = require("../utils/file/user");
 const {
   getAmountNofication,
@@ -32,16 +33,22 @@ exports.noficationPage = async (req, res, next) => {
           "createdBy",
           "username firstName lastName avatar"
         );
-      const nofTemplate = getNoficationContent({
-        _id,
-        content,
-        createdBy,
-        postId,
-        createdAt,
-        seen
-      });
-      if (nofTemplate) {
-        nofications.push(nofTemplate);
+      const nofPost = await Post.findById(postId, "postedBy").populate(
+        "postedBy",
+        "username"
+      );
+      if (nofPost) {
+        const nofTemplate = getNoficationContent({
+          _id,
+          content,
+          createdBy,
+          nofPost,
+          createdAt,
+          seen,
+        });
+        if (nofTemplate) {
+          nofications.push(nofTemplate);
+        }
       }
     }
     res.render("nofication", {
@@ -50,7 +57,7 @@ exports.noficationPage = async (req, res, next) => {
       nofications,
       getAvatar,
       isUser,
-      noficationAmount: getAmountNofication(user.noficationAmount),
+      noficationAmount: getAmountNofication(0),
     });
   } catch (error) {
     console.log(error);

@@ -28,6 +28,8 @@ router.post(
 
 router.post("/search-user", auth, searchUser);
 
+router.post("/reset-nofication", auth, resetNofication);
+
 router.get("/user-images/:title/:key", auth, getUserImages);
 
 

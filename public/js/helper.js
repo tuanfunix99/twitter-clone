@@ -57,16 +57,16 @@ function showUserFunction(isUser, postId, isUpload) {
 }
 
 const getNoficationContent = (input) => {
-  const { content, createdBy, postId, createdAt } = input;
+  const { _id, content, createdBy, nofPost, createdAt, seen } = input;
   const displayName = createdBy.firstName + " " + createdBy.lastName;
   const linkUser = `/user-profile/${createdBy.username}`;
-  const linkPost = `/view-post/${createdBy.username}/${postId}`;
+  const linkPost = `/view-post/${nofPost.postedBy.username}/${nofPost._id}`;
   const time = moment(new Date(createdAt)).fromNow();
   switch (content) {
     case "CREATE_NEW_POST":
       return {
         content: `
-        <p><a href=${linkUser}>${displayName}</a> just upload new post.Let's <a href=${linkPost}>visit it</a></p>
+        <p><a href=${linkUser}>${displayName}</a> just upload new post.Let's <a class="buttonSeenNofication" data-button-seen-nofication="${_id}" href=${linkPost}>seen it</a></p>
         `,
         displayName,
         linkUser,
@@ -77,7 +77,7 @@ const getNoficationContent = (input) => {
     case "UPLOAD_NEW_AVATAR":
       return {
         content: `
-          <p><a href=${linkUser}>${displayName}</a> just upload new avatar.Let's <a href=${linkPost}>visit it</a></p>
+          <p><a href=${linkUser}>${displayName}</a> just upload new avatar.Let's <a class="buttonSeenNofication" data-button-seen-nofication="${_id}" href=${linkPost}>seen it</a></p>
           `,
         displayName,
         linkUser,
@@ -88,7 +88,7 @@ const getNoficationContent = (input) => {
     case "UPLOAD_NEW_BACKGROUND":
       return {
         content: `
-        <p><a href=${linkUser}>${displayName}</a> just upload new background.Let's <a href=${linkPost}>visit it</a></p>
+        <p><a href=${linkUser}>${displayName}</a> just upload new background.Let's <a class="buttonSeenNofication" data-button-seen-nofication="${_id}" href=${linkPost}>seen it</a></p>
         `,
         displayName,
         linkUser,
@@ -96,14 +96,26 @@ const getNoficationContent = (input) => {
         time,
         createdBy,
       };
+    case "LIKE_POST":
+      return {
+        content: `
+            <p><a href=${linkUser}>${displayName}</a> liked your post.Let's <a class="buttonSeenNofication" data-button-seen-nofication="${_id}" href=${linkPost}>seen it</a></p>
+            `,
+        displayName,
+        linkUser,
+        linkPost,
+        time,
+        createdBy,
+        seen,
+      };
     default:
       return null;
   }
 };
 
 const displaySeen = (seen) => {
-  if (seen) return `<span>seen</span>`;
-  else return `<span>not seen</span>`;
+  if (seen) return `<span class="seen">seen</span>`;
+  else return `<span class="not-seen">not seen</span>`;
 };
 
 function createNofication(nofication) {
@@ -159,6 +171,7 @@ function createPost(post) {
       <div class='postContentContainer mx-2'>
           <div class="header">
           <div class="userImageContainer">
+          <a href=${link}>
             <img
               data-avatar="${"img" + postedBy._id + "png"}"
               class="rounded-circle"
@@ -167,6 +180,7 @@ function createPost(post) {
               height="40"
               src="${urlImage}"
             />
+            </a>
           </div>
           <div class="userInfo">
             <a href=${link} class="displayName">${displayName}</a>
@@ -180,23 +194,29 @@ function createPost(post) {
           <div class='postBody'>
               <span data-post-span-id=${post._id}>${content}</span>
           </div>
-          <div class='postFooter'>
-              <div class='postButtonContainer'>
-                  <button>
-                      <i class='far fa-comment'></i>
-                  </button>
-              </div>
-              <div class='postButtonContainer'>
-                  <button>
-                      <i class='fas fa-retweet'></i>
-                  </button>
-              </div>
-              <div class='postButtonContainer'>
-                  <button>
-                      <i class='far fa-heart'></i>
-                  </button>
-              </div>
+          <div class="postFooter">
+          <div class="postButtonContainer p-1">
+            <div class="commentContainer">
+              <button>
+                <i class="far fa-comment"></i>
+              </button>
+            </div>
           </div>
+          <div class="postButtonContainer p-1">
+            <div class="retweetContainer">
+              <button>
+                <i class="fas fa-retweet"></i>
+              </button>  
+            </div>
+          </div>
+          <div class="postButtonContainer p-1">
+            <div class="likeContainer">
+              <button>
+                <i class="far fa-heart"></i>
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
   </div>
 </div>`);

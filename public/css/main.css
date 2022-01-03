@@ -206,31 +206,6 @@ nav .blue {
   margin-top: 10px;
 }
 
-.postButtonContainer button {
-  border: none;
-  background: inherit;
-  border-radius: 50%;
-}
-
-.postButtonContainer {
-  border-radius: 50%;
-  transition: 0.4s;
-}
-
-.postButtonContainer:hover {
-  border-radius: 50%;
-  background: #5cb9f0;
-}
-
-.postButtonContainer:hover i {
-  color: white;
-}
-
-.postButtonContainer button:focus {
-  box-shadow: 0px;
-  outline: 0px;
-}
-
 .view {
   color: gray;
   font-weight: 500;

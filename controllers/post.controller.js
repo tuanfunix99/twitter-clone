@@ -1,7 +1,7 @@
 const User = require("../models/user.model");
 const Post = require("../models/post.model");
 const moment = require("moment");
-const { getAvatar, getBackground } = require("../utils/file/user");
+const { getAvatar } = require("../utils/file/user");
 const { getAmountNofication } = require("../utils/helper")
 
 exports.postPage = async (req, res, next) => {

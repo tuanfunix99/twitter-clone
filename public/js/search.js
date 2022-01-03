@@ -65,7 +65,7 @@ $(document).ready(function () {
     let results = [];
     const userClone = [...users];
     if(value.length > 0){
-      results = userClone.filter(
+      results = userClone.filter( 
         (user) =>
           user.username.toLowerCase().trim().includes(value) ||
           user.firstName.toLowerCase().trim().includes(value) ||
