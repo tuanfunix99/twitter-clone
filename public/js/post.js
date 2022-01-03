@@ -11,7 +11,7 @@ $(document).ready(function () {
   const deletePostCancel = $("#delete-post-cancel");
   const emojiButton = document.getElementById("emojiButton");
   let deleteId = "";
-  const dataUser = $("html").attr("data-user");
+  const dataUser = $("nav").attr("data-user");
 
   const picker = new EmojiButton({
     position: "bottom",
