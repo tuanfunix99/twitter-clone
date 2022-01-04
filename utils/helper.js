@@ -11,7 +11,7 @@ exports.getAmountNofication = (amount) => {
 exports.getNoficationContent = (input) => {
   const { _id, content, createdBy, nofPost, seen, createdAt } = input;
   const displayName = createdBy.firstName + " " + createdBy.lastName;
-  const linkUser = `/user-profile/${createdBy.username}`;
+  const linkUser = `/user-page/${createdBy.username}`;
   const linkPost = `/view-post/${nofPost.postedBy.username}/${nofPost._id}`;
   const time = moment(new Date(createdAt)).fromNow();
   switch (content) {

@@ -99,6 +99,17 @@ exports.deletePost = async (req, res, next) => {
     }
     await Post.findByIdAndRemove(post._id);
     io.emit("deleted-post", { postId: post._id, username });
+    const users = await User.find({}, 'likes');
+    for(let user of users) {
+      if(user.likes.includes(post._id)) {
+        const u = await User.findById(user._id, 'likes');
+        const index = u.likes.indexOf(post._id);
+        if(index !== -1) {
+          u.likes.splice(index, 1);
+        }
+        await u.save();
+      }
+    }
     res.status(200).send({ deleted: true });
   } catch (error) {
     console.log(error.message);

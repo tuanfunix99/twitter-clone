@@ -40,7 +40,7 @@ exports.userProfile = async (req, res, next) => {
     );
 
     res.status(200).render("user", {
-      title: "User Profile",
+      title: "User Page",
       posts,
       user,
       profile,

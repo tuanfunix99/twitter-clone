@@ -59,7 +59,7 @@ function showUserFunction(isUser, postId, isUpload) {
 const getNoficationContent = (input) => {
   const { _id, content, createdBy, nofPost, createdAt, seen } = input;
   const displayName = createdBy.firstName + " " + createdBy.lastName;
-  const linkUser = `/user-profile/${createdBy.username}`;
+  const linkUser = `/user-page/${createdBy.username}`;
   const linkPost = `/view-post/${nofPost.postedBy.username}/${nofPost._id}`;
   const time = moment(new Date(createdAt)).fromNow();
   switch (content) {
@@ -160,7 +160,7 @@ function createPost(post) {
   const { postedBy, content, createdAt } = post;
   const displayName = postedBy.firstName + " " + postedBy.lastName;
   const time = moment(new Date(createdAt)).fromNow();
-  const link = `/user-profile/${postedBy.username}`;
+  const link = `/user-page/${postedBy.username}`;
   const urlImage = getAvatar(postedBy.avatar);
 
   return $(`<div class='post p-2' 

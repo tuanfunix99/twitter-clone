@@ -7,10 +7,10 @@ $(document).ready(function () {
     '<li class="not-found">No results for people or keywords</li>';
 
   const loadResult = ({ _id, avatar, firstName, lastName, username }) => {
-    const link = `/user-profile/${username}`;
+    const link = `/user-page/${username}`;
     const displayName = `${firstName} ${lastName}`;
     const urlImage = getAvatar(avatar);
-    const urlProfile = `/user-profile/${username}`;
+    const urlProfile = `/user-page/${username}`;
     return `<li class="resultUser">
       <div class="resultUserContainer">
           <div class='resultUserImage'>

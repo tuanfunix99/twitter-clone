@@ -11,7 +11,7 @@
       <div class="postContentContainer mx-2">
         <div class="header">
           <div class="userImageContainer">
-            <a href="<%= `/user-profile/${postedBy.username}` %>">
+            <a href="<%= `/user-page/${postedBy.username}` %>">
               <img
                 data-avatar="<%= 'img' + postedBy._id + 'png' %>"
                 class="rounded-circle"
@@ -25,7 +25,7 @@
           </div>
           <div class="userInfo">
             <a
-              href="<%= `/user-profile/${postedBy.username}` %>"
+              href="<%= `/user-page/${postedBy.username}` %>"
               class="displayName"
               ><%= displayName %></a
             >
@@ -67,14 +67,14 @@
         <div class="postFooter">
           <div class="postButtonContainer p-1">
             <div class="commentContainer">
-              <button>
+              <button title="reply">
                 <i class="far fa-comment"></i>
               </button>
             </div>
           </div>
           <div class="postButtonContainer p-1">
             <div class="retweetContainer">
-              <button>
+              <button title="retweet">
                 <i class="fas fa-retweet"></i>
               </button>  
             </div>
@@ -82,11 +82,11 @@
           <div class="postButtonContainer p-1">
             <div class="<%=`likeContainer ${liked ? 'liked' : ''}`%>">
               <% if(liked) {%>
-              <button>
+              <button title="unlike">
                 <i class="fas fa-heart"></i>
               </button>
               <%}else {%>
-              <button>
+              <button title="like">
                 <i class="far fa-heart"></i>
               </button>
               <%}%> <% if(post.likes.length > 0) {%>

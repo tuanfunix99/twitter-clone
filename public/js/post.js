@@ -112,7 +112,7 @@ $(document).ready(function () {
     if (!liked) {
       $(this).addClass("liked");
       $(this).children("button").remove();
-      $(this).prepend(`<button><i class="fas fa-heart"></i></button>`);
+      $(this).prepend(`<button title="unlike"><i class="fas fa-heart"></i></button>`);
       if (!amount) {
         $(this).append(`<div class="amountLike">1</div>`);
       } else {
@@ -122,7 +122,7 @@ $(document).ready(function () {
     } else {
       $(this).removeClass("liked");
       $(this).children("button").remove();
-      $(this).prepend(`<button><i class="far fa-heart"></i></button>`);
+      $(this).prepend(`<button title="like"><i class="far fa-heart"></i></button>`);
       amount -= 1;
       if (amount === 0) {
         $(this).children(".amountLike").remove();
