@@ -49,6 +49,10 @@ const userSchema = new Schema({
     type: Boolean,
     default: false,
   },
+  isReset: {
+    type: Boolean,
+    default: false,
+  },
   token: {
     type: String,
   },
