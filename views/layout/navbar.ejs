@@ -4,7 +4,7 @@
         <i class="<%= 'fas fa-dove' + (title === 'Twitter' ? ' blue' : '') %>"></i>
     </a>
     <a href=<%= `/user-page/${user.username}` %>  title="Home">
-        <i class="<%= 'fas fa-home' + (title === 'User Page' || title === 'Post' ? ' blue' : '') %>">
+        <i class="<%= 'fas fa-home' + (title === 'User Page' && isUser ? ' blue' : '') %>">
         </i></a>
     <a href="" title="Search" id="search"><i class="fas fa-search"></i></a>
     <a href=<%= `/nofication/${user.username}` %> title="Nofication" id="noficationContainer">
