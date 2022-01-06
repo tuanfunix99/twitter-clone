@@ -10,7 +10,7 @@ exports.main = async (req, res) => {
     let users = await User.find({ isActive: true });
     userFollows = users
       .filter((user) => user._id.toString() !== req.user._id.toString())
-      .filter((user) => !user.following.includes(user._id))
+      .filter((user) => !user.following.includes(req.user._id))
       .splice(0, 5);
     let posts = await Post.find().populate(
       "postedBy",
