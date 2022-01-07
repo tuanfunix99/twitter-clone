@@ -43,7 +43,7 @@ exports.noficationPage = async (req, res, next) => {
       const { _id, content, createdBy, postId, createdAt, seen } = nof;
       if (postId && postId.postedBy) {
         const nofPost = {
-          _id: postId,
+          _id: postId._id,
           postedBy: {
             username: postId.postedBy.username,
           },
