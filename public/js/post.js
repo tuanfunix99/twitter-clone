@@ -61,6 +61,15 @@ $(function () {
     postContainer.prepend(newPost);
   });
 
+  socket.on("upload-new-image", (postData) => {
+    btnpost.remove(".spinner-border");
+    btnpost.text("Tweet");
+    btnpost.prop("disabled", true);
+    textarea.val("");
+    const newPost = createPost(postData);
+    postContainer.prepend(newPost);
+  });
+
   socket.on("deleted-post", ({ postId }) => {
     const eles = document.querySelectorAll([`[data-post-id='${postId}']`]);
     if (eles && eles.length > 0) {

@@ -24,7 +24,7 @@ const sendNewNofication = (nof) => {
         text: `@${username} just upload a new post`,
         type: "info",
         icon: avatar,
-        timeout: 5000,
+        timeout: 8000,
         link: linkPost,
       });
       break;
@@ -35,7 +35,7 @@ const sendNewNofication = (nof) => {
         text: `@${username} just upload a new avatar`,
         type: "info",
         icon: avatar,
-        timeout: 5000,
+        timeout: 8000,
         link: linkPost,
       });
       break;
@@ -46,7 +46,7 @@ const sendNewNofication = (nof) => {
         text: `@${username} just upload a new background`,
         type: "info",
         icon: avatar,
-        timeout: 5000,
+        timeout: 8000,
         link: linkPost,
       });
       break;
@@ -57,7 +57,7 @@ const sendNewNofication = (nof) => {
         text: `@${username} liked your post`,
         type: "info",
         icon: avatar,
-        timeout: 5000,
+        timeout: 8000,
         link: linkPost,
       });
       break;
