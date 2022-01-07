@@ -48,7 +48,7 @@ exports.createNewPost = async (req, res, next) => {
         createdBy: user._id,
         reciver: userFollower._id,
         content: "CREATE_NEW_POST",
-        postId: post._id,
+        postId: post._id
       });
       userFollower.nofications.push(nofication._id);
       userFollower.noficationAmount += 1;
@@ -72,7 +72,7 @@ exports.createNewPost = async (req, res, next) => {
         seen: nofica.seen,
         nofPost: nofPost,
       };
-      io.emit("new-nofication", { reciver: f });
+      io.emit("new-nofication", { nof });
       io.emit("created-nofication", { nof });
     }
 
@@ -163,7 +163,7 @@ exports.likePost = async (req, res, next) => {
           createdBy: _id,
           reciver: post.postedBy._id,
           content: "LIKE_POST",
-          postId: post._id,
+          postId: post._id
         });
         const reciver = await User.findById(post.postedBy);
         reciver.nofications.push(nofication._id);
@@ -188,7 +188,7 @@ exports.likePost = async (req, res, next) => {
           seen: nofica.seen,
           nofPost: nofPost,
         };
-        io.emit("new-nofication", { reciver: reciver._id });
+        io.emit("new-nofication", { nof });
         io.emit("created-nofication", { nof });
       }
     }

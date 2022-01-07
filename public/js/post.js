@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(function () {
   const socket = io();
   const postContainer = $(`[data-parent-profile='main']`)
     .children()
@@ -82,7 +82,7 @@ $(document).ready(function () {
     btnpost.prop("disabled", false);
   });
 
-  $(textarea).keyup(function (e) {
+  $(textarea).on('keyup', function (e) {
     value = $(e.target).val();
     if (value.trim().length > 0) {
       btnpost.prop("disabled", false);
@@ -91,7 +91,7 @@ $(document).ready(function () {
     btnpost.prop("disabled", true);
   });
 
-  btnpost.click(function (e) {
+  btnpost.on('click', function (e) {
     e.preventDefault();
     btnpost.text("");
     btnpost.append(spinner("Tweet..."));
@@ -134,7 +134,7 @@ $(document).ready(function () {
     $.post("/api/post/like", { postId });
   });
 
-  deletePostAction.click(function (e) {
+  deletePostAction.on('click', function (e) {
     deletePostAction.text("");
     deletePostAction.append(spinner("Deleting..."));
     deletePostAction.prop("disabled", true);
@@ -150,7 +150,7 @@ $(document).ready(function () {
     });
   });
 
-  deletePostCancel.click(function (e) {
+  deletePostCancel.on('click', function (e) {
     deleteId = "";
   });
 });

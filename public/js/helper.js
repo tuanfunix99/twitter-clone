@@ -1,3 +1,71 @@
+const createToast = (input) => {
+  const { title, text, type, icon, timeout, link, noficationId } = input;
+  VanillaToasts.create({
+    title: title,
+    text: text,
+    type: type,
+    icon: getAvatar(icon),
+    timeout: timeout,
+    positionClass: "bottomRight",
+    link: link,
+    noficationId: noficationId,
+  });
+};
+
+const sendNewNofication = (nof) => {
+  const { firstName, lastName, username, avatar } = nof.createdBy;
+  const displayName = `${firstName} ${lastName}`;
+  const linkPost = `/view-post/${nof.nofPost.postedBy.username}/${nof.nofPost._id}`;
+  switch (nof.content) {
+    case "CREATE_NEW_POST":
+      createToast({
+        noficationId: nof._id,
+        title: `Nofication from ${displayName}`,
+        text: `@${username} just upload a new post`,
+        type: "info",
+        icon: avatar,
+        timeout: 5000,
+        link: linkPost,
+      });
+      break;
+    case "UPLOAD_NEW_AVATAR":
+      createToast({
+        noficationId: nof._id,
+        title: `Nofication from ${displayName}`,
+        text: `@${username} just upload a new avatar`,
+        type: "info",
+        icon: avatar,
+        timeout: 5000,
+        link: linkPost,
+      });
+      break;
+    case "UPLOAD_NEW_BACKGROUND":
+      createToast({
+        noficationId: nof._id,
+        title: `Nofication from ${displayName}`,
+        text: `@${username} just upload a new background`,
+        type: "info",
+        icon: avatar,
+        timeout: 5000,
+        link: linkPost,
+      });
+      break;
+    case "LIKE_POST":
+      createToast({
+        noficationId: nof._id,
+        title: `Nofication from ${displayName}`,
+        text: `@${username} liked your post`,
+        type: "info",
+        icon: avatar,
+        timeout: 5000,
+        link: linkPost,
+      });
+      break;
+    default:
+      return null;
+  }
+};
+
 const getAvatar = (avatar) => {
   if (avatar != "/images/profilePic.jpeg") {
     return `/api/user/user-images/${avatar}`;
@@ -65,42 +133,51 @@ const getNoficationContent = (input) => {
   switch (content) {
     case "CREATE_NEW_POST":
       return {
+        _id,
         content: `
-        <p><a href=${linkUser}>${displayName}</a> just upload new post.Let's <a class="buttonSeenNofication" data-button-seen-nofication="${_id}" href=${linkPost}>seen it</a></p>
+        <p>
+       ${displayName} uploaded new post.
+        </p>
         `,
         displayName,
         linkUser,
         linkPost,
         time,
         createdBy,
+        seen,
       };
     case "UPLOAD_NEW_AVATAR":
       return {
+        _id,
         content: `
-          <p><a href=${linkUser}>${displayName}</a> just upload new avatar.Let's <a class="buttonSeenNofication" data-button-seen-nofication="${_id}" href=${linkPost}>seen it</a></p>
+          <p>${displayName} uploaded new avatar.</p>
           `,
         displayName,
         linkUser,
         linkPost,
         time,
         createdBy,
+        seen,
       };
     case "UPLOAD_NEW_BACKGROUND":
       return {
+        _id,
         content: `
-        <p><a href=${linkUser}>${displayName}</a> just upload new background.Let's <a class="buttonSeenNofication" data-button-seen-nofication="${_id}" href=${linkPost}>seen it</a></p>
+        <p>${displayName} uploaded new background.</p>
         `,
         displayName,
         linkUser,
         linkPost,
         time,
         createdBy,
+        seen,
       };
     case "LIKE_POST":
       return {
+        _id,
         content: `
-            <p><a href=${linkUser}>${displayName}</a> liked your post.Let's <a class="buttonSeenNofication" data-button-seen-nofication="${_id}" href=${linkPost}>seen it</a></p>
-            `,
+          <p>${displayName} liked your post.</p>
+          `,
         displayName,
         linkUser,
         linkPost,
@@ -119,7 +196,8 @@ const displaySeen = (seen) => {
 };
 
 function createNofication(nofication) {
-  return $(` <li class="noficationContent">
+  return $(` <li class="noficationContent" data-nof-id="${nofication._id}"
+  data-link-post="${nofication.linkPost}">
   <div class="noficationContentHeader">
     <div class="noficationContentHeaderContainer">
       <div class="userImageContainer">

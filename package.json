@@ -36,6 +36,7 @@
     "pino": "^7.5.1",
     "pino-pretty": "^7.3.0",
     "socket.io": "^4.4.0",
+    "toastr": "^2.1.4",
     "uuid": "^8.3.2",
     "validator": "^13.7.0"
   }

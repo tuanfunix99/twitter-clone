@@ -6,6 +6,10 @@
   --spacing: 15px;
 }
 
+#vanillatoasts-container{
+  z-index: 10000;
+}
+
 body {
   overflow-x: hidden;
 }

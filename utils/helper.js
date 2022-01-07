@@ -17,9 +17,10 @@ exports.getNoficationContent = (input) => {
   switch (content) {
     case "CREATE_NEW_POST":
       return {
+        _id,
         content: `
         <p>
-        <a href=${linkUser}>${displayName}</a> just upload new post.Let's <a class="buttonSeenNofication" data-button-seen-nofication="${_id}" href=${linkPost}>seen it</a>
+       ${displayName} uploaded new post.
         </p>
         `,
         displayName,
@@ -31,8 +32,9 @@ exports.getNoficationContent = (input) => {
       };
     case "UPLOAD_NEW_AVATAR":
       return {
+        _id,
         content: `
-          <p><a href=${linkUser}>${displayName}</a> just upload new avatar.Let's <a class="buttonSeenNofication" data-button-seen-nofication="${_id}" href=${linkPost}>seen it</a></p>
+          <p>${displayName} uploaded new avatar.</p>
           `,
         displayName,
         linkUser,
@@ -43,8 +45,9 @@ exports.getNoficationContent = (input) => {
       };
     case "UPLOAD_NEW_BACKGROUND":
       return {
+        _id,
         content: `
-        <p><a href=${linkUser}>${displayName}</a> just upload new background.Let's <a class="buttonSeenNofication" data-button-seen-nofication="${_id}" href=${linkPost}>seen it</a></p>
+        <p>${displayName} uploaded new background.</p>
         `,
         displayName,
         linkUser,
@@ -55,8 +58,9 @@ exports.getNoficationContent = (input) => {
       };
     case "LIKE_POST":
       return {
+        _id,
         content: `
-          <p><a href=${linkUser}>${displayName}</a> liked your post.Let's <a class="buttonSeenNofication" data-button-seen-nofication="${_id}" href=${linkPost}>seen it</a></p>
+          <p>${displayName} liked your post.</p>
           `,
         displayName,
         linkUser,

@@ -16,28 +16,38 @@ exports.noficationPage = async (req, res, next) => {
     if (!isUser) {
       res.redirect("/not-found");
     }
-    const profile = await User.findOne(
-      { username: username },
-      "_id nofications"
-    ).populate("nofications", "_id createdBy content postId seen createdAt");
+    const profile = await User.findOne({ username: username }, "_id");
     if (!profile) {
       res.redirect("/not-found");
     }
-    const nofs = profile.nofications.sort(
-      (p1, p2) =>
-        new Date(p2.createdAt).getTime() - new Date(p1.createdAt).getTime()
-    );
-    for (let nofication of nofs) {
-      const { _id, content, createdBy, postId, createdAt, seen } =
-        await nofication.populate(
-          "createdBy",
-          "username firstName lastName avatar"
-        );
-      const nofPost = await Post.findById(postId, "postedBy").populate(
-        "postedBy",
-        "username"
-      );
-      if (nofPost) {
+    let nofs = await Nofication.find(
+      {
+        reciver: profile._id,
+      },
+      "_id content createdBy postId createdAt seen"
+    )
+    .sort({
+      createdAt: -1,
+    })
+      .populate("createdBy", "username firstName lastName avatar")
+      .populate({
+        path: "postId",
+        select: "postedBy",
+        populate: {
+          path: "postedBy",
+          select: "username",
+        },
+      });
+
+    for (let nof of nofs) {
+      const { _id, content, createdBy, postId, createdAt, seen } = nof;
+      if (postId && postId.postedBy) {
+        const nofPost = {
+          _id: postId,
+          postedBy: {
+            username: postId.postedBy.username,
+          },
+        };
         const nofTemplate = getNoficationContent({
           _id,
           content,
@@ -51,6 +61,7 @@ exports.noficationPage = async (req, res, next) => {
         }
       }
     }
+
     res.render("nofication", {
       title: "Nofication",
       user,

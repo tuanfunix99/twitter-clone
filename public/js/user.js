@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(function () {
   const socket = io();
   const btnFollow = $(".btnFollowProfile");
   
@@ -28,7 +28,7 @@ $(document).ready(function () {
     $(`p[data-tweets='${username}']`).text(`${tweets - 1} Tweets`);
   });
 
-  btnFollow.click(function (e) {
+  btnFollow.on('click', function () {
       e.preventDefault();
       const btnThis = $(this);
       btnFollow.prop("disabled", true);
@@ -47,7 +47,7 @@ $(document).ready(function () {
       });
   })
 
-  $(window).scroll(function(){
+  $(window).on('scroll', function(){
     if($(window).scrollTop() >= 390){
       $('.formUserProfile').addClass('show');
     }

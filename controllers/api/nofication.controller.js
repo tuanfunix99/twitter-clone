@@ -2,10 +2,10 @@ const Nofication = require("../../models/nofication.model");
 const User = require("../../models/user.model");
 
 exports.updateSeen = async (req, res, next) => {
-  const { _id, userId } = req.body;
+  const { _id } = req.body;
   try {
     const nof = await Nofication.findById(_id);
-    const user = await User.findById(userId);
+    const user = await User.findById(req.user._id);
     if (nof.seen) {
       return;
     }

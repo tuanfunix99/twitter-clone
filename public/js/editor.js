@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(function () {
   $(".summernote").summernote({ focus: true });
   const socket = io();
   const btnEdit = $("#editButton");
@@ -39,7 +39,7 @@ $(document).ready(function () {
     updateId = "";
   });
 
-  btnEdit.click(function (e) {
+  btnEdit.on('click', function (e) {
     $(".summernote").summernote({ focus: true });
     $(".editorContainer").addClass("show");
     $("body").addClass("scroll-none");
@@ -61,7 +61,7 @@ $(document).ready(function () {
     });
   });
 
-  btnEditCancel.click(function (e) {
+  btnEditCancel.on('click', function (e) {
     e.preventDefault();
     $(".editorContainer").removeClass("show");
     $("body").removeClass("scroll-none");
@@ -71,7 +71,7 @@ $(document).ready(function () {
     updateId = "";
   });
 
-  btnSaveEdit.click(function (e) {
+  btnSaveEdit.on('click', function (e) {
     e.preventDefault();
     const content = $(".summernote").summernote("code");
     btnSaveEdit.text("");

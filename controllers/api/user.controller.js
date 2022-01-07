@@ -98,7 +98,7 @@ const upload = async (title, req, res, next) => {
         reciver: userFollower._id,
         content:
           title === "avatar" ? "UPLOAD_NEW_AVATAR" : "UPLOAD_NEW_BACKGROUND",
-        postId: post._id,
+        postId: post._id
       });
       userFollower.nofications.push(nofication._id);
       userFollower.noficationAmount += 1;
@@ -122,7 +122,7 @@ const upload = async (title, req, res, next) => {
         seen: nofica.seen,
         nofPost: nofPost,
       };
-      io.emit("new-nofication", { reciver: f });
+      io.emit("new-nofication", { nof });
       io.emit("created-nofication", { nof });
     }
   } catch (error) {

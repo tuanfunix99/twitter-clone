@@ -7,6 +7,12 @@ ul#noficationList {
 li.noficationContent {
   width: 100%;
   padding: 15px 20px;
+  cursor: pointer;
+  transition: 0.5s;
+}
+
+li.noficationContent:hover{
+  background: #f5f4f4;
 }
 
 .noficationMessage {

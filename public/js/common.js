@@ -3,7 +3,7 @@ let value = "";
 let upload = null;
 let uploadTitle = "";
 
-$(document).ready(function () {
+$(function () {
   const socket = io();
   const btnfollow = $(".followButton");
   const btnupload = $(".uploadButton");
@@ -41,13 +41,14 @@ $(document).ready(function () {
     }
   };
 
-  socket.on("new-nofication", ({ reciver }) => {
+  socket.on("new-nofication", ({ nof }) => {
     const ele = document.querySelector([
-      `[data-nofication-id='${reciver.toString().trim()}']`,
+      `[data-nofication-id='${nof.reciver.toString().trim()}']`,
     ]);
     if (ele) {
       const amount = parseInt(ele.innerHTML.toString()) + 1;
       ele.innerHTML = getAmountNofication(amount);
+      sendNewNofication(nof);
     }
   });
 
@@ -77,7 +78,7 @@ $(document).ready(function () {
     uploadSuccess();
   });
 
-  $(window).scroll(function () {
+  $(window).on('scroll', function () {
     const top = $(window).scrollTop();
     if (top > 16) {
       $(".titleContainer").css("background", "#ffffffd9");
@@ -91,21 +92,20 @@ $(document).ready(function () {
       $(".back-to-top").removeClass("display");
     }
 
-    $(".back-to-top").click(function () {
+    $(".back-to-top").on('click', function () {
       window.scrollTo({ top: 0, behavior: "smooth" });
     });
   });
 
-  $('.fas.fa-bell').click(function () {
-    console.log('click');
-    $.post('/api/user/reset-nofication');
-  })
+  $(".fas.fa-bell").on('click', function () {
+    $.post("/api/user/reset-nofication");
+  });
 
-  editButton.click(function (e) {
+  editButton.on("click", function (e) {
     e.preventDefault();
   });
 
-  btnsubmitupload.click(function (e) {
+  btnsubmitupload.on("click", function (e) {
     e.preventDefault();
     if (!upload) {
       alert("Image empty");
@@ -150,7 +150,7 @@ $(document).ready(function () {
     }
   });
 
-  btnupload.click(function (e) {
+  btnupload.on("click", function (e) {
     imagePreview.src = "";
     uploadTitle = $(this).val();
     $(".uploadContainer").addClass("show");
@@ -158,7 +158,7 @@ $(document).ready(function () {
     $("#uploadTop").css("top", $(window).scrollTop());
   });
 
-  btnuploadcancel.click(function (e) {
+  btnuploadcancel.on("click", function (e) {
     e.preventDefault();
     $(".uploadContainer").removeClass("show");
     $("body").removeClass("scroll-none");
@@ -167,7 +167,7 @@ $(document).ready(function () {
     imagePreview.src = "";
   });
 
-  inputUpload.change(function (e) {
+  inputUpload.on("change", function (e) {
     const types = ["image/jpeg", "image/jpg", "image/png"];
     upload = e.target.files[0];
     if (!types.includes(upload.type)) {
@@ -198,7 +198,7 @@ $(document).ready(function () {
     reader.readAsDataURL(upload);
   });
 
-  btnfollow.click(function (e) {
+  btnfollow.on("click", function (e) {
     e.preventDefault();
     const btnThis = $(this);
     btnfollow.prop("disabled", true);

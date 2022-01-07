@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(function () {
   const videos = document.querySelectorAll("iframe");
   if(videos && videos.length > 0){
     for(let video of videos){

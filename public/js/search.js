@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(function () {
   const searchUser = $("#search-user");
   const resultList = $("#resultList");
   let users = [];
@@ -40,7 +40,7 @@ $(document).ready(function () {
     );
   }
 
-  $(".searchFormContainer").click(function (){
+  $(".searchFormContainer").on('click', function (e) {
     $(".searchResult").addClass("visible");
     if (users.length <= 0) {
       $.post("/api/user/search-user", function (results) {
@@ -49,16 +49,16 @@ $(document).ready(function () {
     }
   });
 
-  $('.mainSectionContainer').click(function () {
+  $('.mainSectionContainer').on('click', function () {
     $(".searchResult").removeClass("visible");
   })
 
-  $('.third-col').click(function () {
+  $('.third-col').on('click', function () {
     $(".searchResult").removeClass("visible");
   })
 
 
-  searchUser.keyup(function (e) {
+  searchUser.on('keyup', function (e) {
     $(".searchResult").addClass("visible");
     resultList.children("#not").remove();
     const value = $(e.target).val().toLowerCase().trim();
@@ -86,7 +86,7 @@ $(document).ready(function () {
     };
   });
 
-  searchUser.keydown(function (e) {
+  searchUser.on('keydown', function (e) {
     resultList.children(".resultUser").remove();
     resultList.children(".not-found").remove();
   });

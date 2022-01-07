@@ -1,7 +1,11 @@
 <div class="noficationContainer">
   <ul id="noficationList" data-nofication-list-id="<%= user._id %>">
     <% for(let nofication of nofications) {%>
-    <li class="noficationContent">
+    <li
+      class="noficationContent"
+      data-nof-id="<%= nofication._id %>"
+      data-link-post="<%= nofication.linkPost %>"
+    >
       <div class="noficationContentHeader">
         <div class="noficationContentHeaderContainer">
           <div class="userImageContainer">
